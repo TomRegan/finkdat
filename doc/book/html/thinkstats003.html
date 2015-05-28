@@ -1,0 +1,519 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="thinkstats.css">
+<TITLE>Descriptive statistics</TITLE>
+</HEAD>
+<BODY >
+<A HREF="thinkstats002.html"><IMG SRC="back.png" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="up.png" ALT="Up"></A>
+<A HREF="thinkstats004.html"><IMG SRC="next.png" ALT="Next"></A>
+<HR>
+<table cellpadding=10>
+
+<tr>
+
+<td valign="top" width=100 bgcolor="#1B82E6">
+</td>
+
+<td valign="top" width=600>
+
+<p>This HTML version of is provided for convenience, but it
+is not the best format for the book.  In particular, some of the
+symbols are not rendered correctly.
+
+<p>You might prefer to read
+the <a href="http://thinkstats.com/thinkstats.pdf">PDF version</a>, or
+you can buy a hardcopy 
+<a href="http://www.lulu.com/product/paperback/think-stats/12443331">here</a>.
+<H1 CLASS="chapter"><A NAME="htoc9">Chapter&#XA0;2</A>&#XA0;&#XA0;Descriptive statistics</H1><P>
+<A NAME="descriptive"></A></P><H2 CLASS="section"><A NAME="toc10"></A><A NAME="htoc10">2.1</A>&#XA0;&#XA0;Means and averages</H2><P>
+<A NAME="mean"></A></P><P>In the previous chapter, I mentioned three summary statistics&#X2014;mean,
+variance and median&#X2014;without explaining what they are. So before
+we go any farther, let&#X2019;s take care of that.
+<A NAME="@default74"></A>
+<A NAME="@default75"></A>
+<A NAME="@default76"></A>
+<A NAME="@default77"></A></P><P>If you have a sample of <I>n</I>&#XA0;values, <I>x<SUB>i</SUB></I>, the mean, &#XB5;, is
+the sum of the values divided by the number of values; in other words
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">&#XB5;&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>&#X2211;</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>i</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;<I>x<SUB>i</SUB></I>&#XA0;</TD></TR>
+</TABLE><P>
+The words &#X201C;mean&#X201D; and &#X201C;average&#X201D; are sometimes used interchangeably,
+but I will maintain this distinction:</P><UL CLASS="itemize"><LI CLASS="li-itemize">The &#X201C;mean&#X201D; of a sample is the summary statistic computed with
+the previous formula.</LI><LI CLASS="li-itemize">An &#X201C;average&#X201D; is one of many summary statistics you might
+choose to describe the typical value or the
+<B>central tendency</B> of a sample.
+<A NAME="@default78"></A></LI></UL><P>Sometimes the mean is a good description of a set of values. For
+example, apples are all pretty much the same size (at least the ones
+sold in supermarkets). So if I buy 6 apples and the total weight is 3
+pounds, it would be a reasonable summary to say they are about a half
+pound each.
+<A NAME="@default79"></A></P><P>But pumpkins are more diverse. Suppose I grow several varieties in my
+garden, and one day I harvest three decorative pumpkins that are 1
+pound each, two pie pumpkins that are 3 pounds each, and one Atlantic
+Giant&#XAE;&#XA0;pumpkin that weighs 591 pounds. The mean of
+this sample is 100 pounds, but if I told you &#X201C;The average pumpkin
+in my garden is 100 pounds,&#X201D; that would be wrong, or at least
+misleading.
+<A NAME="@default80"></A></P><P>In this example, there is no meaningful average because
+there is no typical pumpkin.</P><H2 CLASS="section"><A NAME="toc11"></A><A NAME="htoc11">2.2</A>&#XA0;&#XA0;Variance</H2><P>
+<A NAME="@default81"></A></P><P>If there is no single number that summarizes pumpkin weights,
+we can do a little better with two numbers: mean and <B>variance</B>.</P><P>In the same way that the mean is intended to describe the central
+tendency, variance is intended to describe the <B>spread</B>.
+The variance of a set of values is
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">&#X3C3;<SUP>2</SUP>&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>&#X2211;</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>i</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;(<I>x<SUB>i</SUB></I>&#XA0;&#X2212;&#XA0;&#XB5;)<SUP>2</SUP>&#XA0;</TD></TR>
+</TABLE><P>
+The term <I>x<SUB>i</SUB></I>-&#XB5;&#XA0;is called the &#X201C;deviation from the mean,&#X201D; so
+variance is the mean squared deviation, which is why it is denoted
+&#X3C3;<SUP>2</SUP>. The square root of variance, &#X3C3;, is called the <B>standard deviation</B>.
+<A NAME="@default82"></A>
+<A NAME="@default83"></A></P><P>By itself, variance is hard to interpret. One problem is that the
+units are strange; in this case the measurements are in pounds, so the
+variance is in pounds squared. Standard deviation is more meaningful;
+in this case the units are pounds.</P><DIV CLASS="theorem"><B>Exercise&#XA0;1</B>&#XA0;&#XA0;<EM>
+For the exercises in this chapter you should download
+<TT>http://thinkstats.com/thinkstats.py</TT>, which contains general-purpose
+functions we will use throughout the book. You can read documentation
+of these functions in <TT>http://thinkstats.com/thinkstats.html</TT>.
+</EM><A NAME="@default84"></A><P><EM>Write a function called
+<TT>Pumpkin</TT> that uses functions from <TT>thinkstats.py</TT> to compute
+the mean, variance and standard deviation of the pumpkins weights in
+the previous section.
+</EM></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;2</B>&#XA0;&#XA0;<EM>
+Reusing code from <TT>survey.py</TT> and <TT>first.py</TT>, compute the
+standard deviation of gestation time for first babies and others.
+Does it look like the spread is the same for the two groups?
+</EM><A NAME="@default85"></A>
+<A NAME="@default86"></A><P><EM>How big is the difference in the means compared to these standard
+deviations? What does this comparison suggest about the statistical
+significance of the difference?
+</EM></P></DIV><P>If you have prior experience, you might have seen a formula for
+variance with <I>n</I>&#XA0;&#X2212;&#XA0;1 in the denominator, rather than <I>n</I>. This
+statistic is called the &#X201C;sample variance,&#X201D; and it is used to
+estimate the variance in a population using a sample. We will come
+back to this in Chapter&#XA0;<A HREF="thinkstats009.html#estimation">8</A>. <A NAME="@default87"></A></P><H2 CLASS="section"><A NAME="toc12"></A><A NAME="htoc12">2.3</A>&#XA0;&#XA0;Distributions</H2><P>
+<A NAME="distributions"></A>
+<A NAME="@default88"></A></P><P>Summary statistics are concise, but dangerous, because they obscure
+the data. An alternative is to look at the <B>distribution</B> of the
+data, which describes how often each value appears.</P><P>The most common representation of a distribution is a <B>histogram</B>,
+which is a graph that shows the frequency or probability
+of each value.<A NAME="@default89"></A></P><P>In this context, <B>frequency</B> means the number of times a value
+appears in a dataset&#X2014;it has nothing to do with the pitch of a sound
+or tuning of a radio signal. A <B>probability</B> is a frequency expressed
+as a fraction of the sample size, <I>n</I>.
+<A NAME="@default90"></A>
+<A NAME="@default91"></A>
+<A NAME="@default92"></A></P><P>In Python, an efficient way to compute frequencies is with a dictionary.
+Given a sequence of values, <TT>t</TT>:
+</P><PRE CLASS="verbatim">hist = {}
+for x in t:
+    hist[x] = hist.get(x, 0) + 1
+</PRE><P>The result is a dictionary that maps from values to frequencies.
+To get from frequencies to probabilities, we divide through by <I>n</I>,
+which is called <B>normalization</B>:<A NAME="@default93"></A>
+</P><PRE CLASS="verbatim">n = float(len(t))
+pmf = {}
+for x, freq in hist.items():
+    pmf[x] = freq / n
+</PRE><P>The normalized histogram is called a <B>PMF</B>, which stands for
+&#X201C;probability mass function&#X201D;; that is, it&#X2019;s a function that maps from
+values to probabilities (I&#X2019;ll explain &#X201C;mass&#X201D; in
+Section&#XA0;<A HREF="thinkstats007.html#density">6.3</A>).
+<A NAME="@default94"></A>
+<A NAME="@default95"></A></P><P>It might be confusing to call a Python dictionary a function. In
+mathematics, a function is a map from one set of values to
+another. In Python, we <EM>usually</EM> represent mathematical functions
+with function objects, but in this case we are using a dictionary
+(dictionaries are also called &#X201C;maps,&#X201D; if that helps).<A NAME="@default96"></A></P><H2 CLASS="section"><A NAME="toc13"></A><A NAME="htoc13">2.4</A>&#XA0;&#XA0;Representing histograms</H2><P>
+<A NAME="@default97"></A>
+<A NAME="@default98"></A>
+<A NAME="@default99"></A></P><P>I wrote a Python module called <TT>Pmf.py</TT> that contains class
+definitions for Hist objects, which represent histograms, and Pmf
+objects, which represent PMFs. You can read the documentation at <TT>thinkstats.com/Pmf.html</TT> and download the code from <TT>thinkstats.com/Pmf.py</TT>.</P><P>The function <TT>MakeHistFromList</TT> takes a list of values and
+returns a new Hist object. You can test it in Python&#X2019;s interactive
+mode:
+</P><PRE CLASS="verbatim">&gt;&gt;&gt; import Pmf
+&gt;&gt;&gt; hist = Pmf.MakeHistFromList([1, 2, 2, 3, 5])
+&gt;&gt;&gt; print hist
+&lt;Pmf.Hist object at 0xb76cf68c&gt;
+</PRE><P><TT>Pmf.Hist</TT> means that this object is a member of the Hist class,
+which is defined in the Pmf module. In general, I use upper case
+letters for the names of classes and functions, and lower case letters
+for variables.</P><P>Hist objects provide methods to look up values and their
+probabilities. <TT>Freq</TT> takes a value and returns its frequency:
+</P><PRE CLASS="verbatim">&gt;&gt;&gt; hist.Freq(2)
+2
+</PRE><P>If you look up a value that has never appeared, the frequency is 0.
+</P><PRE CLASS="verbatim">&gt;&gt;&gt; hist.Freq(4)
+0
+</PRE><P><TT>Values</TT> returns an unsorted list of the values in the Hist:
+</P><PRE CLASS="verbatim">&gt;&gt;&gt; hist.Values()
+[1, 5, 3, 2]
+</PRE><P>To loop through the values in order, you can use the built-in function
+<TT>sorted</TT>:
+</P><PRE CLASS="verbatim">for val in sorted(hist.Values()):
+    print val, hist.Freq(val)
+</PRE><P>If you are planning to look up all of the frequencies, it is more
+efficient to use <TT>Items</TT>, which returns an unsorted list of
+value-frequency pairs:
+</P><PRE CLASS="verbatim">for val, freq in hist.Items():
+     print val, freq
+</PRE><DIV CLASS="theorem"><B>Exercise&#XA0;3</B>&#XA0;&#XA0;<EM>
+The mode of a distribution is the most frequent value (see
+<TT>http://wikipedia.org/wiki/Mode_(statistics)</TT>). Write a function called
+<TT>Mode</TT> that takes a Hist object and returns the most frequent
+value.</EM><A NAME="@default100"></A><P><EM>As a more challenging version, write a function called <TT>AllModes</TT>
+that takes a Hist object and returns a list of value-frequency
+pairs in descending order of frequency. Hint: the <TT>operator</TT>
+module provides a function called <TT>itemgetter</TT> which you can
+pass as a key to <TT>sorted</TT>.</EM></P></DIV><H2 CLASS="section"><A NAME="toc14"></A><A NAME="htoc14">2.5</A>&#XA0;&#XA0;Plotting histograms</H2><P>
+<A NAME="@default101"></A>
+<A NAME="@default102"></A></P><P>There are a number of Python packages for making figures and graphs.
+The one I will demonstrate is <TT>pyplot</TT>, which is part of
+the <TT>matplotlib</TT> package at <TT>http://matplotlib.sourceforge.net</TT>.</P><P>This package is included in many Python installations. To see whether
+you have it, launch the Python interpreter and run:
+</P><PRE CLASS="verbatim">import matplotlib.pyplot as pyplot
+pyplot.pie([1,2,3])
+pyplot.show()
+</PRE><P>If you have <TT>matplotlib</TT> you should see a simple pie chart;
+otherwise you will have to install it.
+<A NAME="@default103"></A>
+<A NAME="@default104"></A>
+<A NAME="@default105"></A></P><P>Histograms and PMFs are most often plotted as bar charts. The
+<TT>pyplot</TT> function to draw a bar chart is <TT>bar</TT>. Hist
+objects provide a method called <TT>Render</TT> that returns a sorted
+list of values and a list of the corresponding frequencies, which
+is the format <TT>bar</TT> expects:
+</P><PRE CLASS="verbatim">&gt;&gt;&gt; vals, freqs = hist.Render()
+&gt;&gt;&gt; rectangles = pyplot.bar(vals, freqs)
+&gt;&gt;&gt; pyplot.show()
+</PRE><P>I wrote a module called <TT>myplot.py</TT> that provides functions
+for plotting histograms, PMFs and other objects we will see soon.
+You can read the documentation at <TT>thinkstats.com/myplot.html</TT> and download the code from <TT>thinkstats.com/myplot.py</TT>. Or you can use
+<TT>pyplot</TT> directly, if you prefer. Either way, you can find
+the documentation for <TT>pyplot</TT> on the web.
+<A NAME="@default106"></A></P><P>Figure&#XA0;<A HREF="#nsfg_hist">2.1</A> shows histograms of pregnancy lengths for
+first babies and others.
+<A NAME="@default107"></A>
+<A NAME="@default108"></A></P><BLOCKQUOTE CLASS="figure"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+<DIV CLASS="center"><IMG SRC="thinkstats001.png"></DIV>
+<DIV CLASS="caption"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD VALIGN=top ALIGN=left>Figure 2.1: Histogram of pregnancy lengths.</TD></TR>
+</TABLE></DIV>
+<A NAME="nsfg_hist"></A>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><P>Histograms are useful because they make the following features immediately
+apparent:</P><DL CLASS="description"><DT CLASS="dt-description"><B>Mode:</B></DT><DD CLASS="dd-description"> The most common value in a distribution is called the
+<B>mode</B>. In Figure&#XA0;<A HREF="#nsfg_hist">2.1</A> there is a clear mode at 39
+weeks. In this case, the mode is the summary statistic that does
+the best job of describing the typical value.
+<A NAME="@default109"></A></DD><DT CLASS="dt-description"><B>Shape:</B></DT><DD CLASS="dd-description"> Around the mode, the distribution is asymmetric; it
+drops off quickly to the right and more slowly to the left. From a
+medical point of view, this makes sense. Babies are often born
+early, but seldom later than 42 weeks. Also, the right side of the
+distribution is truncated because doctors often intervene after 42
+weeks.
+<A NAME="@default110"></A></DD><DT CLASS="dt-description"><B>Outliers:</B></DT><DD CLASS="dd-description"> Values far from the mode are called <B>outliers</B>.
+Some of these are just unusual cases, like babies born at 30 weeks.
+But many of them are probably due to errors, either in the reporting
+or recording of data.
+<A NAME="@default111"></A></DD></DL><P>Although histograms make some features apparent, they are usually not
+useful for comparing two distributions. In this example, there are
+fewer &#X201C;first babies&#X201D; than &#X201C;others,&#X201D; so some of the apparent
+differences in the histograms are due to sample sizes. We can
+address this problem using PMFs.</P><H2 CLASS="section"><A NAME="toc15"></A><A NAME="htoc15">2.6</A>&#XA0;&#XA0;Representing PMFs</H2><P>
+<A NAME="@default112"></A>
+<A NAME="@default113"></A></P><P><TT>Pmf.py</TT> provides a class called <TT>Pmf</TT> that represents PMFs.
+The notation can be confusing, but here it is: <TT>Pmf</TT> is the
+name of the module and also the class, so the full name of the class
+is <TT>Pmf.Pmf</TT>. I often use <TT>pmf</TT> as a variable name.
+Finally, in the text, I use PMF to refer to the general concept
+of a probability mass function, independent of my implementation.</P><P>To create a Pmf object, use <TT>MakePmfFromList</TT>, which takes a list
+of values:
+</P><PRE CLASS="verbatim">&gt;&gt;&gt; import Pmf
+&gt;&gt;&gt; pmf = Pmf.MakePmfFromList([1, 2, 2, 3, 5])
+&gt;&gt;&gt; print pmf
+&lt;Pmf.Pmf object at 0xb76cf68c&gt;
+</PRE><P>Pmf and Hist objects are similar in many ways. The methods <TT>Values</TT> and <TT>Items</TT> work the same way for both types. The
+biggest difference is that a Hist maps from values to integer
+counters; a Pmf maps from values to floating-point probabilities.</P><P>To look up the probability associated with a value, use <TT>Prob</TT>:
+</P><PRE CLASS="verbatim">&gt;&gt;&gt; pmf.Prob(2)
+0.4
+</PRE><P>You can modify an existing Pmf by incrementing the probability
+associated with a value:
+</P><PRE CLASS="verbatim">&gt;&gt;&gt; pmf.Incr(2, 0.2)
+&gt;&gt;&gt; pmf.Prob(2)
+0.6
+</PRE><P>Or you can multiply a probability by a factor:
+</P><PRE CLASS="verbatim">&gt;&gt;&gt; pmf.Mult(2, 0.5)
+&gt;&gt;&gt; pmf.Prob(2)
+0.3
+</PRE><P>If you modify a Pmf, the result may not be normalized; that is, the
+probabilities may no longer add up to 1. To check, you can call <TT>Total</TT>, which returns the sum of the probabilities:
+</P><PRE CLASS="verbatim">&gt;&gt;&gt; pmf.Total()
+0.9
+</PRE><P>To renormalize, call <TT>Normalize</TT>:
+</P><PRE CLASS="verbatim">&gt;&gt;&gt; pmf.Normalize()
+&gt;&gt;&gt; pmf.Total()
+1.0
+</PRE><P>Pmf objects provide a <TT>Copy</TT> method so you can make
+and modify a copy without affecting the original.</P><DIV CLASS="theorem"><B>Exercise&#XA0;4</B>&#XA0;&#XA0;<EM>
+According to Wikipedia, &#X201C;Survival analysis is a branch of statistics
+which deals with death in biological organisms and failure in
+mechanical systems;&#X201D; see <TT>http://wikipedia.org/wiki/Survival_analysis</TT>.
+</EM><A NAME="@default114"></A><P><EM>As part of survival analysis, it is often useful to compute the
+remaining lifetime of, for example, a mechanical component. If we
+know the distribution of lifetimes and the age of the component,
+we can compute the distribution of remaining lifetimes.</EM></P><P><EM>Write a function called <TT>RemainingLifetime</TT> that takes a
+Pmf of lifetimes and an age, and returns a new Pmf that represents
+the distribution of remaining lifetimes.</EM></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;5</B>&#XA0;&#XA0;
+<A NAME="@default115"></A>
+<A NAME="@default116"></A>
+<A NAME="@default117"></A><EM>
+In Section&#XA0;<A HREF="#mean">2.1</A> we computed the mean of a sample by adding up
+the elements and dividing by <I>n</I>. If you are given a PMF, you can
+still compute the mean, but the process is slightly different:
+</EM><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><EM>&#XB5;&#XA0;=&#XA0;</EM></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6><EM>&#X2211;</EM></FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I><EM>i</EM></I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><EM>&#XA0;<I>p<SUB>i</SUB></I>&#XA0;<I>x<SUB>i</SUB></I>&#XA0;</EM></TD></TR>
+</TABLE><EM>
+where the <I>x<SUB>i</SUB></I>&#XA0;are the unique values in the PMF and <I>p<SUB>i</SUB></I>=PMF(<I>x<SUB>i</SUB></I>).
+Similarly, you can compute variance like this:
+</EM><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><EM>&#X3C3;<SUP>2</SUP>&#XA0;=&#XA0;</EM></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6><EM>&#X2211;</EM></FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I><EM>i</EM></I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><EM>&#XA0;<I>p<SUB>i</SUB></I>&#XA0;(<I>x<SUB>i</SUB></I>&#XA0;&#X2212;&#XA0;&#XB5;)<SUP>2</SUP></EM></TD></TR>
+</TABLE><EM>
+Write functions called <TT>PmfMean</TT> and <TT>PmfVar</TT> that take a
+Pmf object and compute the mean and variance. To test these methods,
+check that they are consistent with the methods <TT>Mean</TT> and <TT>Var</TT> in <TT>Pmf.py</TT>.
+</EM><A NAME="@default118"></A></DIV><H2 CLASS="section"><A NAME="toc16"></A><A NAME="htoc16">2.7</A>&#XA0;&#XA0;Plotting PMFs</H2><P>
+<A NAME="@default119"></A>
+<A NAME="@default120"></A></P><P>There are two common ways to plot Pmfs:</P><UL CLASS="itemize"><LI CLASS="li-itemize">To plot a Pmf as a bar graph, you can use <TT>pyplot.bar</TT>
+or <TT>myplot.Hist</TT>. Bar graphs are most useful if the number
+of values in the Pmf is small.
+<A NAME="@default121"></A>
+<A NAME="@default122"></A></LI><LI CLASS="li-itemize">To plot a Pmf as a line, you can use <TT>pyplot.plot</TT>
+or <TT>myplot.Pmf</TT>. Line plots are most useful if there are
+a large number of values and the Pmf is smooth.
+<A NAME="@default123"></A>
+<A NAME="@default124"></A></LI></UL><BLOCKQUOTE CLASS="figure"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+<DIV CLASS="center"><IMG SRC="thinkstats002.png"></DIV>
+<DIV CLASS="caption"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD VALIGN=top ALIGN=left>Figure 2.2: PMF of pregnancy lengths.</TD></TR>
+</TABLE></DIV>
+<A NAME="nsfg_pmf"></A>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><P>
+<A NAME="@default125"></A>
+<A NAME="@default126"></A></P><P>Figure&#XA0;<A HREF="#nsfg_pmf">2.2</A> shows the PMF of pregnancy lengths as a bar
+graph. Using the PMF, we can see more clearly where the distributions
+differ. First babies seem to be less likely to arrive on time (week
+39) and more likely to be a late (weeks 41 and 42).</P><P>The code that generates the figures in this chapters is available from
+<TT>http://thinkstats.com/descriptive.py</TT>. To run it, you will need the
+modules it imports and the data from the NSFG (see
+Section&#XA0;<A HREF="thinkstats002.html#nsfg">1.3</A>).
+<A NAME="@default127"></A>
+<A NAME="@default128"></A>
+<A NAME="@default129"></A></P><P>Note: <TT>pyplot</TT> provides a function called <TT>hist</TT> that
+takes a sequence of values, computes the histogram and plots it.
+Since I use <TT>Hist</TT> objects, I usually don&#X2019;t use <TT>pyplot.hist</TT>.</P><H2 CLASS="section"><A NAME="toc17"></A><A NAME="htoc17">2.8</A>&#XA0;&#XA0;Outliers</H2><P>
+<A NAME="@default130"></A></P><P>Outliers are values that are far from the central tendency. Outliers
+might be caused by errors in collecting or processing the data, or
+they might be correct but unusual measurements. It is always a good
+idea to check for outliers, and sometimes it is useful and appropriate
+to discard them.</P><P>In the list of pregnancy lengths for live births, the 10 lowest values
+are {0, 4, 9, 13, 17, 17, 18, 19, 20, 21}. Values below 20
+weeks are certainly errors, and values higher than 30 weeks are
+probably legitimate. But values in between are
+hard to interpret.
+<A NAME="@default131"></A>
+<A NAME="@default132"></A></P><P>On the other end, the highest values are:
+</P><PRE CLASS="verbatim">weeks  count
+43     148
+44     46
+45     10
+46     1
+47     1
+48     7
+50     2
+</PRE><P>Again, some values are almost certainly errors,
+but it is hard to know for sure. One option is to <B>trim</B> the data
+by discarding some fraction of the highest and lowest values (see
+<TT>http://wikipedia.org/wiki/Truncated_mean</TT>).
+<A NAME="@default133"></A>
+<A NAME="@default134"></A>
+<A NAME="@default135"></A>
+<A NAME="@default136"></A></P><H2 CLASS="section"><A NAME="toc18"></A><A NAME="htoc18">2.9</A>&#XA0;&#XA0;Other visualizations</H2><P>
+<A NAME="@default137"></A>
+<A NAME="@default138"></A></P><P>Histograms and PMFs are useful for exploratory data analysis;
+once you have an idea what is going on, it is often useful to
+design a visualization that focuses on the apparent effect.
+<A NAME="@default139"></A></P><P>In the NSFG data, the biggest differences in the distributions are
+near the mode. So it makes sense to zoom in on that part of the
+graph, and to transform the data to emphasize differences.
+<A NAME="@default140"></A>
+<A NAME="@default141"></A></P><P>Figure&#XA0;<A HREF="#nsfg_diffs">2.3</A> shows the difference between the PMFs for weeks
+35&#X2013;45. I multiplied by 100 to express the differences in percentage
+points.</P><BLOCKQUOTE CLASS="figure"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+<DIV CLASS="center"><IMG SRC="thinkstats003.png"></DIV>
+<DIV CLASS="caption"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD VALIGN=top ALIGN=left>Figure 2.3: Difference in percentage, by week.</TD></TR>
+</TABLE></DIV>
+<A NAME="nsfg_diffs"></A>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><P>This figure makes the pattern clearer: first babies are
+less likely to be born in week 39, and somewhat more likely
+to be born in weeks 41 and 42.</P><H2 CLASS="section"><A NAME="toc19"></A><A NAME="htoc19">2.10</A>&#XA0;&#XA0;Relative risk</H2><P>
+<A NAME="relative.risk"></A>
+<A NAME="@default142"></A></P><P>We started with the question, &#X201C;Do first babies arrive late?&#X201D; To
+make that more precise, let&#X2019;s say that a baby is early if it is born
+during Week 37 or earlier, on time if it is born during Week 38, 39 or
+40, and late if it is born during Week 41 or later. Ranges like these
+that are used to group data are called <B>bins</B>.
+<A NAME="@default143"></A>
+<A NAME="@default144"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;6</B>&#XA0;&#XA0;<EM>
+Create a file named <TT>risk.py</TT>.
+Write functions named <TT>ProbEarly</TT>, <TT>ProbOnTime</TT> and
+<TT>ProbLate</TT> that take a PMF and compute the fraction of births
+that fall into each bin. Hint: write a generalized function
+that these functions call.</EM><P><EM>Make three PMFs, one for first babies, one for others, and one for
+all live births. For each PMF, compute the probability of being
+born early, on time, or late.</EM></P><P><EM>One way to summarize data like this is with <B>relative risk</B>,
+which is a ratio of two probabilities. For example, the probability
+that a first baby is born early is 18.2%. For other babies it is
+16.8%, so the relative risk is 1.08. That means that first babies
+are about 8% more likely to be early.</EM></P><P><EM>Write code to confirm that result, then compute the relative risks of
+being born on time and being late. You can download a solution
+from <TT>http://thinkstats.com/risk.py</TT>.</EM></P></DIV><H2 CLASS="section"><A NAME="toc20"></A><A NAME="htoc20">2.11</A>&#XA0;&#XA0;Conditional probability</H2><P>
+<A NAME="@default145"></A>
+<A NAME="@default146"></A></P><P>Imagine that someone you know is pregnant, and it is the beginning of
+Week 39. What is the chance that the baby will be born in the next
+week? How much does the answer change if it&#X2019;s a first baby?</P><P>We can answer these questions by computing a <B>conditional
+probability</B>, which is (ahem!) a probability that depends on a condition.
+In this case, the condition is that we know the baby didn&#X2019;t arrive
+during Weeks 0&#X2013;38.</P><P>Here&#X2019;s one way to do it:</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">Given a PMF, generate a fake cohort of 1000 pregnancies.
+For each number of weeks, <I>x</I>, the number of pregnancies with
+duration <I>x</I>&#XA0;is 1000 PMF(<I>x</I>).
+<A NAME="@default147"></A></LI><LI CLASS="li-enumerate">Remove from the cohort all pregnancies with length less than 39.
+<A NAME="@default148"></A>
+<A NAME="@default149"></A></LI><LI CLASS="li-enumerate">Compute the PMF of the remaining durations; the result is the
+conditional PMF.</LI><LI CLASS="li-enumerate">Evaluate the conditional PMF at <I>x</I>&#XA0;=&#XA0;39 weeks.</LI></OL><P>This algorithm is conceptually clear, but not very efficient.
+A simple alternative is to remove from the distribution the values
+less than 39 and then renormalize.</P><DIV CLASS="theorem"><B>Exercise&#XA0;7</B>&#XA0;&#XA0;<EM>
+Write a function that implements either of these algorithms and
+computes the probability that a baby will be born during Week 39,
+given that it was not born prior to Week 39.</EM><P><EM>Generalize the function to compute the
+probability that a baby will be born during Week <I>x</I>, given that
+it was not born prior to Week <I>x</I>, for all <I>x</I>.
+Plot this value as a function of <I>x</I>&#XA0;for first babies and others.</EM></P><P><EM>You can download a solution to this problem from
+<TT>http://thinkstats.com/conditional.py</TT>.
+</EM><A NAME="@default150"></A></P></DIV><H2 CLASS="section"><A NAME="toc21"></A><A NAME="htoc21">2.12</A>&#XA0;&#XA0;Reporting results</H2><P>At this point we have explored the data and seen several apparent
+effects. For now, let&#X2019;s assume that these effects are real (but let&#X2019;s
+remember that it&#X2019;s an assumption). How should we report these
+results?</P><P>The answer might depend on who is asking the question. For example, a
+scientist might be interested in any (real) effect, no matter how
+small. A doctor might only care about effects that are <B>clinically significant</B>; that is, differences that affect treatment
+decisions. A pregnant woman might be interested in results that are
+relevant to her, like the conditional probabilities in the previous
+section.
+<A NAME="@default151"></A>
+<A NAME="@default152"></A></P><P>How you report results also depends on your goals. If you are
+trying to demonstrate the significance of an effect, you might choose
+summary statistics, like relative risk, that emphasize differences.
+If you are trying to reassure a patient, you might choose statistics
+that put the differences in context.</P><DIV CLASS="theorem"><B>Exercise&#XA0;8</B>&#XA0;&#XA0;<EM>
+Based on the results from the previous exercises, suppose you were
+asked to summarize what you learned about whether first
+babies arrive late.</EM><P><EM>Which summary statistics would you use if you wanted to get a story
+on the evening news? Which ones would you use if you wanted to
+reassure an anxious patient?
+</EM><A NAME="@default153"></A>
+<A NAME="@default154"></A></P><P><EM>Finally, imagine that you are Cecil Adams, author of <I>The Straight
+Dope</I> (<TT>http://straightdope.com</TT>), and your job is to answer the
+question, &#X201C;Do first babies arrive late?&#X201D; Write a paragraph that
+uses the results in this chapter to answer the question clearly,
+precisely, and accurately.</EM></P></DIV><H2 CLASS="section"><A NAME="toc22"></A><A NAME="htoc22">2.13</A>&#XA0;&#XA0;Glossary</H2><DL CLASS="description"><DT CLASS="dt-description"><B>central tendency:</B></DT><DD CLASS="dd-description"> A characteristic of a sample or population;
+intuitively, it is the most average value. 
+<A NAME="@default155"></A></DD><DT CLASS="dt-description"><B>spread:</B></DT><DD CLASS="dd-description"> A characteristic of a sample or population;
+intuitively, it describes how much variability there is.
+<A NAME="@default156"></A></DD><DT CLASS="dt-description"><B>variance:</B></DT><DD CLASS="dd-description"> A summary statistic often used to quantify spread.
+<A NAME="@default157"></A></DD><DT CLASS="dt-description"><B>standard deviation:</B></DT><DD CLASS="dd-description"> The square root of variance, also used
+as a measure of spread.
+<A NAME="@default158"></A></DD><DT CLASS="dt-description"><B>frequency:</B></DT><DD CLASS="dd-description"> The number of times a value appears in a sample.
+<A NAME="@default159"></A></DD><DT CLASS="dt-description"><B>histogram:</B></DT><DD CLASS="dd-description"> A mapping from values to frequencies, or a graph
+that shows this mapping.
+<A NAME="@default160"></A></DD><DT CLASS="dt-description"><B>probability:</B></DT><DD CLASS="dd-description"> A frequency expressed as a fraction of the sample
+size.
+<A NAME="@default161"></A></DD><DT CLASS="dt-description"><B>normalization:</B></DT><DD CLASS="dd-description"> The process of dividing a frequency by a sample
+size to get a probability.
+<A NAME="@default162"></A></DD><DT CLASS="dt-description"><B>distribution:</B></DT><DD CLASS="dd-description"> A summary of the values that appear in a sample
+and the frequency, or probability, of each.
+<A NAME="@default163"></A></DD><DT CLASS="dt-description"><B>PMF:</B></DT><DD CLASS="dd-description"> Probability mass function: a representation of a distribution
+as a function that maps from values to probabilities.
+<A NAME="@default164"></A></DD><DT CLASS="dt-description"><B>mode:</B></DT><DD CLASS="dd-description"> The most frequent value in a sample.
+<A NAME="@default165"></A></DD><DT CLASS="dt-description"><B>outlier:</B></DT><DD CLASS="dd-description"> A value far from the central tendency.
+<A NAME="@default166"></A></DD><DT CLASS="dt-description"><B>trim:</B></DT><DD CLASS="dd-description"> To remove outliers from a dataset.
+<A NAME="@default167"></A></DD><DT CLASS="dt-description"><B>bin:</B></DT><DD CLASS="dd-description"> A range used to group nearby values.
+<A NAME="@default168"></A></DD><DT CLASS="dt-description"><B>relative risk:</B></DT><DD CLASS="dd-description"> A ratio of two probabilities, often used to measure
+a difference between distributions.
+<A NAME="@default169"></A></DD><DT CLASS="dt-description"><B>conditional probability:</B></DT><DD CLASS="dd-description"> A probability computed under the assumption
+that some condition holds.
+<A NAME="@default170"></A></DD><DT CLASS="dt-description"><B>clinically significant:</B></DT><DD CLASS="dd-description"> A result, like a difference between groups,
+that is relevant in practice.
+<A NAME="@default171"></A></DD></DL></td>
+
+<td width=130 valign="top">
+
+<h4>Like this book?</h4> <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FThink-Stats%2F181213931900328&amp;width=130&amp;colorscheme=light&amp;show_faces=false&amp;stream=false&amp;header=false&amp;height=62" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:100px;" allowTransparency="true"></iframe>
+
+<p>
+<h4>Are you using one of our books in a class?</h4>  We'd like to know
+about it.  Please consider filling out <a href="http://spreadsheets.google.com/viewform?formkey=dC0tNUZkMjBEdXVoRGljNm9FRmlTMHc6MA" onClick="javascript: pageTracker._trackPageview('/outbound/survey');">this short survey</a>.
+
+<p>
+<br>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?t=greenteapre01-20&o=1&p=8&l=as1&asins=1
+449307116&ref=qf_sp_asin_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1
+=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" margi
+nwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=greenteapre01-20&o=1&p=8&l=as1&m=amazon&f=ifr&md=10FE9736YVPPT7A0FBG2&asins=0521725968" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" onClick="javascript: pageTracker._trackPageview('/outbound/amazon');"></iframe>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?t=greenteapre01-20&o=1&p=8&l=as1&asins=0615185509&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" onClick="javascript: pageTracker._trackPageview('/outbound/amazon_matlab');"></iframe> 
+
+</td>
+</tr>
+</table>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-9267613-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+<HR>
+<A HREF="thinkstats002.html"><IMG SRC="back.png" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="up.png" ALT="Up"></A>
+<A HREF="thinkstats004.html"><IMG SRC="next.png" ALT="Next"></A>
+</BODY>
+</HTML>

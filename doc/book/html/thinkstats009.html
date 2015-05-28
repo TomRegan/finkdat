@@ -1,0 +1,585 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="thinkstats.css">
+<TITLE>Estimation</TITLE>
+</HEAD>
+<BODY >
+<A HREF="thinkstats008.html"><IMG SRC="back.png" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="up.png" ALT="Up"></A>
+<A HREF="thinkstats010.html"><IMG SRC="next.png" ALT="Next"></A>
+<HR>
+<table cellpadding=10>
+
+<tr>
+
+<td valign="top" width=100 bgcolor="#1B82E6">
+</td>
+
+<td valign="top" width=600>
+
+<p>This HTML version of is provided for convenience, but it
+is not the best format for the book.  In particular, some of the
+symbols are not rendered correctly.
+
+<p>You might prefer to read
+the <a href="http://thinkstats.com/thinkstats.pdf">PDF version</a>, or
+you can buy a hardcopy 
+<a href="http://www.lulu.com/product/paperback/think-stats/12443331">here</a>.
+<H1 CLASS="chapter"><A NAME="htoc72">Chapter&#XA0;8</A>&#XA0;&#XA0;Estimation</H1><P>
+<A NAME="estimation"></A>
+<A NAME="@default826"></A></P><H2 CLASS="section"><A NAME="toc67"></A><A NAME="htoc73">8.1</A>&#XA0;&#XA0;The estimation game</H2><P>Let&#X2019;s play a game. I&#X2019;ll think of a distribution, and you have to guess
+what it is. We&#X2019;ll start out easy and work our way up.
+<A NAME="@default827"></A>
+<A NAME="@default828"></A>
+<A NAME="@default829"></A>
+<A NAME="@default830"></A></P><P><EM>I&#X2019;m thinking of a distribution.</EM> I&#X2019;ll give you two hints; it&#X2019;s a
+normal distribution, and here&#X2019;s a random sample drawn from it:</P><P>{&#X2212;0.441, 1.774, &#X2212;0.101, &#X2212;1.138, 2.975, &#X2212;2.138}</P><P>What do you think is the mean parameter, &#XB5;, of this distribution?
+<A NAME="@default831"></A>
+<A NAME="@default832"></A></P><P>One choice is to use the sample mean to estimate &#XB5;. Up
+until now we have used the symbol &#XB5;&#XA0;for both the sample mean and
+the mean parameter, but now to distinguish them I will use <SPAN style="text-decoration:overline">x</SPAN>&#XA0;for 
+the sample mean. In this example, <SPAN style="text-decoration:overline">x</SPAN>&#XA0;is 0.155, so it would
+be reasonable to guess &#XB5;&#XA0;=&#XA0;0.155.</P><P>This process is called <B>estimation</B>, and the statistic we used
+(the sample mean) is called an <B>estimator</B>.
+<A NAME="@default833"></A></P><P>Using the sample mean to estimate &#XB5;&#XA0;is so obvious that it is hard
+to imagine a reasonable alternative. But suppose we change the game by
+introducing outliers. 
+<A NAME="@default834"></A>
+<A NAME="@default835"></A>
+<A NAME="@default836"></A>
+<A NAME="@default837"></A></P><P><EM>I&#X2019;m thinking of a distribution.</EM> It&#X2019;s a normal distribution, and
+here&#X2019;s a sample that was collected by an unreliable surveyor who
+occasionally puts the decimal point in the wrong place.</P><P>{&#X2212;0.441, 1.774, &#X2212;0.101, &#X2212;1.138, 2.975, &#X2212;213.8}</P><P>Now what&#X2019;s your estimate of &#XB5;? If you use the sample mean your
+guess is &#X2212;35.12. Is that the best choice? What are the alternatives?
+<A NAME="@default838"></A></P><P>One option is to identify and discard outliers, then compute the sample
+mean of the rest. Another option is to use the median as an estimator.
+<A NAME="@default839"></A></P><P>Which estimator is the best depends on the circumstances (for example,
+whether there are outliers) and on what the goal is. Are you
+trying to minimize errors, or maximize your chance of getting the
+right answer?
+<A NAME="@default840"></A>
+<A NAME="@default841"></A>
+<A NAME="@default842"></A></P><P>If there are no outliers, the sample mean minimizes the <B>mean squared
+error</B> (MSE). If we play the game many times, and each time
+compute the error <SPAN style="text-decoration:overline">x</SPAN>&#XA0;&#X2212;&#XA0;&#XB5;, the sample mean minimizes
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>MSE</I>&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>m</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;<FONT SIZE=6>&#X2211;</FONT>(<SPAN style="text-decoration:overline">x</SPAN>&#XA0;&#X2212;&#XA0;&#XB5;)<SUP>2</SUP>&#XA0;</TD></TR>
+</TABLE><P>
+Where <I>m</I>&#XA0;is the number of times you play the estimation game (not to
+be confused with <I>n</I>, which is the size of the sample used to compute
+<SPAN style="text-decoration:overline">x</SPAN>). </P><P>Minimizing MSE is a nice property, but it&#X2019;s not always the best
+strategy. For example, suppose we are estimating the distribution of
+wind speeds at a building site. If we guess too high, we might
+overbuild the structure, increasing its cost. But if we guess too
+low, the building might collapse. Because cost as a function of
+error is asymmetric, minimizing MSE is not the best strategy.
+<A NAME="@default843"></A></P><P>As another example, suppose I roll three six-sided dice and ask you
+to predict the total. If you get it exactly right, you get a prize;
+otherwise you get nothing. In this case the value that minimizes MSE
+is 10.5, but that would be a terrible guess. For this game, you
+want an estimator that has the highest chance of being right, which is
+a <B>maximum likelihood estimator</B> (MLE). If you pick 10 or 11, your
+chance of winning is 1 in 8, and that&#X2019;s the best you can do.
+<A NAME="@default844"></A>
+<A NAME="@default845"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;1</B>&#XA0;&#XA0;<EM>
+Write a function that draws 6 values from a normal distribution with
+&#XB5;&#XA0;=&#XA0;0 and &#X3C3;&#XA0;=&#XA0;1. Use the sample mean to estimate &#XB5;&#XA0;and
+compute the error <SPAN style="text-decoration:overline">x</SPAN>&#XA0;&#X2212;&#XA0;&#XB5;. Run the function 1000 times and
+compute MSE.
+</EM><A NAME="@default846"></A>
+<A NAME="@default847"></A>
+<A NAME="@default848"></A>
+<A NAME="@default849"></A><P><EM>Now modify the program to use the median as an
+estimator. Compute MSE again and compare to the MSE for <SPAN style="text-decoration:overline">x</SPAN>.
+</EM><A NAME="@default850"></A>
+<A NAME="@default851"></A>
+<A NAME="@default852"></A></P></DIV><H2 CLASS="section"><A NAME="toc68"></A><A NAME="htoc74">8.2</A>&#XA0;&#XA0;Guess the variance</H2><P>
+<A NAME="@default853"></A>
+<A NAME="@default854"></A>
+<A NAME="@default855"></A>
+<A NAME="@default856"></A>
+<A NAME="@default857"></A></P><P><EM>I&#X2019;m thinking of a distribution.</EM> It&#X2019;s a normal distribution, and 
+here&#X2019;s a (familiar) sample:</P><P>{&#X2212;0.441, 1.774, &#X2212;0.101, &#X2212;1.138, 2.975, &#X2212;2.138}</P><P>What do you think is the variance, &#X3C3;<SUP>2</SUP>, of my distribution?
+Again, the obvious choice is to use the sample variance as an estimator.
+I will use <I>S</I><SUP>2</SUP>to denote the sample variance, to distinguish from the
+unknown parameter &#X3C3;<SUP>2</SUP>.
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>S</I><SUP>2</SUP>&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;<FONT SIZE=6>&#X2211;</FONT>(<I>x<SUB>i</SUB></I>&#XA0;&#X2212;&#XA0;<SPAN style="text-decoration:overline">x</SPAN>)<SUP>2</SUP>&#XA0;</TD></TR>
+</TABLE><P> 
+For large samples, <I>S</I><SUP>2</SUP>is an adequate estimator, but for small
+samples it tends to be too low. Because of this unfortunate
+property, it is called a <B>biased</B> estimator.
+<A NAME="@default858"></A>
+<A NAME="@default859"></A>
+<A NAME="@default860"></A>
+<A NAME="@default861"></A>
+<A NAME="@default862"></A></P><P>An estimator is <B>unbiased</B> if the expected total (or mean) error,
+after many iterations of the estimation game, is 0.
+Fortunately, there is another simple statistic that is an unbiased
+estimator of &#X3C3;<SUP>2</SUP>:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>S</I><SUB><I>n</I>&#X2212;1</SUB><SUP>2</SUP>&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I>&#X2212;1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;<FONT SIZE=6>&#X2211;</FONT>(<I>x<SUB>i</SUB></I>&#XA0;&#X2212;&#XA0;<SPAN style="text-decoration:overline">x</SPAN>)<SUP>2</SUP>&#XA0;</TD></TR>
+</TABLE><P> 
+The biggest problem with this estimator is that its name and symbol
+are used inconsistently. The name &#X201C;sample variance&#X201D; can refer to
+either <I>S</I><SUP>2</SUP>or <I>S</I><SUB><I>n</I>&#X2212;1</SUB><SUP>2</SUP>, and the symbol <I>S</I><SUP>2</SUP>is used
+for either or both.</P><P>For an explanation of why <I>S</I><SUP>2</SUP>is biased, and a proof that
+<I>S</I><SUB><I>n</I>&#X2212;1</SUB><SUP>2</SUP>is unbiased, see
+<TT>http://wikipedia.org/wiki/Bias_of_an_estimator</TT>.</P><DIV CLASS="theorem"><B>Exercise&#XA0;2</B>&#XA0;&#XA0;<EM>
+Write a function that draws 6 values from a normal distribution with
+&#XB5;&#XA0;&#XA0;=&#XA0;&#XA0;0 and &#X3C3;&#XA0;&#XA0;=&#XA0;&#XA0;1. Use the sample variance to estimate
+&#X3C3;<SUP>2</SUP>&#XA0;and compute the error <I>S</I><SUP>2</SUP>&#XA0;&#X2212;&#XA0;&#X3C3;<SUP>2</SUP>.
+Run the function 1000 times and compute mean error (not squared).
+</EM><A NAME="@default863"></A>
+<A NAME="@default864"></A>
+<A NAME="@default865"></A>
+<A NAME="@default866"></A><P><EM>Now modify the program to use the unbiased estimator <I>S</I><SUB><I>n</I>&#X2212;1</SUB><SUP>2</SUP>.
+Compute the mean error again and see if it converges to zero as you
+increase the number of games.</EM></P></DIV><H2 CLASS="section"><A NAME="toc69"></A><A NAME="htoc75">8.3</A>&#XA0;&#XA0;Understanding errors</H2><P>
+<A NAME="@default867"></A></P><P>Before we go on, let&#X2019;s clear up a common source of confusion.
+Properties like MSE and bias are long-term expectations based on
+many iterations of the estimation game.</P><P>While you are playing the game, you don&#X2019;t know the errors. That is,
+if I give you a sample and ask you to estimate a parameter, you
+can compute the value of the estimator, but you can&#X2019;t compute the
+error. If you could, you wouldn&#X2019;t need the estimator!</P><P>The reason we talk about estimation error is to describe the behavior
+of different estimators in the long run. In this chapter we run
+experiments to examine those behaviors; these experiments are
+artificial in the sense that we know the actual values of the
+parameters, so we can compute errors. But when you work with
+real data, you don&#X2019;t, so you can&#X2019;t.</P><P>Now let&#X2019;s get back to the game.</P><H2 CLASS="section"><A NAME="toc70"></A><A NAME="htoc76">8.4</A>&#XA0;&#XA0;Exponential distributions</H2><P>
+<A NAME="@default868"></A>
+<A NAME="@default869"></A></P><P><EM>I&#X2019;m thinking of a distribution.</EM> It&#X2019;s an exponential distribution, and 
+here&#X2019;s a sample:</P><P>{5.384, 4.493, 19.198, 2.790, 6.122, 12.844}</P><P>What do you think is the parameter, &#X3BB;, of this distribution?
+<A NAME="@default870"></A>
+<A NAME="@default871"></A></P><P>In general, the mean of an exponential distribution is 1/&#X3BB;,
+so working backwards, we might choose</P><P>&#XA0;&#XA0; &#X3BB; = 1 / <SPAN style="text-decoration:overline">x</SPAN></P><P>It is common to use hat notation for estimators, so &#X3BB; is an
+estimator of &#X3BB;. And not just any estimator; it is also the
+MLE estimator<SUP><A NAME="text25" HREF="#note25">1</A></SUP>.
+So if you want to maximize your chance of guessing &#X3BB;&#XA0;exactly,
+&#X3BB; is the way to go.
+<A NAME="@default872"></A>
+<A NAME="@default873"></A></P><P>But we know that <SPAN style="text-decoration:overline">x</SPAN>&#XA0;is not robust in the presence of outliers, so
+we expect &#X3BB; to have the same problem.
+<A NAME="@default874"></A>
+<A NAME="@default875"></A></P><P>Maybe we can find an alternative based on the sample median. Remember
+that the median of an exponential distribution is ln(2) / &#X3BB;,
+so working backwards again, we can define an estimator
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">&#X3BB;<SUB>1/2</SUB>&#XA0;=&#XA0;ln(2)&#XA0;/&#XA0;&#XB5;<SUB>1/2</SUB>&#XA0;</TD></TR>
+</TABLE><P>
+where &#XB5;<SUB>1/2</SUB> is the sample median.
+<A NAME="@default876"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;3</B>&#XA0;&#XA0;<EM>
+Run an experiment to see which of &#X3BB; and &#X3BB;<SUB>1/2</SUB> yields
+lower MSE. Test whether either of them is biased.
+</EM><A NAME="@default877"></A></DIV><H2 CLASS="section"><A NAME="toc71"></A><A NAME="htoc77">8.5</A>&#XA0;&#XA0;Confidence intervals</H2><P>
+<A NAME="@default878"></A>
+<A NAME="@default879"></A>
+<A NAME="@default880"></A></P><P>So far we have looked at estimators that generate single values, known
+as <B>point estimates</B>. For many problems, we might prefer an interval
+that specifies an upper and lower bound on the unknown parameter.</P><P>Or, more generally, we might want that whole distribution; that is,
+the range of values the parameter could have, and for each value in
+the range, a notion of how likely it is.</P><P>Let&#X2019;s start with <B>confidence intervals</B>.
+<A NAME="@default881"></A>
+<A NAME="@default882"></A></P><P><EM>I&#X2019;m thinking of a distribution.</EM> It&#X2019;s an exponential distribution, and 
+here&#X2019;s a sample:</P><P>{5.384, 4.493, 19.198, 2.790, 6.122, 12.844}</P><P>I want you to give me a range of values that you think is likely to
+contain the unknown parameter &#X3BB;. More specifically, I want
+a 90% confidence interval, which means that if we play this game over
+and over, your interval will contain &#X3BB;&#XA0;90% of the time.</P><P>It turns out that this version of the game is hard, so I&#X2019;m going
+to tell you the answer, and all you have to do is test it.</P><P>Confidence intervals are usually described in terms of the miss rate,
+&#X3B1;, so a 90% confidence interval has miss rate &#X3B1;&#XA0;=&#XA0;0.1.
+The confidence interval for the &#X3BB;&#XA0;parameter of an exponential
+distribution is
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">&#X239B;<BR>
+&#X239C;<BR>
+&#X239C;<BR>
+&#X239D;</TD><TD CLASS="dcell">&#X3BB;&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&#X3C7;<SUP>2</SUP>(2<I>n</I>,&#XA0;1&#X2212;&#X3B1;/2)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2<I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">,
+&#X3BB;&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&#X3C7;<SUP>2</SUP>(2<I>n</I>,&#XA0;&#X3B1;/2)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2<I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD><TD CLASS="dcell">&#X239E;<BR>
+&#X239F;<BR>
+&#X239F;<BR>
+&#X23A0;</TD></TR>
+</TABLE><P>
+where <I>n</I>&#XA0;is the sample size, &#X3BB; is the mean-based estimator
+from the previous section, and &#X3C7;<SUP>2</SUP>(<I>k</I>, <I>x</I>) is the
+CDF of a chi-squared distribution with <I>k</I>&#XA0;degrees of freedom,
+evaluated at <I>x</I>&#XA0;(see
+<TT>http://wikipedia.org/wiki/Chi-square_distribution</TT>).
+<A NAME="@default883"></A> <A NAME="@default884"></A></P><P>In general, confidence intervals are hard to compute analytically, but
+relatively easy to estimate using simulation. But first we need
+to talk about Bayesian estimation.
+<A NAME="@default885"></A>
+<A NAME="@default886"></A></P><H2 CLASS="section"><A NAME="toc72"></A><A NAME="htoc78">8.6</A>&#XA0;&#XA0;Bayesian estimation</H2><P>If you collect a sample and compute a 90% confidence interval, it is
+tempting to say that the true value of the parameter has a 90% chance
+of falling in the interval. But from a frequentist point of view,
+that is not correct because the parameter is an unknown but fixed
+value. It is either in the interval you computed or not, so the
+frequentist definition of probability doesn&#X2019;t apply.
+<A NAME="@default887"></A>
+<A NAME="@default888"></A>
+<A NAME="@default889"></A></P><P>So let&#X2019;s try a different version of the game.
+<A NAME="@default890"></A>
+<A NAME="@default891"></A>
+<A NAME="@default892"></A>
+<A NAME="@default893"></A></P><P><EM>I&#X2019;m thinking of a distribution.</EM> It&#X2019;s an exponential
+distribution, and I chose &#X3BB;&#XA0;from a uniform distribution
+between 0.5 and 1.5. Here&#X2019;s a sample, which I&#X2019;ll call <I>X</I>:</P><P>{2.675, 0.198, 1.152, 0.787, 2.717, 4.269}</P><P>Based on this sample, what value of &#X3BB;&#XA0;do you think I chose?</P><P>In this version of the game, &#X3BB;&#XA0;<EM>is</EM> a random quantity, so we
+can reasonably talk about its distribution, and we can compute it
+easily using Bayes&#X2019;s theorem.</P><P>Here are the steps:</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">Divide the range (0.5, 1.5) into a set of equal-sized bins.
+For each bin, we define <I>H<SUB>i</SUB></I>, which is the hypothesis that the
+actual value of &#X3BB;&#XA0;falls in the <I>i</I>&#XA0;th bin.
+Since &#X3BB;&#XA0;was drawn from a uniform distribution, the prior
+probability, <I>P</I>(<I>H<SUB>i</SUB></I>), is the same for all <I>i</I>.</LI><LI CLASS="li-enumerate">For each hypothesis, we compute the likelihood, <I>P</I>(<I>X</I>|<I>H<SUB>i</SUB></I>),
+which is the chance of drawing the sample <I>X</I>&#XA0;given <I>H<SUB>i</SUB></I>.
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>X</I>&#XA0;&#XA0;|&#XA0;&#XA0;<I>H<SUB>i</SUB></I>)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>&#X220F;</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>j</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;<I>expo</I>(&#X3BB;<I><SUB>i</SUB></I>,&#XA0;<I>x<SUB>j</SUB></I>)&#XA0;&#XA0;</TD></TR>
+</TABLE>
+where expo(&#X3BB;, <I>x</I>) is a function that
+computes the PDF of the exponential distribution with parameter &#X3BB;,
+evaluated at <I>x</I>. 
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>PDF<SUB>expo</SUB></I>(&#X3BB;,&#XA0;<I>x</I>)&#XA0;=&#XA0;&#X3BB;&#XA0;<I>e</I><SUP>&#X2212;&#X3BB;&#XA0;<I>x</I></SUP></TD></TR>
+</TABLE>
+The symbol &#X220F; represents the product of a sequence (see
+<TT>http://wikipedia.org/wiki/Multiplication#Capital_Pi_notation</TT>).</LI><LI CLASS="li-enumerate">Then by Bayes&#X2019;s theorem the posterior distribution is<P>&#XA0;&#XA0; <I>P</I>(<I>H<SUB>i</SUB></I>|<I>X</I>) = <I>P</I>(<I>H<SUB>i</SUB></I>) <I>P</I>(<I>X</I>|<I>H<SUB>i</SUB></I>) /<I>f</I></P><P>where <I>f</I>&#XA0;is the normalization factor
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>f</I>&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>&#X2211;</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>i</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;<I>P</I>(<I>H<SUB>i</SUB></I>)&#XA0;<I>P</I>(<I>X</I>&#XA0;&#XA0;|&#XA0;&#XA0;<I>H<SUB>i</SUB></I>)&#XA0;</TD></TR>
+</TABLE></LI></OL><P>Given a posterior distribution, it is easy to compute a confidence
+interval. For example, to compute a 90% CI, you can
+use the 5th and 95th percentiles of the posterior.
+<A NAME="@default894"></A>
+<A NAME="@default895"></A></P><P>Bayesian confidence intervals are sometimes called <B>credible
+intervals</B>; for a discussion of the differences, see
+<TT>http://wikipedia.org/wiki/Credible_interval</TT>.</P><H2 CLASS="section"><A NAME="toc73"></A><A NAME="htoc79">8.7</A>&#XA0;&#XA0;Implementing Bayesian estimation</H2><P>To represent the prior distribution, we could use a Pmf, Cdf, or
+any other representation of a distribution, but since we want to
+map from a hypothesis to a probability, a Pmf is a natural choice.
+<A NAME="@default896"></A>
+<A NAME="@default897"></A>
+<A NAME="@default898"></A></P><P>Each value in the Pmf represents a hypothesis; for example, the
+value 0.5 represents the hypothesis that &#X3BB;&#XA0;is 0.5.
+In the prior distribution, all hypotheses have the same probability.
+So we can construct the prior like this:
+</P><PRE CLASS="verbatim">def MakeUniformSuite(low, high, steps):
+    hypos = [low + (high-low) * i / (steps-1.0) for i in range(steps)]
+    pmf = Pmf.MakePmfFromList(hypos)
+    return pmf
+</PRE><P>This function makes and returns a Pmf that represents a 
+collection of related hypotheses, called a <B>suite</B>. Each hypothesis
+has the same probability, so the distribution is <B>uniform</B>.
+<A NAME="@default899"></A>
+<A NAME="@default900"></A>
+<A NAME="@default901"></A></P><P>The arguments <TT>low</TT> and <TT>high</TT> specify the range of values;
+<TT>steps</TT> is the number of hypotheses.
+<A NAME="@default902"></A></P><P>To perform the update, we take a suite of hypotheses and a body of
+evidence:
+</P><PRE CLASS="verbatim">def Update(suite, evidence):
+    for hypo in suite.Values():
+        likelihood = Likelihood(evidence, hypo)
+        suite.Mult(hypo, likelihood)
+    suite.Normalize()
+</PRE><P>For each hypothesis in the suite, we multiply the prior probability
+by the likelihood of the evidence. Then we normalize the suite.</P><P>In this function, <TT>suite</TT> has to be a Pmf, but <TT>evidence</TT>
+can be any type, as long as <TT>Likelihood</TT> knows how to interpret it.
+<A NAME="@default903"></A></P><P>Here&#X2019;s the likelihood function:
+</P><PRE CLASS="verbatim">def Likelihood(evidence, hypo):
+    param = hypo
+    likelihood = 1
+    for x in evidence:
+        likelihood *= ExpoPdf(x, param)
+
+    return likelihood
+</PRE><P>In <TT>Likelihood</TT> we assume that <TT>evidence</TT> is a sample
+from an exponential distribution and compute the product in the
+previous section.
+<A NAME="@default904"></A>
+<A NAME="@default905"></A>
+<A NAME="@default906"></A></P><P><TT>ExpoPdf</TT> evaluates the PDF of the exponential distribution
+at <TT>x</TT>:
+</P><PRE CLASS="verbatim">def ExpoPdf(x, param):
+    p = param * math.exp(-param * x)
+    return p
+</PRE><P>Putting it all together, here&#X2019;s the code that creates the prior
+and computes the posterior:
+</P><PRE CLASS="verbatim">evidence = [2.675, 0.198, 1.152, 0.787, 2.717, 4.269]
+prior = MakeUniformSuite(0.5, 1.5, 100)
+posterior = prior.Copy()
+Update(posterior, evidence)
+</PRE><P>You can download the code in this section from
+<TT>http://thinkstats.com/estimate.py</TT>.
+<A NAME="@default907"></A></P><P>When I think of Bayesian estimation, I imagine a room full of people,
+where each person has a different guess about whatever you are trying
+to estimate. So in this example they each have a guess about the
+correct value of &#X3BB;.</P><P>Initially, each person has a degree of confidence about their own hypothesis.
+After seeing the evidence, each person updates their confidence based on
+<I>P</I>(<I>E</I>|<I>H</I>), the likelihood of the evidence, given their hypothesis.</P><P>Most often the likelihood function computes a
+probability, which is at most 1, so initially everyone&#X2019;s confidence
+goes down (or stays the same). But then we normalize, which increases
+everyone&#X2019;s confidence.</P><P>So the net effect is that some people get more confident, and some less,
+depending on the relative likelihood of their hypothesis.</P><H2 CLASS="section"><A NAME="toc74"></A><A NAME="htoc80">8.8</A>&#XA0;&#XA0;Censored data</H2><P>
+<A NAME="censored"></A>
+<A NAME="@default908"></A>
+<A NAME="@default909"></A></P><P>The following problem appears in Chapter 3 of David MacKay&#X2019;s
+<EM>Information Theory, Inference and Learning
+Algorithms</EM>, which you can download from
+<TT>http://www.inference.phy.cam.ac.uk/mackay/itprnn/ps/</TT>.</P><BLOCKQUOTE CLASS="quote">
+Unstable particles are emitted from a source and decay at a distance
+<I>x</I>, a real number that has an exponential probability distribution
+with [parameter] &#X3BB;. Decay events can
+only be observed if they occur in a window extending from <I>x</I>&#XA0;=&#XA0;1 cm to
+<I>x</I>&#XA0;=&#XA0;20 cm. <I>n</I>&#XA0;decays are observed at locations { <I>x</I><SUB>1</SUB>, ... , <I>x<SUB>N</SUB></I>
+}. What is &#X3BB;?
+<A NAME="@default910"></A>
+<A NAME="@default911"></A>
+<A NAME="@default912"></A>
+<A NAME="@default913"></A>
+<A NAME="@default914"></A></BLOCKQUOTE><P>This is an example of an estimation problem with <B>censored data</B>;
+that is, we know that some data are systematically excluded.</P><P>One of the strengths of Bayesian estimation is that it can deal with
+censored data with relative ease. We can use the method from the
+previous section with only one change: we have to replace
+PDF<I><SUB>expo</SUB></I> with the conditional distribution:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>PDF<SUB>cond</SUB></I>(&#X3BB;,&#XA0;<I>x</I>)&#XA0;=&#XA0;&#X3BB;&#XA0;<I>e</I><SUP>&#X2212;&#X3BB;&#XA0;<I>x</I></SUP>&#XA0;/&#XA0;<I>Z</I>(&#X3BB;)&#XA0;&#XA0;</TD></TR>
+</TABLE><P>
+for 1&#XA0;&lt;&#XA0;<I>x</I>&#XA0;&lt;&#XA0;20, and 0 otherwise, with
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>Z</I>(&#X3BB;)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><FONT SIZE=6>&#X222B;</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">20</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;&#X3BB;&#XA0;<I>e</I><SUP>&#X2212;&#X3BB;&#XA0;<I>x</I></SUP>&#XA0;&#XA0;&#XA0;<I>dx</I>&#XA0;=&#XA0;
+<I>e</I><SUP>&#X2212;&#X3BB;</SUP>&#XA0;&#X2212;&#XA0;<I>e</I><SUP>&#X2212;20&#XA0;&#X3BB;</SUP>&#XA0;&#XA0;</TD></TR>
+</TABLE><P>
+You might remember Z(&#X3BB;) from Exercise&#XA0;<A HREF="thinkstats007.html#expo_pdf">5</A>. I told
+you to keep it handy.</P><DIV CLASS="theorem"><B>Exercise&#XA0;4</B>&#XA0;&#XA0;<EM>
+Download <TT>http://thinkstats.com/estimate.py</TT>, which contains the code
+from the previous section, and make a copy named <TT>decay.py</TT>.
+</EM><A NAME="@default915"></A><P><EM>Modify <TT>decay.py</TT> to compute the posterior distribution of
+&#X3BB;&#XA0;for the sample <I>X</I>&#XA0;=&#XA0;{1.5, 2, 3, 4, 5, 12}. For
+the prior you can use a uniform distribution between 0
+and 1.5 (not including 0).
+</EM><A NAME="@default916"></A>
+<A NAME="@default917"></A></P><P><EM>You can download a solution to this problem from
+<TT>http://thinkstats.com/decay.py</TT>.
+</EM><A NAME="@default918"></A></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;5</B>&#XA0;&#XA0;<EM>
+In the 2008 Minnesota Senate race the final vote count was 1,212,629
+votes for Al Franken and 1,212,317 votes for Norm Coleman. Franken
+was declared the winner, but as Charles Seife points out in <I>Proofiness</I>, the margin of victory was much smaller than the margin
+of error, so the result should have been considered a tie.
+</EM><A NAME="@default919"></A>
+<A NAME="@default920"></A>
+<A NAME="@default921"></A>
+<A NAME="@default922"></A>
+<A NAME="@default923"></A>
+<A NAME="@default924"></A>
+<A NAME="@default925"></A><P><EM>Assuming that there is a chance that any vote might be lost and a chance
+that any vote might be double-counted, what is the probability that
+Coleman actually received more votes?</EM></P><P><EM>Hint: you will have to fill in some details to model the error process.</EM></P></DIV><H2 CLASS="section"><A NAME="toc75"></A><A NAME="htoc81">8.9</A>&#XA0;&#XA0;The locomotive problem</H2><P>
+<A NAME="@default926"></A>
+<A NAME="@default927"></A>
+<A NAME="@default928"></A></P><P>The locomotive problem is a classic estimation problem also
+known as the &#X201C;German tank problem.&#X201D; Here is the version
+that appears in Mosteller, <I>Fifty Challenging Problems in
+Probability</I>:</P><BLOCKQUOTE CLASS="quote">
+&#X201C;A railroad numbers its locomotives in order 1..N. One day you see a
+locomotive with the number 60. Estimate how many locomotives the
+railroad has.&#X201D;
+</BLOCKQUOTE><P>Before you read the rest of this section, try to answer these
+questions:</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">For a given estimate, N, what is the likelihood of the
+evidence, <I>P</I>(<I>E</I>|N)? What is the maximum likelihood estimator?
+<A NAME="@default929"></A>
+<A NAME="@default930"></A></LI><LI CLASS="li-enumerate">If we see train <I>i</I>&#XA0;it seems reasonable that we would guess
+some multiple of <I>i</I>&#XA0;so let&#X2019;s assume N&#XA0;=&#XA0;<I>ai</I>. What value of
+<I>a</I>&#XA0;minimizes mean squared error?
+<A NAME="@default931"></A>
+<A NAME="@default932"></A></LI><LI CLASS="li-enumerate">Still assuming that N&#XA0;=&#XA0;<I>ai</I>&#XA0;can you find a value of 
+<I>a</I>&#XA0;that makes N&#XA0;an unbiased estimator?
+<A NAME="@default933"></A>
+<A NAME="@default934"></A></LI><LI CLASS="li-enumerate">For what value of N is 60 the average value?</LI><LI CLASS="li-enumerate">What is the Bayesian posterior distribution assuming a prior
+distribution that is uniform from 1 to 200?
+<A NAME="@default935"></A>
+<A NAME="@default936"></A>
+<A NAME="@default937"></A></LI></OL><P>For best results, you should take some time to work on these questions
+before you continue.</P><P>For a given estimate, N, the likelihood of seeing train <I>i</I>&#XA0;is
+1/N if <I>i</I>&#XA0;&#X2264;&#XA0;N, and 0 otherwise. So the MLE is 
+N&#XA0;=&#XA0;<I>i</I>. 
+In other words, if you see train 60 and you want to maximize your
+chance of getting the answer exactly right, you should guess that there
+are 60 trains.</P><P>But this estimator doesn&#X2019;t do very well in terms of MSE. We can do
+better by choosing N&#XA0;=&#XA0;<I>ai</I>; all we have to do is find a good
+value for <I>a</I>.</P><P>Suppose that there are, in fact, <I>N</I>&#XA0;trains. Each time we play
+the estimation game, we see train <I>i</I>&#XA0;and guess <I>ai</I>, so the squared
+error is (<I>ai</I>&#XA0;&#X2212;&#XA0;<I>N</I>)<SUP>2</SUP>.</P><P>If we play the game <I>N</I>&#XA0;times and see each train once, the mean
+squared error is 
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>MSE</I>&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>&#X2211;</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>i</I>=1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;(<I>ai</I>&#XA0;&#X2212;&#XA0;<I>N</I>)<SUP>2</SUP>&#XA0;</TD></TR>
+</TABLE><P>
+To minimize MSE, we take the derivative with respect to <I>a</I>:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>d</I>&#XA0;<I>MSE</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>da</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>&#X2211;</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>i</I>=1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;2<I>i</I>&#XA0;(<I>ai</I>&#XA0;&#X2212;&#XA0;<I>N</I>)&#XA0;=&#XA0;0&#XA0;</TD></TR>
+</TABLE><P>
+And solve for <I>a</I>.
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I>&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">3<I>N</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2<I>N</I>+1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD></TR>
+</TABLE><P>
+At first glance, that doesn&#X2019;t seem very useful, because <I>N</I>&#XA0;appears on
+the right-hand side, which suggests that we need to know <I>N</I>&#XA0;to choose
+<I>a</I>, but if we knew <I>N</I>, we wouldn&#X2019;t need an estimator in the first place.</P><P>However, for large values of <I>N</I>, the optimal value for <I>a</I>&#XA0;converges
+to 3/2, so we could choose N&#XA0;=&#XA0;3<I>i</I>/ 2.</P><P>To find an unbiased estimator, we can compute the mean error (ME):
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>ME</I>&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>N</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>&#X2211;</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>i</I>=1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;(<I>ai</I>&#XA0;&#X2212;&#XA0;<I>N</I>)&#XA0;</TD></TR>
+</TABLE><P>
+And find the value of <I>a</I>&#XA0;that yields ME&#XA0;=&#XA0;0, which turns out to be
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>a</I>&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">2<I>N</I></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>N</I>+1</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+For large values of <I>N</I>, <I>a</I>&#XA0;converges to 2, so we could choose
+N&#XA0;=&#XA0;2<I>i</I>.</P><P>So far we have generated three estimators, <I>i</I>, 3<I>i</I>/2, and 2<I>i</I>,
+that have the properties of maximizing likelihood, minimizing squared
+error, and being unbiased.</P><P>Yet another way to generate an estimator is to choose the value
+that makes the population mean equal the sample mean. If we see train
+<I>i</I>, the sample mean is just <I>i</I>; the train population that has the
+same mean is N&#XA0;=&#XA0;2<I>i</I>&#XA0;&#X2212;&#XA0;1.</P><BLOCKQUOTE CLASS="figure"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+<DIV CLASS="center"><IMG SRC="thinkstats017.png"></DIV>
+<DIV CLASS="caption"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD VALIGN=top ALIGN=left>Figure 8.1: Posterior distribution of the number of trains.</TD></TR>
+</TABLE></DIV>
+<A NAME="locomotive"></A>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><P>Finally, to compute the Bayesian posterior distribution, we compute
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>H<SUB>n</SUB></I>&#XA0;&#XA0;|&#XA0;&#XA0;<I>i</I>)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>P</I>(<I>i</I>&#XA0;&#XA0;|&#XA0;&#XA0;<I>H<SUB>n</SUB></I>)&#XA0;<I>P</I>(<I>H<SUB>n</SUB></I>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>P</I>(<I>i</I>)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD></TR>
+</TABLE><P>
+Where <I>H<SUB>n</SUB></I> is the hypothesis that there are <I>n</I>&#XA0;trains, and <I>i</I>&#XA0;is
+the evidence: we saw train <I>i</I>. Again, <I>P</I>(<I>i</I>|<I>H<SUB>n</SUB></I>)
+is 1/<I>n</I>&#XA0;if <I>i</I>&#XA0;&lt; <I>n</I>, and 0 otherwise. The normalizing constant,
+<I>P</I>(<I>i</I>), is just the sum of the numerators for each hypothesis.
+<A NAME="@default938"></A>
+<A NAME="@default939"></A></P><P>If the prior distribution is uniform from 1 to 200, we start with 200
+hypotheses and compute the likelihood for each. You can download an
+implementation from
+<TT>http://thinkstats.com/locomotive.py</TT>. Figure&#XA0;<A HREF="#locomotive">8.1</A> shows
+what the result looks like.
+<A NAME="@default940"></A>
+<A NAME="@default941"></A>
+<A NAME="@default942"></A></P><P>The 90% credible interval for this posterior is [63, 189], which
+is still quite wide. Seeing one train doesn&#X2019;t provide strong evidence
+for any of the hypotheses (although it does rule out the hypotheses
+with <I>n</I>&#XA0;&lt;&#XA0;<I>i</I>).
+<A NAME="@default943"></A></P><P>If we start with a different prior, the posterior is significantly
+different, which helps to explain why the other estimators are so
+diverse.</P><P>One way to think of different estimators is that they are implicitly
+based on different priors. If there is enough evidence to swamp the
+priors, then all estimators tend to converge; otherwise, as in this
+case, there is no single estimator that has all of the properties we
+might want.</P><DIV CLASS="theorem"><B>Exercise&#XA0;6</B>&#XA0;&#XA0;<EM>
+Generalize <CODE>locomotive.py</CODE> to handle the case where you
+see more than one train. You should only have to
+change a few lines of code.
+</EM><A NAME="@default944"></A><P><EM>See if you can answer the other questions for the case where you
+see more than one train. You can find a discussion of the problem
+and several solutions at
+<TT>http://wikipedia.org/wiki/German_tank_problem</TT>.</EM></P></DIV><H2 CLASS="section"><A NAME="toc76"></A><A NAME="htoc82">8.10</A>&#XA0;&#XA0;Glossary</H2><DL CLASS="description"><DT CLASS="dt-description"><B>estimation:</B></DT><DD CLASS="dd-description"> The process of inferring the parameters of a distribution
+from a sample.
+<A NAME="@default945"></A></DD><DT CLASS="dt-description"><B>estimator:</B></DT><DD CLASS="dd-description"> A statistic used to estimate a parameter.
+<A NAME="@default946"></A></DD><DT CLASS="dt-description"><B>mean squared error:</B></DT><DD CLASS="dd-description"> A measure of estimation error.
+<A NAME="@default947"></A>
+<A NAME="@default948"></A></DD><DT CLASS="dt-description"><B>maximum likelihood estimator:</B></DT><DD CLASS="dd-description"> An estimator that computes the
+point estimate with the highest likelihood.
+<A NAME="@default949"></A>
+<A NAME="@default950"></A></DD><DT CLASS="dt-description"><B>bias:</B></DT><DD CLASS="dd-description"> The tendency of an estimator to be above or below the actual
+value of the parameter, when averaged over repeated samples.
+<A NAME="@default951"></A></DD><DT CLASS="dt-description"><B>point estimate:</B></DT><DD CLASS="dd-description"> An estimate expressed as a single value.
+<A NAME="@default952"></A></DD><DT CLASS="dt-description"><B>confidence interval:</B></DT><DD CLASS="dd-description"> An estimate expressed as an interval with a
+given probability of containing the true value of the parameter.
+<A NAME="@default953"></A>
+<A NAME="@default954"></A></DD><DT CLASS="dt-description"><B>credible interval:</B></DT><DD CLASS="dd-description"> Another name for a Bayesian confidence interval.
+<A NAME="@default955"></A>
+<A NAME="@default956"></A></DD><DT CLASS="dt-description"><B>censored data:</B></DT><DD CLASS="dd-description"> A dataset sampled in a way that systematically
+excludes some data.
+<A NAME="@default957"></A></DD></DL><HR CLASS="footnoterule"><DL CLASS="thefootnotes"><DT CLASS="dt-thefootnotes">
+<A NAME="note25" HREF="#text25">1</A></DT><DD CLASS="dd-thefootnotes">See
+<TT>http://wikipedia.org/wiki/Exponential_distribution#Maximum_likelihood</TT>.
+</DD></DL>
+</td>
+
+<td width=130 valign="top">
+
+<h4>Like this book?</h4> <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FThink-Stats%2F181213931900328&amp;width=130&amp;colorscheme=light&amp;show_faces=false&amp;stream=false&amp;header=false&amp;height=62" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:100px;" allowTransparency="true"></iframe>
+
+<p>
+<h4>Are you using one of our books in a class?</h4>  We'd like to know
+about it.  Please consider filling out <a href="http://spreadsheets.google.com/viewform?formkey=dC0tNUZkMjBEdXVoRGljNm9FRmlTMHc6MA" onClick="javascript: pageTracker._trackPageview('/outbound/survey');">this short survey</a>.
+
+<p>
+<br>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?t=greenteapre01-20&o=1&p=8&l=as1&asins=1
+449307116&ref=qf_sp_asin_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1
+=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" margi
+nwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=greenteapre01-20&o=1&p=8&l=as1&m=amazon&f=ifr&md=10FE9736YVPPT7A0FBG2&asins=0521725968" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" onClick="javascript: pageTracker._trackPageview('/outbound/amazon');"></iframe>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?t=greenteapre01-20&o=1&p=8&l=as1&asins=0615185509&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" onClick="javascript: pageTracker._trackPageview('/outbound/amazon_matlab');"></iframe> 
+
+</td>
+</tr>
+</table>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-9267613-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+<HR>
+<A HREF="thinkstats008.html"><IMG SRC="back.png" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="up.png" ALT="Up"></A>
+<A HREF="thinkstats010.html"><IMG SRC="next.png" ALT="Next"></A>
+</BODY>
+</HTML>

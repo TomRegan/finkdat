@@ -1,0 +1,419 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="thinkstats.css">
+<TITLE>Cumulative distribution functions</TITLE>
+</HEAD>
+<BODY >
+<A HREF="thinkstats003.html"><IMG SRC="back.png" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="up.png" ALT="Up"></A>
+<A HREF="thinkstats005.html"><IMG SRC="next.png" ALT="Next"></A>
+<HR>
+<table cellpadding=10>
+
+<tr>
+
+<td valign="top" width=100 bgcolor="#1B82E6">
+</td>
+
+<td valign="top" width=600>
+
+<p>This HTML version of is provided for convenience, but it
+is not the best format for the book.  In particular, some of the
+symbols are not rendered correctly.
+
+<p>You might prefer to read
+the <a href="http://thinkstats.com/thinkstats.pdf">PDF version</a>, or
+you can buy a hardcopy 
+<a href="http://www.lulu.com/product/paperback/think-stats/12443331">here</a>.
+<H1 CLASS="chapter"><A NAME="htoc23">Chapter&#XA0;3</A>&#XA0;&#XA0;Cumulative distribution functions</H1><P>
+<A NAME="cumulative"></A></P><H2 CLASS="section"><A NAME="toc23"></A><A NAME="htoc24">3.1</A>&#XA0;&#XA0;The class size paradox</H2><P>
+<A NAME="@default172"></A></P><P>At many American colleges and universities, the student-to-faculty
+ratio is about 10:1. But students are often surprised to discover
+that their average class size is bigger than 10. There
+are two reasons for the discrepancy:</P><UL CLASS="itemize"><LI CLASS="li-itemize">Students typically take 4&#X2013;5 classes per semester, but
+professors often teach 1 or 2.</LI><LI CLASS="li-itemize">The number of students who enjoy a small class is small,
+but the number of students in a large class is (ahem!) large.</LI></UL><P>The first effect is obvious (at least once it is pointed out);
+the second is more subtle. So let&#X2019;s look at an example. Suppose
+that a college offers 65 classes in a given semester, with the
+following distribution of sizes:
+</P><PRE CLASS="verbatim"> size      count
+ 5- 9          8
+10-14          8
+15-19         14
+20-24          4
+25-29          6
+30-34         12
+35-39          8
+40-44          3
+45-49          2
+</PRE><P>If you ask the Dean for the average class size, he would
+construct a PMF, compute the mean, and report that the
+average class size is 24.</P><P>But if you survey a group of students, ask them how many
+students are in their classes, and compute the mean, you would
+think that the average class size was higher.</P><DIV CLASS="theorem"><B>Exercise&#XA0;1</B>&#XA0;&#XA0;<EM>
+Build a PMF of these data and compute the mean as perceived by the
+Dean. Since the data have been grouped in bins, you can use the
+mid-point of each bin.
+</EM><A NAME="@default173"></A><P><EM>Now find the distribution of class sizes as perceived by students
+and compute its mean. </EM></P><P><EM>Suppose you want to find the distribution of class sizes at a
+college, but you can&#X2019;t get reliable data from the Dean.
+An alternative is to choose a random sample of students and ask them
+the number of students in each of their classes. Then you could compute
+the PMF of their responses.
+</EM><A NAME="@default174"></A>
+<A NAME="@default175"></A></P><P><EM>The result would be biased because large classes
+would be oversampled, but you could estimate the actual
+distribution of class sizes by applying an appropriate transformation
+to the observed distribution.</EM></P><P><EM>Write a function called <CODE>UnbiasPmf</CODE> that takes the PMF of the
+observed values and returns a new Pmf object that estimates the
+distribution of class sizes.</EM></P><P><EM>You can download a solution to this problem from
+<TT>http://thinkstats.com/class_size.py</TT>.
+</EM><A NAME="@default176"></A></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;2</B>&#XA0;&#XA0;
+<A NAME="relay"></A><P><EM>In most foot races, everyone starts at the same time. If you are a
+fast runner, you usually pass a lot of people at the beginning of the
+race, but after a few miles everyone around you is going at the same
+speed.
+</EM><A NAME="@default177"></A>
+<A NAME="@default178"></A>
+<A NAME="@default179"></A></P><P><EM>When I ran a long-distance (209 miles) relay race for the first
+time, I noticed an odd phenomenon: when I overtook another runner, I
+was usually much faster, and when another runner overtook me, he was
+usually much faster.</EM></P><P><EM>At first I thought that the distribution of speeds might be bimodal;
+that is, there were many slow runners and many fast runners, but few
+at my speed.</EM></P><P><EM>Then I realized that I was the victim of selection bias. The race
+was unusual in two ways: it used a staggered start, so teams started
+at different times; also, many teams included runners at different
+levels of ability.
+</EM><A NAME="@default180"></A>
+<A NAME="@default181"></A></P><P><EM>As a result, runners were spread out along the course with little
+relationship between speed and location. When I started running my
+leg, the runners near me were (pretty much) a random sample of the
+runners in the race.</EM></P><P><EM>So where does the bias come from? During my time on the course, the
+chance of overtaking a runner, or being overtaken, is proportional to
+the difference in our speeds. To see why, think about the extremes.
+If another runner is going at the same speed as me, neither of us will
+overtake the other. If someone is going so fast that they cover the
+entire course while I am running, they are certain to overtake me.</EM></P><P><EM>Write a function called <TT>BiasPmf</TT> that takes a Pmf representing
+the actual distribution of runners&#X2019; speeds, and the speed of a running
+observer, and returns a new Pmf representing the distribution of
+runners&#X2019; speeds as seen by the observer.</EM></P><P><EM>To test your function, get the distribution of speeds from a
+normal road race (not a relay). I wrote a program that reads the
+results from the James Joyce Ramble 10K in Dedham MA and converts the
+pace of each runner to MPH. Download it from
+<TT>http://thinkstats.com/relay.py</TT>. Run it and look at the PMF of
+speeds.
+</EM><A NAME="@default182"></A>
+<A NAME="@default183"></A></P><P><EM>Now compute the distribution of speeds you would observe if you ran a
+relay race at 7.5 MPH with this group of runners. You can download a
+solution from <TT>http://thinkstats.com/relay_soln.py</TT></EM></P></DIV><H2 CLASS="section"><A NAME="toc24"></A><A NAME="htoc25">3.2</A>&#XA0;&#XA0;The limits of PMFs</H2><P>
+<A NAME="@default184"></A></P><P>PMFs work well if the number of values is small. But as the
+number of values increases, the probability associated with each value
+gets smaller and the effect of random noise increases.</P><P>For example, we might be interested in the distribution of birth
+weights. In the NSFG data, the variable <CODE>totalwgt_oz</CODE> records
+weight at birth in ounces. Figure&#XA0;<A HREF="#nsfg_birthwgt_pmf">3.1</A> shows the
+PMF of these values for first babies and others.
+<A NAME="@default185"></A>
+<A NAME="@default186"></A>
+<A NAME="@default187"></A>
+<A NAME="@default188"></A></P><BLOCKQUOTE CLASS="figure"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+<DIV CLASS="center"><IMG SRC="thinkstats004.png"></DIV>
+<DIV CLASS="caption"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD VALIGN=top ALIGN=left>Figure 3.1: PMF of birth weights. This figure shows a limitation
+of PMFs: they are hard to compare.</TD></TR>
+</TABLE></DIV>
+<A NAME="nsfg_birthwgt_pmf"></A>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><P>Overall, these distributions resemble the familiar &#X201C;bell curve,&#X201D; with
+many values near the mean and a few values much higher and lower.</P><P>But parts of this figure are hard to interpret. There are many spikes
+and valleys, and some apparent differences between the distributions.
+It is hard to tell which of these features are significant. Also, it
+is hard to see overall patterns; for example, which distribution do
+you think has the higher mean?
+<A NAME="@default189"></A></P><P>These problems can be mitigated by binning the data;
+that is, dividing the domain into non-overlapping intervals and counting
+the number of values in each bin. Binning can be useful, but it is
+tricky to get the size of the bins right. If they are big enough to
+smooth out noise, they might also smooth out useful information.</P><P>An alternative that avoids these problems is the <B>cumulative
+distribution function</B>, or <B>CDF</B>. But before we can get to that,
+we have to talk about percentiles.
+<A NAME="@default190"></A>
+<A NAME="@default191"></A></P><H2 CLASS="section"><A NAME="toc25"></A><A NAME="htoc26">3.3</A>&#XA0;&#XA0;Percentiles</H2><P>
+<A NAME="@default192"></A></P><P>If you have taken a standardized test, you probably got your
+results in the form of a raw score and a <B>percentile rank</B>.
+In this context, the percentile rank is the fraction of people who
+scored lower than you (or the same). So if you are &#X201C;in the 90th
+percentile,&#X201D; you did as well as or better than 90% of the people who
+took the exam.</P><P>Here&#X2019;s how you could compute the percentile rank of a value,
+<CODE>your_score</CODE>, relative to the scores in the sequence <TT>scores</TT>:
+</P><PRE CLASS="verbatim">def PercentileRank(scores, your_score):
+    count = 0
+    for score in scores:
+        if score &lt;= your_score:
+            count += 1
+
+    percentile_rank = 100.0 * count / len(scores)
+    return percentile_rank
+</PRE><P>For example, if the scores in the sequence were 55, 66, 77, 88 and 99,
+and you got the 88, then your percentile rank would be <TT>100 * 4 / 5</TT>
+which is 80.</P><P>If you are given a value, it is easy to find its percentile rank; going
+the other way is slightly harder. If you are given a percentile rank
+and you want to find the corresponding value, one option is to
+sort the values and search for the one you want:
+</P><PRE CLASS="verbatim">def Percentile(scores, percentile_rank):
+    scores.sort()
+    for score in scores:
+        if PercentileRank(scores, score) &gt;= percentile_rank:
+            return score
+</PRE><P>The result of this calculation is a <B>percentile</B>. For example,
+the 50th percentile is the value with percentile rank 50. In the
+distribution of exam scores, the 50th percentile is 77.
+<A NAME="@default193"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;3</B>&#XA0;&#XA0;<EM>
+This implementation of <TT>Percentile</TT> is not very efficient. A
+better approach is to use the percentile rank to compute the index of
+the corresponding percentile. Write a version of <TT>Percentile</TT> that
+uses this algorithm.</EM><P><EM>You can download a solution from <TT>http://thinkstats.com/score_example.py</TT>.
+</EM><A NAME="@default194"></A></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;4</B>&#XA0;&#XA0;<EM>
+Optional: If you only want to compute one percentile, it is not
+efficient to sort the scores. A better option is the selection
+algorithm, which you can read about at
+<TT>http://wikipedia.org/wiki/Selection_algorithm</TT>.
+</EM><A NAME="@default195"></A><P><EM>Write (or find) an implementation of the selection algorithm and use
+it to write an efficient version of <TT>Percentile</TT>.</EM></P></DIV><H2 CLASS="section"><A NAME="toc26"></A><A NAME="htoc27">3.4</A>&#XA0;&#XA0;Cumulative distribution functions</H2><P>
+<A NAME="@default196"></A>
+<A NAME="@default197"></A></P><P>Now that we understand percentiles, we are ready to tackle the
+cumulative distribution function (CDF). The CDF is the function that
+maps values to their percentile rank in a distribution.</P><P>The CDF is a function of <I>x</I>, where <I>x</I>&#XA0;is any value that might appear
+in the distribution. To evaluate CDF(<I>x</I>) for a particular value of
+<I>x</I>, we compute the fraction of the values in the sample less than (or
+equal to) <I>x</I>.</P><P>Here&#X2019;s what that looks like as a function that takes a sample,
+<TT>t</TT>, and a value, <TT>x</TT>:
+</P><PRE CLASS="verbatim">def Cdf(t, x):
+    count = 0.0
+    for value in t:
+        if value &lt;= x:
+            count += 1.0
+
+    prob = count / len(t)
+    return prob
+</PRE><P>This function should look familiar; it is almost identical to <TT>PercentileRank</TT>, except that the result is in a probability in the
+range 0&#X2013;1 rather than a percentile rank in the range 0&#X2013;100.</P><P>As an example, suppose a sample has the values {1, 2, 2, 3, 5}.
+Here are some values from its CDF:</P><P>&#XA0;&#XA0; CDF(0)&#XA0;=&#XA0;0 </P><P>&#XA0;&#XA0; CDF(1)&#XA0;=&#XA0;0.2 </P><P>&#XA0;&#XA0; CDF(2)&#XA0;=&#XA0;0.6 </P><P>&#XA0;&#XA0; CDF(3)&#XA0;=&#XA0;0.8 </P><P>&#XA0;&#XA0; CDF(4)&#XA0;=&#XA0;0.8 </P><P>&#XA0;&#XA0; CDF(5)&#XA0;=&#XA0;1 </P><P>We can evaluate the CDF for any value of <I>x</I>, not just
+values that appear in the sample.
+If <I>x</I>&#XA0;is less than the smallest value in the sample, CDF(<I>x</I>) is 0.
+If <I>x</I>&#XA0;is greater than the largest value, CDF(<I>x</I>) is 1.</P><BLOCKQUOTE CLASS="figure"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+<DIV CLASS="center"><IMG SRC="thinkstats005.png"></DIV>
+<DIV CLASS="caption"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD VALIGN=top ALIGN=left>Figure 3.2: Example of a CDF.</TD></TR>
+</TABLE></DIV>
+<A NAME="example_cdf"></A>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><P>Figure&#XA0;<A HREF="#example_cdf">3.2</A> is a graphical representation of this CDF.
+The CDF of a sample is a step function. In the next chapter we
+will see distributions whose CDFs are continuous functions. </P><H2 CLASS="section"><A NAME="toc27"></A><A NAME="htoc28">3.5</A>&#XA0;&#XA0;Representing CDFs</H2><P>
+<A NAME="@default198"></A>
+<A NAME="@default199"></A></P><P>I have written a module called <TT>Cdf</TT> that provides a class named
+<TT>Cdf</TT> that represents CDFs. You can read the documentation of
+this module at <TT>http://thinkstats.com/Cdf.html</TT> and you can download it
+from <TT>http://thinkstats.com/Cdf.py</TT>.</P><P>Cdfs are implemented with two sorted lists: <TT>xs</TT>, which contains
+the values, and <TT>ps</TT>, which contains the probabilities. The
+most important methods Cdfs provide are:</P><DL CLASS="description"><DT CLASS="dt-description"><B><TT>Prob(x)</TT>:</B></DT><DD CLASS="dd-description"> Given a value <I>x</I>, computes the probability <I>p</I>&#XA0;=&#XA0;CDF(<I>x</I>).</DD><DT CLASS="dt-description"><B><TT>Value(p)</TT>:</B></DT><DD CLASS="dd-description"> Given a probability <I>p</I>, computes the
+corresponding value, <I>x</I>; that is, the inverse CDF of <I>p</I>.</DD></DL><P>Because <TT>xs</TT> and <TT>ps</TT> are sorted, these operations can use the
+bisection algorithm, which is efficient. The run time is proportional
+to the logarithm of the number of values; see
+<TT>http://wikipedia.org/wiki/Time_complexity</TT>.
+<A NAME="@default200"></A></P><P>Cdfs also provide <TT>Render</TT>, which returns two lists, <TT>xs</TT> and
+<TT>ps</TT>, suitable for plotting the CDF. Because the CDF is a
+step function, these lists have two elements for each unique
+value in the distribution.</P><P>The Cdf module provides several functions for making Cdfs, including
+<TT>MakeCdfFromList</TT>, which takes a sequence of values
+and returns their Cdf.</P><P>Finally, <TT>myplot.py</TT> provides functions named <TT>Cdf</TT> and
+<TT>Cdfs</TT> that plot Cdfs as lines.
+<A NAME="@default201"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;5</B>&#XA0;&#XA0;<EM>
+Download <TT>Cdf.py</TT> and <CODE>relay.py</CODE> (see
+Exercise&#XA0;<A HREF="#relay">2</A>) and generate a plot that shows the CDF of
+running speeds. Which gives you a better sense of the shape of the
+distribution, the PMF or the CDF? You can download a solution
+from <TT>http://thinkstats.com/relay_cdf.py</TT>.
+</EM><A NAME="@default202"></A>
+<A NAME="@default203"></A></DIV><H2 CLASS="section"><A NAME="toc28"></A><A NAME="htoc29">3.6</A>&#XA0;&#XA0;Back to the survey data</H2><P>
+<A NAME="birth_weights"></A>
+<A NAME="@default204"></A>
+<A NAME="@default205"></A>
+<A NAME="@default206"></A>
+<A NAME="@default207"></A></P><P>Figure&#XA0;<A HREF="#nsfg_birthwgt_cdf">3.3</A> shows the CDFs of birth weight for
+first babies and others in the NSFG dataset.</P><BLOCKQUOTE CLASS="figure"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+<DIV CLASS="center"><IMG SRC="thinkstats006.png"></DIV>
+<DIV CLASS="caption"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD VALIGN=top ALIGN=left>Figure 3.3: CDF of birth weights.</TD></TR>
+</TABLE></DIV>
+<A NAME="nsfg_birthwgt_cdf"></A>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><P>This figure makes the shape of the distributions, and the differences
+between them, much clearer. We can see that first babies are slightly
+lighter throughout the distribution, with a larger discrepancy above 
+the mean.
+<A NAME="@default208"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;6</B>&#XA0;&#XA0;<EM>
+How much did you weigh at birth? If you don&#X2019;t know, call your mother
+or someone else who knows. Using the pooled data (all live births),
+compute the distribution of birth weights and use it to find your
+percentile rank. If you were a first baby, find your percentile rank
+in the distribution for first babies. Otherwise use the distribution
+for others. If you are in the 90th percentile or higher, call your
+mother back and apologize.</EM></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;7</B>&#XA0;&#XA0;<EM>
+Suppose you and your classmates compute the percentile rank of your
+birth weights and then compute the CDF of the percentile ranks. What do
+you expect it to look like? Hint: what fraction of the class do you
+expect to be above the median?
+</EM><A NAME="@default209"></A>
+<A NAME="@default210"></A></DIV><H2 CLASS="section"><A NAME="toc29"></A><A NAME="htoc30">3.7</A>&#XA0;&#XA0;Conditional distributions</H2><P>
+<A NAME="@default211"></A>
+<A NAME="@default212"></A></P><P>A <B>conditional distribution</B> is the distribution of a subset of
+the data which is selected according to a condition.</P><P>For example, if you are above average in weight, but way above average
+in height, then you might be relatively light for your height. Here&#X2019;s
+how you could make that claim more precise.</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">Select a cohort of people who are the same height as you (within
+some range).
+<A NAME="@default213"></A></LI><LI CLASS="li-enumerate">Find the CDF of weight for those people.</LI><LI CLASS="li-enumerate">Find the percentile rank of your weight in that distribution.</LI></OL><P>Percentile ranks are useful for comparing measurements from
+different tests, or tests applied to different groups.
+<A NAME="@default214"></A>
+<A NAME="@default215"></A></P><P>For example, people who compete in foot races are usually grouped by
+age and gender. To compare people in different groups, you can convert
+race times to percentile ranks.</P><DIV CLASS="theorem"><B>Exercise&#XA0;8</B>&#XA0;&#XA0;<EM>
+I recently ran the James Joyce Ramble 10K
+in Dedham MA. The results are available from
+<TT>http://coolrunning.com/results/10/ma/Apr25_27thAn_set1.shtml</TT>.
+Go to that page and find my results. I came in 97th in a field
+of 1633, so what is my percentile rank in the field?
+</EM><A NAME="@default216"></A>
+<A NAME="@default217"></A><P><EM>In my division (M4049 means &#X201C;male between 40 and 49 years of age&#X201D;)
+I came in 26th out of 256. What is my percentile rank in my division?</EM></P><P><EM>If I am still running in 10 years (and I hope I am), I will be in
+the M5059 division. Assuming that my percentile rank in my division
+is the same, how much slower should I expect to be?</EM></P><P><EM>I maintain a friendly rivalry with a student who is in the
+F2039 division. How fast does she have to run her next 10K to
+&#X201C;beat&#X201D; me in terms of percentile ranks?</EM></P></DIV><H2 CLASS="section"><A NAME="toc30"></A><A NAME="htoc31">3.8</A>&#XA0;&#XA0;Random numbers</H2><P>
+<A NAME="random"></A>
+<A NAME="@default218"></A></P><P>CDFs are useful for generating random numbers with a given
+distribution. Here&#X2019;s how:</P><UL CLASS="itemize"><LI CLASS="li-itemize">Choose a random probability in the range 0&#X2013;1.</LI><LI CLASS="li-itemize">Use <TT>Cdf.Value</TT> to find the value in the distribution
+that corresponds to the probability you chose.</LI></UL><P>It might not be obvious why this works, but since it is easier
+to implement than to explain, let&#X2019;s try it out.</P><DIV CLASS="theorem"><B>Exercise&#XA0;9</B>&#XA0;&#XA0;<EM>
+Write a function called <TT>Sample</TT>, that takes a Cdf and
+an integer, <I>n</I>, and returns a list of <I>n</I>&#XA0;values chosen at
+random from the Cdf. Hint: use <TT>random.random</TT>.
+You will find a solution to this exercise in <TT>Cdf.py</TT>.
+</EM><A NAME="@default219"></A>
+<A NAME="@default220"></A><P><EM>Using the distribution of birth weights from the NSFG, generate a
+random sample with 1000 elements. Compute the CDF of the sample.
+Make a plot that shows the original CDF and the CDF of the random
+sample. For large values of <I>n</I>, the distributions should be
+the same.
+</EM><A NAME="@default221"></A>
+<A NAME="@default222"></A>
+<A NAME="@default223"></A>
+<A NAME="@default224"></A></P></DIV><P>This process, generating a random sample based on a measured sample,
+is called <B>resampling</B>.
+<A NAME="@default225"></A>
+<A NAME="@default226"></A>
+<A NAME="@default227"></A></P><P>There are two ways to draw a sample from a population: with and
+without replacement. If you imagine drawing marbles from an
+urn<SUP><A NAME="text5" HREF="#note5">1</A></SUP>, &#X201C;replacement&#X201D; means
+putting the marbles back as you go (and stirring), so the population
+is the same for every draw. &#X201C;Without replacement,&#X201D; means that each
+marble can only be drawn once, so the remaining population is
+different after each draw.</P><P>In Python, sampling with replacement can be implemented with
+<TT>random.random</TT> to choose a percentile rank, or <TT>random.choice</TT>
+to choose an element from a sequence. Sampling without replacement
+is provided by <TT>random.sample</TT>.
+<A NAME="@default228"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;10</B>&#XA0;&#XA0;<EM>
+The numbers generated by <TT>random.random</TT> are supposed to be
+uniform between 0 and 1; that is, every value in the range
+should have the same probability.</EM><P><EM>Generate 1000 numbers from <TT>random.random</TT> and plot their
+PMF and CDF. Can you tell whether they are uniform?</EM></P><P><EM>You can read about the uniform distribution at
+<TT>http://wikipedia.org/wiki/Uniform_distribution_(discrete)</TT>.
+</EM><A NAME="@default229"></A>
+<A NAME="@default230"></A></P></DIV><H2 CLASS="section"><A NAME="toc31"></A><A NAME="htoc32">3.9</A>&#XA0;&#XA0;Summary statistics revisited</H2><P>
+<A NAME="@default231"></A>
+<A NAME="@default232"></A>
+<A NAME="@default233"></A>
+<A NAME="@default234"></A>
+<A NAME="@default235"></A>
+<A NAME="@default236"></A>
+<A NAME="@default237"></A></P><P>Once you have computed a CDF, it is easy to compute other summary
+statistics. The median is just the 50th percentile<SUP><A NAME="text6" HREF="#note6">2</A></SUP>.
+The 25th and 75th percentiles are often used to check whether
+a distribution is symmetric, and their difference, which is called
+the <B>interquartile range</B>, measures the spread.</P><DIV CLASS="theorem"><B>Exercise&#XA0;11</B>&#XA0;&#XA0;<EM>
+Write a function called <TT>Median</TT> that takes a Cdf and computes the
+median, and one called <TT>Interquartile</TT> that computes
+the interquartile range.</EM><P><EM>Compute the 25th, 50th, and 75th percentiles of the birth weight
+CDF. Do these values suggest that the distribution is symmetric?
+</EM><A NAME="@default238"></A>
+<A NAME="@default239"></A>
+<A NAME="@default240"></A></P></DIV><H2 CLASS="section"><A NAME="toc32"></A><A NAME="htoc33">3.10</A>&#XA0;&#XA0;Glossary</H2><DL CLASS="description"><DT CLASS="dt-description"><B>percentile rank:</B></DT><DD CLASS="dd-description"> The percentage of values in a distribution that are
+less than or equal to a given value.
+<A NAME="@default241"></A></DD><DT CLASS="dt-description"><B>CDF:</B></DT><DD CLASS="dd-description"> Cumulative distribution function, a function that maps
+from values to their percentile ranks.
+<A NAME="@default242"></A></DD><DT CLASS="dt-description"><B>percentile:</B></DT><DD CLASS="dd-description"> The value associated with a given percentile rank.
+<A NAME="@default243"></A></DD><DT CLASS="dt-description"><B>conditional distribution:</B></DT><DD CLASS="dd-description"> A distribution computed under the assumption
+that some condition holds.
+<A NAME="@default244"></A></DD><DT CLASS="dt-description"><B>resampling:</B></DT><DD CLASS="dd-description"> The process of generating a random sample from a
+distribution that was computed from a sample.
+<A NAME="@default245"></A></DD><DT CLASS="dt-description"><B>replacement:</B></DT><DD CLASS="dd-description"> During a sampling process, &#X201C;replacement&#X201D; indicates
+that the population is the same for every sample. &#X201C;Without replacement&#X201D;
+indicates that each element can be selected only once.
+<A NAME="@default246"></A></DD><DT CLASS="dt-description"><B>interquartile range:</B></DT><DD CLASS="dd-description"> A measure of spread, the difference between
+the 75th and 25th percentiles.
+<A NAME="@default247"></A></DD></DL><HR CLASS="footnoterule"><DL CLASS="thefootnotes"><DT CLASS="dt-thefootnotes">
+<A NAME="note5" HREF="#text5">1</A></DT><DD CLASS="dd-thefootnotes">The marbles-in-an-urn scenario is a standard model for
+random sampling processes (see
+<TT>http://wikipedia.org/wiki/Urn_problem</TT>).
+</DD><DT CLASS="dt-thefootnotes"><A NAME="note6" HREF="#text6">2</A></DT><DD CLASS="dd-thefootnotes">You might
+see other definitions of the median. In particular,
+some sources suggest that if you have an even number of elements in
+a sample, the median is the average of the middle two elements.
+This is an unnecessary special case, and it has the odd effect of
+generating a value that is not in the sample. As far
+as I&#X2019;m concerned, the median is the 50th percentile. Period.
+</DD></DL>
+</td>
+
+<td width=130 valign="top">
+
+<h4>Like this book?</h4> <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FThink-Stats%2F181213931900328&amp;width=130&amp;colorscheme=light&amp;show_faces=false&amp;stream=false&amp;header=false&amp;height=62" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:100px;" allowTransparency="true"></iframe>
+
+<p>
+<h4>Are you using one of our books in a class?</h4>  We'd like to know
+about it.  Please consider filling out <a href="http://spreadsheets.google.com/viewform?formkey=dC0tNUZkMjBEdXVoRGljNm9FRmlTMHc6MA" onClick="javascript: pageTracker._trackPageview('/outbound/survey');">this short survey</a>.
+
+<p>
+<br>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?t=greenteapre01-20&o=1&p=8&l=as1&asins=1
+449307116&ref=qf_sp_asin_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1
+=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" margi
+nwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=greenteapre01-20&o=1&p=8&l=as1&m=amazon&f=ifr&md=10FE9736YVPPT7A0FBG2&asins=0521725968" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" onClick="javascript: pageTracker._trackPageview('/outbound/amazon');"></iframe>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?t=greenteapre01-20&o=1&p=8&l=as1&asins=0615185509&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" onClick="javascript: pageTracker._trackPageview('/outbound/amazon_matlab');"></iframe> 
+
+</td>
+</tr>
+</table>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-9267613-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+<HR>
+<A HREF="thinkstats003.html"><IMG SRC="back.png" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="up.png" ALT="Up"></A>
+<A HREF="thinkstats005.html"><IMG SRC="next.png" ALT="Next"></A>
+</BODY>
+</HTML>

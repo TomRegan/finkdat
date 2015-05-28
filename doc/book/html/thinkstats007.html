@@ -1,0 +1,637 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="thinkstats.css">
+<TITLE>Operations on distributions</TITLE>
+</HEAD>
+<BODY >
+<A HREF="thinkstats006.html"><IMG SRC="back.png" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="up.png" ALT="Up"></A>
+<A HREF="thinkstats008.html"><IMG SRC="next.png" ALT="Next"></A>
+<HR>
+<table cellpadding=10>
+
+<tr>
+
+<td valign="top" width=100 bgcolor="#1B82E6">
+</td>
+
+<td valign="top" width=600>
+
+<p>This HTML version of is provided for convenience, but it
+is not the best format for the book.  In particular, some of the
+symbols are not rendered correctly.
+
+<p>You might prefer to read
+the <a href="http://thinkstats.com/thinkstats.pdf">PDF version</a>, or
+you can buy a hardcopy 
+<a href="http://www.lulu.com/product/paperback/think-stats/12443331">here</a>.
+<H1 CLASS="chapter"><A NAME="htoc52">Chapter&#XA0;6</A>&#XA0;&#XA0;Operations on distributions</H1><P>
+<A NAME="operations"></A>
+<A NAME="@default547"></A>
+<A NAME="@default548"></A></P><H2 CLASS="section"><A NAME="toc49"></A><A NAME="htoc53">6.1</A>&#XA0;&#XA0;Skewness</H2><P>
+<A NAME="@default549"></A></P><P><B>Skewness</B> is a statistic that measures the asymmetry of a
+distribution. Given a sequence of values, <I>x<SUB>i</SUB></I>, the sample skewness
+is:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>g</I><SUB>1</SUB>&#XA0;=&#XA0;<I>m</I><SUB>3</SUB>&#XA0;/&#XA0;<I>m</I><SUB>2</SUB><SUP>3/2</SUP></TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>m</I><SUB>2</SUB>&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>&#X2211;</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>i</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;(<I>x<SUB>i</SUB></I>&#XA0;&#X2212;&#XA0;&#XB5;)<SUP>2</SUP>&#XA0;</TD></TR>
+</TABLE><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>m</I><SUB>3</SUB>&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>n</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>&#X2211;</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>i</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;(<I>x<SUB>i</SUB></I>&#XA0;&#X2212;&#XA0;&#XB5;)<SUP>3</SUP>&#XA0;</TD></TR>
+</TABLE><P>
+You might recognize <I>m</I><SUB>2</SUB> as the mean squared deviation (also known as
+variance); <I>m</I><SUB>3</SUB> is the mean cubed deviation.
+<A NAME="@default550"></A>
+<A NAME="@default551"></A></P><P>Negative skewness indicates that a distribution 
+&#X201C;skews left;&#X201D; that is, it extends
+farther to the left than the right. Positive skewness indicates
+that a distribution skews right.</P><P>In practice, computing the skewness of a sample is usually not
+a good idea. If there are any outliers, they
+have a disproportionate effect on <I>g</I><SUB>1</SUB>.
+<A NAME="@default552"></A></P><P>Another way to evaluate the asymmetry of a distribution is to look
+at the relationship between the mean and median.
+Extreme values have more effect on the mean than the median, so
+in a distribution that skews left, the mean is less than the median.
+<A NAME="@default553"></A>
+<A NAME="@default554"></A>
+<A NAME="@default555"></A></P><P><B>Pearson&#X2019;s median skewness coefficient</B> is an alternative measure
+of skewness that explicitly captures the relationship between the
+mean, &#XB5;, and the median, &#XB5;<SUB>1/2</SUB>:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>g<SUB>p</SUB></I>&#XA0;=&#XA0;3&#XA0;(&#XB5;&#XA0;&#X2212;&#XA0;&#XB5;<SUB>1/2</SUB>)&#XA0;/&#XA0;&#X3C3;&#XA0;</TD></TR>
+</TABLE><P>
+This statistic is <B>robust</B>, which means that it is less vulnerable
+to the effect of outliers.
+<A NAME="@default556"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;1</B>&#XA0;&#XA0;<EM>
+Write a function named <TT>Skewness</TT> that computes
+<I>g</I><SUB>1</SUB> for a sample.</EM><P><EM>Compute the skewness for the distributions of pregnancy length and
+birth weight. Are the results consistent with the shape of the
+distributions?
+</EM><A NAME="@default557"></A>
+<A NAME="@default558"></A>
+<A NAME="@default559"></A>
+<A NAME="@default560"></A></P><P><EM>Write a function named <TT>PearsonSkewness</TT> that computes <I>g<SUB>p</SUB></I>
+for these distributions. How does <I>g<SUB>p</SUB></I> compare to <I>g</I><SUB>1</SUB>?</EM></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;2</B>&#XA0;&#XA0;<EM>
+The &#X201C;Lake Wobegon effect&#X201D; is an amusing nickname<SUP><A NAME="text22" HREF="#note22">1</A></SUP> for <B>illusory superiority</B>, which is the tendency for people to
+overestimate their abilities relative to others. For example, in some
+surveys, more than 80% of respondents believe that they are better
+than the average driver (see
+<TT>http://wikipedia.org/wiki/Illusory_superiority</TT>).
+</EM><A NAME="@default561"></A>
+<A NAME="@default562"></A>
+<A NAME="@default563"></A>
+<A NAME="@default564"></A><P><EM>If we interpret &#X201C;average&#X201D; to mean median, then this result is
+logically impossible, but if &#X201C;average&#X201D; is the mean, this result is
+possible, although unlikely.</EM></P><P><EM>What percentage of the population has more than the average number
+of legs?</EM></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;3</B>&#XA0;&#XA0;<EM>
+The Internal Revenue Service of the United States (IRS) provides data
+about income taxes, and other statistics, at <TT>http://irs.gov/taxstats</TT>.
+If you did Exercise&#XA0;<A HREF="thinkstats005.html#irs">13</A>, you have already worked with this data;
+otherwise, follow the instructions there to extract the distribution
+of incomes from this dataset.
+</EM><A NAME="@default565"></A>
+<A NAME="@default566"></A>
+<A NAME="@default567"></A>
+<A NAME="@default568"></A><P><EM>What fraction of the population reports a taxable income below the
+mean?</EM></P><P><EM>Compute the median, mean, skewness and Pearson&#X2019;s skewness of the income
+data. Because the data has been binned, you will have to make
+some approximations.
+</EM><A NAME="@default569"></A>
+<A NAME="@default570"></A></P><P><EM>The Gini coefficient is a measure of income inequality.
+Read about it at <TT>http://wikipedia.org/wiki/Gini_coefficient</TT> and write a
+function called <TT>Gini</TT> that computes it for the income
+distribution.
+</EM><A NAME="@default571"></A></P><P><EM>Hint: use the PMF to compute the relative mean difference
+(see <TT>http://wikipedia.org/wiki/Mean_difference</TT>).
+</EM><A NAME="@default572"></A></P><P><EM>You can download a solution to this exercise from <TT>http://thinkstats.com/gini.py</TT>.</EM></P></DIV><H2 CLASS="section"><A NAME="toc50"></A><A NAME="htoc54">6.2</A>&#XA0;&#XA0;Random Variables</H2><P>
+<A NAME="@default573"></A>
+<A NAME="@default574"></A></P><P>A <B>random variable</B> represents a process that generates a random
+number. Random variables are usually written with a capital letter,
+like <I>X</I>. When you see a random variable, you should think &#X201C;a value
+selected from a distribution.&#X201D;
+<A NAME="@default575"></A>
+<A NAME="@default576"></A></P><P>For example, the formal definition of the cumulative distribution
+function is:</P><P>&#XA0;&#XA0; CDF<I><SUB>X</SUB></I>(<I>x</I>) = <I>P</I>(<I>X</I>&#XA0;&#X2264;&#XA0;<I>x</I>) </P><P>I have avoided this notation until now because it is so awful, but
+here&#X2019;s what it means: The CDF of the random variable <I>X</I>, evaluated
+for a particular value <I>x</I>, is defined as the probability that
+a value generated by the random process <I>X</I>&#XA0;is less than or equal
+to <I>x</I>.</P><P>As a computer scientist, I find it helpful to think of a random
+variable as an object that provides a method, which I will call
+<TT>generate</TT>, that uses a random process to generate values.</P><P>For example, here is a definition for a class that represents
+random variables:
+</P><PRE CLASS="verbatim">class RandomVariable(object):
+    """Parent class for all random variables."""
+</PRE><P>And here is a random variable with an exponential distribution:
+<A NAME="@default577"></A>
+<A NAME="@default578"></A>
+</P><PRE CLASS="verbatim">class Exponential(RandomVariable):
+    def __init__(self, lam):
+        self.lam = lam
+
+    def generate(self):
+        return random.expovariate(self.lam)
+</PRE><P>The init method takes the parameter, &#X3BB;, and stores it as
+an attribute. The <TT>generate</TT> method returns a random value
+from the exponential distribution with that parameter.
+<A NAME="@default579"></A>
+<A NAME="@default580"></A></P><P>Each time you invoke <TT>generate</TT>, you get a different value. The
+value you get is called a <B>random variate</B>, which is why many
+function names in the <TT>random</TT> module include the word &#X201C;variate.&#X201D;
+<A NAME="@default581"></A>
+<A NAME="@default582"></A></P><P>If I were just generating exponential variates, I would not bother to
+define a new class; I would use <TT>random.expovariate</TT>. But for
+other distributions it might be useful to use RandomVariable objects.
+For example, the Erlang distribution is a continuous distribution with
+parameters &#X3BB;&#XA0;and <I>k</I>&#XA0;(see
+<TT>http://wikipedia.org/wiki/Erlang_distribution</TT>).
+<A NAME="@default583"></A>
+<A NAME="@default584"></A></P><P>One way to generate values from an Erlang distribution is to add
+<I>k</I>&#XA0;values from an exponential distribution with the same &#X3BB;.
+Here&#X2019;s an implementation:
+</P><PRE CLASS="verbatim">class Erlang(RandomVariable):
+    def __init__(self, lam, k):
+        self.lam = lam
+        self.k = k
+        self.expo = Exponential(lam)
+
+    def generate(self):
+        total = 0
+        for i in range(self.k):
+            total += self.expo.generate()
+        return total
+</PRE><P>The init method creates an Exponential object with the given
+parameter; then <TT>generate</TT> uses it. In general, the init method
+can take any set of parameters and the <TT>generate</TT> function can
+implement any random process.</P><DIV CLASS="theorem"><B>Exercise&#XA0;4</B>&#XA0;&#XA0;<EM>
+Write a definition for a class that represents a random variable
+with a Gumbel distribution (see <TT>http://wikipedia.org/wiki/Gumbel_distribution</TT>).
+</EM><A NAME="@default585"></A>
+<A NAME="@default586"></A></DIV><H2 CLASS="section"><A NAME="toc51"></A><A NAME="htoc55">6.3</A>&#XA0;&#XA0;PDFs</H2><P>
+<A NAME="density"></A>
+<A NAME="@default587"></A>
+<A NAME="@default588"></A>
+<A NAME="@default589"></A>
+<A NAME="@default590"></A>
+<A NAME="@default591"></A>
+<A NAME="@default592"></A>
+<A NAME="@default593"></A>
+<A NAME="@default594"></A>
+<A NAME="@default595"></A>
+<A NAME="@default596"></A></P><P>The derivative of a CDF is called a <B>probability density function</B>,
+or PDF. For example, the PDF of an exponential distribution is
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>PDF<SUB>expo</SUB></I>(<I>x</I>)&#XA0;=&#XA0;&#X3BB;&#XA0;<I>e</I><SUP>&#X2212;&#X3BB;&#XA0;<I>x</I></SUP>&#XA0;&#XA0;&#XA0;</TD></TR>
+</TABLE><P>
+The PDF of a normal distribution is
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>PDF<SUB>normal</SUB></I>(<I>x</I>)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">&#X3C3;&#XA0;</TD><TD CLASS="dcell"><FONT SIZE=5>&#X221A;</FONT></TD><TD CLASS="dcell"><TABLE border=0 cellspacing=1 cellpadding=0><TR><TD CLASS="hbar"></TD></TR>
+<TR><TD ALIGN=center NOWRAP>2&#XA0;&#X3C0;</TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;
+exp</TD><TD CLASS="dcell">&#X23A1;<BR>
+&#X23A2;<BR>
+&#X23A2;<BR>
+&#X23A2;<BR>
+&#X23A2;<BR>
+&#X23A2;<BR>
+&#X23A3;</TD><TD CLASS="dcell">&#X2212;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">1</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">2</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;
+</TD><TD CLASS="dcell">&#X239B;<BR>
+&#X239C;<BR>
+&#X239C;<BR>
+&#X239D;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>x</I>&#XA0;&#X2212;&#XA0;&#XB5;</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center">&#X3C3;</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD><TD CLASS="dcell">&#X239E;<BR>
+&#X239F;<BR>
+&#X239F;<BR>
+&#X23A0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">2</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">&nbsp;</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD><TD CLASS="dcell">&#X23A4;<BR>
+&#X23A5;<BR>
+&#X23A5;<BR>
+&#X23A5;<BR>
+&#X23A5;<BR>
+&#X23A5;<BR>
+&#X23A6;</TD></TR>
+</TABLE><P>
+Evaluating a PDF for a particular value of <I>x</I>&#XA0;is usually not useful.
+The result is not a probability; it is a probability <EM>density</EM>.
+<A NAME="@default597"></A>
+<A NAME="@default598"></A></P><P>In physics, density is mass per unit of
+volume; in order to get a mass, you have to multiply by volume or,
+if the density is not constant, you have to integrate over volume.
+<A NAME="@default599"></A>
+<A NAME="@default600"></A></P><P>Similarly, probability density measures probability per unit of <I>x</I>.
+In order to get a probability mass<SUP><A NAME="text23" HREF="#note23">2</A></SUP>, you have to integrate over <I>x</I>.
+For example, if <I>x</I>&#XA0;is a random variable whose PDF is PDF<I><SUB>X</SUB></I>, we
+can compute the probability that a value from <I>X</I>&#XA0;falls between 
+&#X2212;0.5 and 0.5:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(&#X2212;0.5&#XA0;&#X2264;&#XA0;<I>X</I>&#XA0;&lt;&#XA0;0.5)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><FONT SIZE=6>&#X222B;</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">0.5</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">&#X2212;0.5</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;<I>PDF<SUB>X</SUB></I>(<I>x</I>)&#XA0;<I>dx</I>&#XA0;</TD></TR>
+</TABLE><P>
+Or, since the CDF is the integral of the PDF, we can write
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(&#X2212;0.5&#XA0;&#X2264;&#XA0;<I>X</I>&#XA0;&lt;&#XA0;0.5)&#XA0;=&#XA0;<I>CDF<SUB>X</SUB></I>(0.5)&#XA0;&#X2212;&#XA0;<I>CDF<SUB>X</SUB></I>(&#X2212;0.5)&#XA0;</TD></TR>
+</TABLE><P>
+For some distributions we can evaluate the CDF explicitly, so we would
+use the second option. Otherwise we usually have to integrate the
+PDF numerically.</P><DIV CLASS="theorem"><B>Exercise&#XA0;5</B>&#XA0;&#XA0;
+<A NAME="expo_pdf"></A><P><EM>What is the probability that a value chosen from an exponential
+distribution with parameter &#X3BB;&#XA0;falls between 1 and 20? Express
+your answer as a function of &#X3BB;. Keep this result handy;
+we will use it in Section&#XA0;<A HREF="thinkstats009.html#censored">8.8</A>.
+</EM><A NAME="@default601"></A>
+<A NAME="@default602"></A></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;6</B>&#XA0;&#XA0;<EM>
+In the BRFSS (see Section&#XA0;<A HREF="thinkstats005.html#lognormal">4.5</A>), the distribution of
+heights is roughly normal with parameters &#XB5;&#XA0;=&#XA0;178 cm and
+&#X3C3;<SUP>2</SUP>&#XA0;=&#XA0;59.4 cm for men, and &#XB5;&#XA0;=&#XA0;163 cm and &#X3C3;<SUP>2</SUP>&#XA0;=&#XA0;52.8 cm for
+women.
+</EM><A NAME="@default603"></A>
+<A NAME="@default604"></A>
+<A NAME="@default605"></A>
+<A NAME="@default606"></A>
+<A NAME="@default607"></A><P><EM>In order to join Blue Man Group, you have to be male between 5&#X2019;10&#X201D;
+and 6&#X2019;1&#X201D; (see <TT>http://bluemancasting.com</TT>). What percentage of the
+U.S. male population is in this range? Hint: see
+Section&#XA0;<A HREF="thinkstats005.html#normal">4.3</A>.</EM></P></DIV><H2 CLASS="section"><A NAME="toc52"></A><A NAME="htoc56">6.4</A>&#XA0;&#XA0;Convolution</H2><P>
+<A NAME="@default608"></A>
+<A NAME="@default609"></A></P><P>Suppose we have two random variables, <I>X</I>&#XA0;and <I>Y</I>, 
+with distributions CDF<I><SUB>X</SUB></I> and CDF<I><SUB>Y</SUB></I>. What is the
+distribution of the sum <I>Z</I>&#XA0;=&#XA0;<I>X</I>&#XA0;+&#XA0;<I>Y</I>?
+<A NAME="@default610"></A>
+<A NAME="@default611"></A>
+<A NAME="@default612"></A></P><P>One option is to write a RandomVariable object that generates
+the sum:
+</P><PRE CLASS="verbatim">class Sum(RandomVariable):
+    def __init__(X, Y):
+        self.X = X
+        self.Y = Y
+
+    def generate():
+        return X.generate() + Y.generate()
+</PRE><P>Given any RandomVariables, <I>X</I>&#XA0;and <I>Y</I>, we can create a Sum
+object that represents <I>Z</I>. Then we can use a sample from <I>Z</I>&#XA0;to
+approximate CDF<I><SUB>Z</SUB></I>.</P><P>This approach is simple and versatile, but not very efficient; we
+have to generate a large sample to estimate CDF<I><SUB>Z</SUB></I> accurately, and
+even then it is not exact.</P><P>If CDF<I><SUB>X</SUB></I> and CDF<I><SUB>Y</SUB></I> are expressed as functions, sometimes we can
+find CDF<I><SUB>Z</SUB></I> exactly. Here&#X2019;s how:</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">To start, assume that the particular value
+of <I>X</I>&#XA0;is <I>x</I>. Then CDF<I><SUB>Z</SUB></I>(<I>z</I>) is 
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>Z</I>&#XA0;&#X2264;&#XA0;<I>z</I>&#XA0;&#XA0;|&#XA0;&#XA0;<I>X</I>&#XA0;=&#XA0;<I>x</I>)&#XA0;&#XA0;=&#XA0;&#XA0;<I>P</I>(<I>Y</I>&#XA0;&#X2264;&#XA0;<I>z</I>&#X2212;<I>x</I>)&#XA0;</TD></TR>
+</TABLE>
+Let&#X2019;s read that back. 
+The left side is &#X201C;the probability that the sum is less than
+<I>z</I>, given that the first term is <I>x</I>.&#X201D; Well, if
+the first term is <I>x</I>&#XA0;and the sum has to be less than <I>z</I>, then the
+second term has to be less than <I>z</I>&#XA0;&#X2212;&#XA0;<I>x</I>.</LI><LI CLASS="li-enumerate">To get the probability that <I>Y</I>&#XA0;is less than <I>z</I>&#XA0;&#X2212;&#XA0;<I>x</I>, we
+evaluate CDF<I><SUB>Y</SUB></I>.
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>Y</I>&#XA0;&#X2264;&#XA0;<I>z</I>&#X2212;<I>x</I>)&#XA0;=&#XA0;<I>CDF<SUB>Y</SUB></I>(<I>z</I>&#X2212;<I>x</I>)&#XA0;</TD></TR>
+</TABLE>
+This follows from the definition of the CDF.</LI><LI CLASS="li-enumerate">Good so far? Let&#X2019;s go on. Since we don&#X2019;t actually know
+the value of <I>x</I>, we have to consider all values it could have and
+integrate over them:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>Z</I>&#XA0;&#X2264;&#XA0;<I>z</I>)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><FONT SIZE=6>&#X222B;</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">&#X221E;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">&#X2212;&#X221E;</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;<I>P</I>(<I>Z</I>&#XA0;&#X2264;&#XA0;<I>z</I>&#XA0;&#XA0;|&#XA0;&#XA0;<I>X</I>&#XA0;=&#XA0;<I>x</I>)&#XA0;&#XA0;&#XA0;<I>PDF<SUB>X</SUB></I>(<I>x</I>)&#XA0;&#XA0;&#XA0;<I>dx</I>&#XA0;</TD></TR>
+</TABLE>
+The integrand is &#X201C;the probability that <I>Z</I>&#XA0;is less than or equal
+to <I>z</I>, given that <I>X</I>&#XA0;=&#XA0;<I>x</I>, times the probability that <I>X</I>&#XA0;=&#XA0;<I>x</I>.&#X201D;<P>Substituting from the previous steps we get
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>Z</I>&#XA0;&#X2264;&#XA0;<I>z</I>)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><FONT SIZE=6>&#X222B;</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">&#X221E;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">&#X2212;&#X221E;</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;<I>CDF<SUB>Y</SUB></I>(<I>z</I>&#X2212;<I>x</I>)&#XA0;&#XA0;&#XA0;<I>PDF<SUB>X</SUB></I>(<I>x</I>)&#XA0;&#XA0;&#XA0;<I>dx</I>&#XA0;</TD></TR>
+</TABLE><P>
+The left side is the definition of CDF<I><SUB>Z</SUB></I>, so we conclude:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>CDF<SUB>Z</SUB></I>(<I>z</I>)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><FONT SIZE=6>&#X222B;</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">&#X221E;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">&#X2212;&#X221E;</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;<I>CDF<SUB>Y</SUB></I>(<I>z</I>&#X2212;<I>x</I>)&#XA0;&#XA0;&#XA0;<I>PDF<SUB>X</SUB></I>(<I>x</I>)&#XA0;&#XA0;&#XA0;<I>dx</I>&#XA0;</TD></TR>
+</TABLE></LI><LI CLASS="li-enumerate">To get PDF<I><SUB>Z</SUB></I>, take the derivative of
+both sides with respect to <I>z</I>. The result is
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>PDF<SUB>Z</SUB></I>(<I>z</I>)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><FONT SIZE=6>&#X222B;</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">&#X221E;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">&#X2212;&#X221E;</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;<I>PDF<SUB>Y</SUB></I>(<I>z</I>&#X2212;<I>x</I>)&#XA0;&#XA0;&#XA0;<I>PDF<SUB>X</SUB></I>(<I>x</I>)&#XA0;&#XA0;&#XA0;<I>dx</I>&#XA0;&#XA0;</TD></TR>
+</TABLE>
+If you have studied signals and systems, you might recognize that
+integral. It is the <B>convolution</B> of PDF<I><SUB>Y</SUB></I> and PDF<I><SUB>X</SUB></I>, 
+denoted with the operator &#X22C6;.<P>&#XA0;&#XA0; PDF<I><SUB>Z</SUB></I> = PDF<I><SUB>Y</SUB></I> &#X22C6;&#XA0;PDF<I><SUB>X</SUB></I> </P><P>So the distribution of the sum is the convolution of the distributions.
+See <TT>http://wiktionary.org/wiki/booyah</TT>!
+<A NAME="@default613"></A>
+<A NAME="@default614"></A>
+<A NAME="@default615"></A></P></LI></OL><P>
+<A NAME="@default616"></A></P><P>As an example, suppose <I>X</I>&#XA0;and <I>Y</I>&#XA0;are random variables with an
+exponential distribution with parameter &#X3BB;. 
+The distribution of <I>Z</I>&#XA0;=&#XA0;<I>X</I>&#XA0;+&#XA0;<I>Y</I>&#XA0;is:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>PDF<SUB>Z</SUB></I>(<I>z</I>)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><FONT SIZE=6>&#X222B;</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">&#X221E;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">&#X2212;&#X221E;</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;<I>PDF<SUB>X</SUB></I>(<I>x</I>)&#XA0;<I>PDF<SUB>Y</SUB></I>(<I>z</I>&#X2212;<I>x</I>)&#XA0;&#XA0;&#XA0;<I>dx</I>&#XA0;=&#XA0;
+</TD><TD CLASS="dcell"><FONT SIZE=6>&#X222B;</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left">&#X221E;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">&#X2212;&#X221E;</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;&#X3BB;&#XA0;<I>e</I><SUP>&#X2212;&#X3BB;&#XA0;<I>x</I></SUP>&#XA0;&#X3BB;&#XA0;<I>e</I><SUP>&#X2212;&#X3BB;&#XA0;(<I>z</I>&#X2212;<I>x</I>)</SUP>&#XA0;<I>dx</I>&#XA0;</TD></TR>
+</TABLE><P>
+Now we have to remember that <I>PDF<SUB>expo</SUB></I> is 0 for all negative
+values, but we can handle that by adjusting the limits of integration:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>PDF<SUB>Z</SUB></I>(<I>z</I>)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><FONT SIZE=6>&#X222B;</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left"><I>z</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;&#X3BB;&#XA0;<I>e</I><SUP>&#X2212;&#X3BB;&#XA0;<I>x</I></SUP>&#XA0;&#X3BB;&#XA0;<I>e</I><SUP>&#X2212;&#X3BB;&#XA0;(<I>z</I>&#X2212;<I>x</I>)</SUP>&#XA0;&#XA0;&#XA0;<I>dx</I>&#XA0;</TD></TR>
+</TABLE><P>
+Now we can combine terms and move constants outside the integral:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>PDF<SUB>Z</SUB></I>(<I>z</I>)&#XA0;=&#XA0;&#X3BB;<SUP>2</SUP>&#XA0;<I>e</I><SUP>&#X2212;&#X3BB;&#XA0;<I>z</I></SUP>&#XA0;</TD><TD CLASS="dcell"><FONT SIZE=6>&#X222B;</FONT></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="left"><I>z</I></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left"><BR>
+<BR>
+</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="left">0</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;<I>dx</I>&#XA0;=&#XA0;
+&#X3BB;<SUP>2</SUP>&#XA0;<I>z</I>&#XA0;&#XA0;&#XA0;<I>e</I><SUP>&#X2212;&#X3BB;&#XA0;<I>z</I></SUP>&#XA0;</TD></TR>
+</TABLE><P>
+This, it turns out, is the PDF of an Erlang distribution with
+parameter <I>k</I>&#XA0;=&#XA0;2 (see <TT>http://wikipedia.org/wiki/Erlang_distribution</TT>).
+So the convolution of two exponential distributions (with the same
+parameter) is an Erlang distribution.
+<A NAME="@default617"></A>
+<A NAME="@default618"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;7</B>&#XA0;&#XA0;<EM>
+If <I>X</I>&#XA0;has an exponential distribution with parameter
+&#X3BB;, and <I>Y</I>&#XA0;has an Erlang distribution with parameters
+<I>k</I>&#XA0;and &#X3BB;, what is the distribution of the sum <I>Z</I>&#XA0;=&#XA0;<I>X</I>&#XA0;+&#XA0;<I>Y</I>?
+</EM><A NAME="@default619"></A>
+<A NAME="@default620"></A></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;8</B>&#XA0;&#XA0;<EM>
+Suppose I draw two values from a distribution; what is the distribution
+of the larger value? Express your answer in terms of the PDF or CDF of
+the distribution.
+</EM><A NAME="@default621"></A><P><EM>As the number of values increases, the distribution of the maximum
+converges on one of the extreme value distributions; see
+<TT>http://wikipedia.org/wiki/Gumbel_distribution</TT>.
+</EM><A NAME="@default622"></A>
+<A NAME="@default623"></A></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;9</B>&#XA0;&#XA0;<EM>
+If you are given Pmf objects, you can compute the distribution of
+the sum by enumerating all pairs of values:
+</EM><A NAME="@default624"></A>
+<PRE CLASS="verbatim"><EM>for x in pmf_x.Values():
+    for y in pmf_y.Values():
+        z = x + y
+</EM></PRE><P><EM>Write a function that takes PMF<SUB><I>X</I></SUB> and
+PMF<SUB><I>Y</I></SUB> and returns a new Pmf that represents the distribution of
+the sum <I>Z</I>&#XA0;=&#XA0;<I>X</I>&#XA0;+&#XA0;<I>Y</I>.</EM></P><P><EM>Write a similar function that computes the PMF of <I>Z</I>&#XA0;=&#XA0;max(<I>X</I>, <I>Y</I>).</EM></P></DIV><H2 CLASS="section"><A NAME="toc53"></A><A NAME="htoc57">6.5</A>&#XA0;&#XA0;Why normal?</H2><P>
+<A NAME="why_normal"></A>
+<A NAME="@default625"></A>
+<A NAME="@default626"></A>
+<A NAME="@default627"></A>
+<A NAME="@default628"></A></P><P>I said earlier that normal distributions are amenable to analysis,
+but I didn&#X2019;t say why. One reason is that they are
+closed under linear transformation and convolution. To explain what
+that means, it will help to introduce some notation.
+<A NAME="@default629"></A>
+<A NAME="@default630"></A>
+<A NAME="@default631"></A></P><P>If the distribution of a random variable, <I>X</I>, is
+normal with parameters &#XB5;&#XA0;and &#X3C3;, you can write</P><P>&#XA0;&#XA0; <I>X</I>&#XA0;&#X223C;&#XA0;<FONT COLOR=red><I>N</I></FONT>(&#XB5;, &#X3C3;<SUP>2</SUP>) </P><P>where the symbol &#X223C;&#XA0;means &#X201C;is distributed&#X201D; and the script letter
+<FONT COLOR=red><I>N</I></FONT>&#XA0;stands for &#X201C;normal.&#X201D;</P><P>A linear transformation of <I>X</I>&#XA0;is something like <I>X</I>&#X2019;&#XA0;=&#XA0;<I>aX</I>&#XA0;+&#XA0;<I>b</I>, where
+<I>a</I>&#XA0;and <I>b</I>&#XA0;are real numbers.<A NAME="@default632"></A>
+A family of distributions is closed under
+linear transformation if <I>X</I>&#X2019; is in the same family as <I>X</I>. The normal
+distribution has this property; if <I>X</I>&#XA0;&#X223C;&#XA0;<FONT COLOR=red><I>N</I></FONT>(&#XB5;,
+&#X3C3;<SUP>2</SUP>),</P><P>&#XA0;&#XA0; <I>X</I>&#X2019;&#XA0;&#X223C;&#XA0;<FONT COLOR=red><I>N</I></FONT>(<I>a</I>&#XB5;&#XA0;+&#XA0;<I>b</I>, <I>a</I><SUP>2</SUP> &#X3C3;<SUP>2</SUP>) </P><P>Normal distributions are also closed under convolution. 
+If <I>Z</I>&#XA0;=&#XA0;<I>X</I>&#XA0;+&#XA0;<I>Y</I>and
+<I>X</I>&#XA0;&#X223C;&#XA0;<FONT COLOR=red><I>N</I></FONT>(&#XB5;<I><SUB>X</SUB></I>, &#X3C3;<I><SUB>X</SUB></I><SUP>2</SUP>) and
+<I>Y</I>&#XA0;&#X223C;&#XA0;<FONT COLOR=red><I>N</I></FONT>(&#XB5;<I><SUB>Y</SUB></I>, &#X3C3;<I><SUB>Y</SUB></I><SUP>2</SUP>) then
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>Z</I>&#XA0;&#X223C;&#XA0;<FONT COLOR=red><I>N</I></FONT>&#XA0;(&#XB5;<I><SUB>X</SUB></I>&#XA0;+&#XA0;&#XB5;<I><SUB>Y</SUB></I>,&#XA0;&#X3C3;<I><SUB>X</SUB></I><SUP>2</SUP>&#XA0;+&#XA0;&#X3C3;<I><SUB>Y</SUB></I><SUP>2</SUP>)&#XA0;</TD></TR>
+</TABLE><P>
+The other distributions we have looked at do not have these
+properties.
+<A NAME="@default633"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;10</B>&#XA0;&#XA0;<EM>
+If 
+<I>X</I>&#XA0;&#X223C;&#XA0;<FONT COLOR=red><I>N</I></FONT>(&#XB5;<SUB><I>X</I></SUB>, &#X3C3;<SUB><I>X</I></SUB><SUP>2</SUP>) and
+<I>Y</I>&#XA0;&#X223C;&#XA0;<FONT COLOR=red><I>N</I></FONT>(&#XB5;<SUB><I>Y</I></SUB>, &#X3C3;<SUB><I>Y</I></SUB><SUP>2</SUP>), what 
+is the distribution of <I>Z</I>&#XA0;=&#XA0;<I>aX</I>&#XA0;+&#XA0;<I>bY</I>?</EM></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;11</B>&#XA0;&#XA0;<EM>
+Let&#X2019;s see what happens when we add values from
+other distributions. Choose a pair of distributions (any two of
+exponential, normal, lognormal, and Pareto) and choose parameters
+that make their mean and variance similar.
+</EM><A NAME="@default634"></A>
+<A NAME="@default635"></A>
+<A NAME="@default636"></A>
+<A NAME="@default637"></A>
+<A NAME="@default638"></A>
+<A NAME="@default639"></A>
+<A NAME="@default640"></A><P><EM>Generate random numbers from these distributions and compute the
+distribution of their sums. Use the tests from
+Chapter&#XA0;<A HREF="thinkstats005.html#continuous">4</A> to see if the sum can be modeled by a
+continuous distribution.</EM></P></DIV><H2 CLASS="section"><A NAME="toc54"></A><A NAME="htoc58">6.6</A>&#XA0;&#XA0;Central limit theorem</H2><P>
+<A NAME="CLT"></A>
+<A NAME="@default641"></A></P><P>So far we have seen:</P><UL CLASS="itemize"><LI CLASS="li-itemize">If we add values drawn from normal distributions, the distribution
+of the sum is normal.
+<A NAME="@default642"></A>
+<A NAME="@default643"></A>
+<A NAME="@default644"></A>
+<A NAME="@default645"></A>
+<A NAME="@default646"></A></LI><LI CLASS="li-itemize">If we add values drawn from other distributions, the sum does not
+generally have one of the continuous distributions we have seen.</LI></UL><P>But it turns out that if we add up a large number of values from
+almost any distribution, the distribution of the sum converges to
+normal.</P><P>More specifically, if the distribution of the values has mean and
+standard deviation &#XB5;&#XA0;and &#X3C3;, the distribution of the sum is
+approximately <FONT COLOR=red><I>N</I></FONT>(<I>n</I>&#XB5;, <I>n</I>&#X3C3;<SUP>2</SUP>).</P><P>This is called the <B>Central Limit Theorem</B>. It is one of the
+most useful tools for statistical analysis, but it comes with
+caveats:</P><UL CLASS="itemize"><LI CLASS="li-itemize">The values have to be drawn independently.
+<A NAME="@default647"></A></LI><LI CLASS="li-itemize">The values have to come from the same distribution (although
+this requirement can be relaxed).
+<A NAME="@default648"></A></LI><LI CLASS="li-itemize">The values have to be drawn
+from a distribution with finite mean and variance, so most Pareto
+distributions are out.
+<A NAME="@default649"></A>
+<A NAME="@default650"></A>
+<A NAME="@default651"></A>
+<A NAME="@default652"></A>
+<A NAME="@default653"></A>
+<A NAME="@default654"></A></LI><LI CLASS="li-itemize">The number of values you need before you see convergence depends
+on the skewness of the distribution. Sums from an exponential
+distribution converge for small sample sizes. Sums from a
+lognormal distribution do not.
+<A NAME="@default655"></A>
+<A NAME="@default656"></A></LI></UL><P>The Central Limit Theorem explains, at least in part, the prevalence
+of normal distributions in the natural world. Most characteristics of
+animals and other life forms are affected by a large number of genetic
+and environmental factors whose effect is additive. The characteristics
+we measure are the sum of a large number of small effects, so their
+distribution tends to be normal.
+<A NAME="@default657"></A>
+<A NAME="@default658"></A>
+<A NAME="@default659"></A>
+<A NAME="@default660"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;12</B>&#XA0;&#XA0;<EM>
+If I draw a sample, <I>x</I><SUB>1</SUB> .. <I>x<SUB>n</SUB></I>, independently from a
+distribution with finite mean &#XB5;&#XA0;and variance &#X3C3;<SUP>2</SUP>, what is
+the distribution of the sample mean:
+</EM><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><EM><SPAN style="text-decoration:overline">x</SPAN>&#XA0;=&#XA0;</EM></TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><EM>1</EM></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I><EM>n</EM></I></TD></TR>
+</TABLE></TD><TD CLASS="dcell"><EM>&#XA0;<FONT SIZE=6>&#X2211;</FONT><I>x<SUB>i</SUB></I>&#XA0;</EM></TD></TR>
+</TABLE><EM>
+As <I>n</I>&#XA0;increases, what happens to the variance of the sample mean?
+Hint: review Section&#XA0;<A HREF="#why_normal">6.5</A>.</EM></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;13</B>&#XA0;&#XA0;<EM>
+Choose a distribution (one of exponential, lognormal or Pareto) and
+choose values for the parameter(s). Generate samples with sizes
+2, 4, 8, etc., and compute the distribution of their sums. Use
+a normal probability plot to see if the distribution is approximately
+normal. How many terms do you have to add to see convergence?
+</EM><A NAME="@default661"></A>
+<A NAME="@default662"></A>
+<A NAME="@default663"></A>
+<A NAME="@default664"></A>
+<A NAME="@default665"></A>
+<A NAME="@default666"></A>
+<A NAME="@default667"></A></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;14</B>&#XA0;&#XA0;<EM>
+Instead of the distribution of sums, compute the distribution of
+products; what happens as the number of terms increases?
+Hint: look at the distribution of the log of the products.
+</EM><A NAME="@default668"></A>
+<A NAME="@default669"></A></DIV><H2 CLASS="section"><A NAME="toc55"></A><A NAME="htoc59">6.7</A>&#XA0;&#XA0;The distribution framework</H2><P>
+<A NAME="@default670"></A>
+<A NAME="@default671"></A></P><BLOCKQUOTE CLASS="figure"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+<DIV CLASS="center"><IMG SRC="thinkstats015.png"></DIV>
+<DIV CLASS="caption"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD VALIGN=top ALIGN=left>Figure 6.1: A framework that relates representations of distribution
+functions.</TD></TR>
+</TABLE></DIV>
+<A NAME="dist_framework"></A>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><P>At this point we have seen PMFs, CDFs and PDFs; let&#X2019;s take a minute
+to review. Figure&#XA0;<A HREF="#dist_framework">6.1</A> shows how these functions relate
+to each other.
+<A NAME="@default672"></A></P><P>We started with PMFs, which represent the probabilities for a discrete
+set of values. To get from a PMF to a CDF, we computed a cumulative sum.
+To be more consistent, a discrete CDF should be called a cumulative mass
+function (CMF), but as far as I can tell no one uses that term.
+<A NAME="@default673"></A></P><P>To get from a CDF to a PMF, you can compute differences in cumulative
+probabilities.
+<A NAME="@default674"></A></P><P>Similarly, a PDF is the derivative of a continuous CDF; or, equivalently,
+a CDF is the integral of a PDF. But remember that a PDF maps from
+values to probability densities; to get a probability, you have to
+integrate.
+<A NAME="@default675"></A>
+<A NAME="@default676"></A></P><P>To get from a discrete to a continuous distribution, you can perform
+various kinds of smoothing. One form of smoothing is to assume that
+the data come from an analytic continuous distribution
+(like exponential or normal) and to estimate the parameters of that
+distribution. And that&#X2019;s what Chapter&#XA0;<A HREF="thinkstats009.html#estimation">8</A> is about.
+<A NAME="@default677"></A>
+<A NAME="@default678"></A>
+<A NAME="@default679"></A>
+<A NAME="@default680"></A>
+<A NAME="@default681"></A>
+<A NAME="@default682"></A>
+<A NAME="@default683"></A></P><P>If you divide a PDF into a set of bins, you can generate a PMF that is
+at least an approximation of the PDF. We use this
+technique in Chapter&#XA0;<A HREF="thinkstats009.html#estimation">8</A> to do Bayesian estimation.
+<A NAME="@default684"></A>
+<A NAME="@default685"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;15</B>&#XA0;&#XA0;<EM>
+Write a function called <TT>MakePmfFromCdf</TT> that takes a Cdf object
+and returns the corresponding Pmf object.</EM><P><EM>You can find a solution to this exercise in <TT>thinkstats.com/Pmf.py</TT>.
+</EM><A NAME="@default686"></A></P></DIV><H2 CLASS="section"><A NAME="toc56"></A><A NAME="htoc60">6.8</A>&#XA0;&#XA0;Glossary</H2><DL CLASS="description"><DT CLASS="dt-description"><B>skewness:</B></DT><DD CLASS="dd-description"> A characteristic of a distribution; intuitively, it
+is a measure of how asymmetric the distribution is.
+<A NAME="@default687"></A></DD><DT CLASS="dt-description"><B>robust:</B></DT><DD CLASS="dd-description"> A statistic is robust if it is relatively immune to the
+effect of outliers.
+<A NAME="@default688"></A></DD><DT CLASS="dt-description"><B>illusory superiority:</B></DT><DD CLASS="dd-description"> The tendency of people to imagine that
+they are better than average.
+<A NAME="@default689"></A>
+<A NAME="@default690"></A></DD><DT CLASS="dt-description"><B>random variable:</B></DT><DD CLASS="dd-description"> An object that represents a random process.
+<A NAME="@default691"></A>
+<A NAME="@default692"></A></DD><DT CLASS="dt-description"><B>random variate:</B></DT><DD CLASS="dd-description"> A value generated by a random process.
+<A NAME="@default693"></A>
+<A NAME="@default694"></A></DD><DT CLASS="dt-description"><B>PDF:</B></DT><DD CLASS="dd-description"> Probability density function, the derivative of a continuous CDF.
+<A NAME="@default695"></A>
+<A NAME="@default696"></A></DD><DT CLASS="dt-description"><B>convolution:</B></DT><DD CLASS="dd-description"> An operation that computes the distribution of the
+sum of values from two distributions. 
+<A NAME="@default697"></A></DD><DT CLASS="dt-description"><B>Central Limit Theorem:</B></DT><DD CLASS="dd-description"> &#X201C;The supreme law of Unreason,&#X201D; according
+to Sir Francis Galton, an early statistician.
+<A NAME="@default698"></A>
+<A NAME="@default699"></A>
+<A NAME="@default700"></A></DD></DL><HR CLASS="footnoterule"><DL CLASS="thefootnotes"><DT CLASS="dt-thefootnotes">
+<A NAME="note22" HREF="#text22">1</A></DT><DD CLASS="dd-thefootnotes">If you
+don&#X2019;t get it, see <TT>http://wikipedia.org/wiki/Lake_Wobegon</TT>.
+</DD><DT CLASS="dt-thefootnotes"><A NAME="note23" HREF="#text23">2</A></DT><DD CLASS="dd-thefootnotes">To take the analogy one
+step farther, the mean of a distribution is its center of mass, and
+the variance is its moment of inertia.
+</DD></DL>
+</td>
+
+<td width=130 valign="top">
+
+<h4>Like this book?</h4> <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FThink-Stats%2F181213931900328&amp;width=130&amp;colorscheme=light&amp;show_faces=false&amp;stream=false&amp;header=false&amp;height=62" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:100px;" allowTransparency="true"></iframe>
+
+<p>
+<h4>Are you using one of our books in a class?</h4>  We'd like to know
+about it.  Please consider filling out <a href="http://spreadsheets.google.com/viewform?formkey=dC0tNUZkMjBEdXVoRGljNm9FRmlTMHc6MA" onClick="javascript: pageTracker._trackPageview('/outbound/survey');">this short survey</a>.
+
+<p>
+<br>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?t=greenteapre01-20&o=1&p=8&l=as1&asins=1
+449307116&ref=qf_sp_asin_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1
+=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" margi
+nwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=greenteapre01-20&o=1&p=8&l=as1&m=amazon&f=ifr&md=10FE9736YVPPT7A0FBG2&asins=0521725968" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" onClick="javascript: pageTracker._trackPageview('/outbound/amazon');"></iframe>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?t=greenteapre01-20&o=1&p=8&l=as1&asins=0615185509&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" onClick="javascript: pageTracker._trackPageview('/outbound/amazon_matlab');"></iframe> 
+
+</td>
+</tr>
+</table>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-9267613-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+<HR>
+<A HREF="thinkstats006.html"><IMG SRC="back.png" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="up.png" ALT="Up"></A>
+<A HREF="thinkstats008.html"><IMG SRC="next.png" ALT="Next"></A>
+</BODY>
+</HTML>

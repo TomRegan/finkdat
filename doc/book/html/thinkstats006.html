@@ -1,0 +1,606 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="thinkstats.css">
+<TITLE>Probability</TITLE>
+</HEAD>
+<BODY >
+<A HREF="thinkstats005.html"><IMG SRC="back.png" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="up.png" ALT="Up"></A>
+<A HREF="thinkstats007.html"><IMG SRC="next.png" ALT="Next"></A>
+<HR>
+<table cellpadding=10>
+
+<tr>
+
+<td valign="top" width=100 bgcolor="#1B82E6">
+</td>
+
+<td valign="top" width=600>
+
+<p>This HTML version of is provided for convenience, but it
+is not the best format for the book.  In particular, some of the
+symbols are not rendered correctly.
+
+<p>You might prefer to read
+the <a href="http://thinkstats.com/thinkstats.pdf">PDF version</a>, or
+you can buy a hardcopy 
+<a href="http://www.lulu.com/product/paperback/think-stats/12443331">here</a>.
+<H1 CLASS="chapter"><A NAME="htoc43">Chapter&#XA0;5</A>&#XA0;&#XA0;Probability</H1><P>
+<A NAME="probability"></A>
+<A NAME="@default427"></A>
+<A NAME="@default428"></A>
+<A NAME="@default429"></A></P><P>In Chapter&#XA0;<A HREF="thinkstats003.html#descriptive">2</A>, I said that a probability is a frequency
+expressed as a fraction of the sample size. That&#X2019;s one definition of
+probability, but it&#X2019;s not the only one. In fact, the meaning
+of probability is a topic of some controversy.</P><P>We&#X2019;ll start with the uncontroversial parts and work our way up. There
+is general agreement that a probability is a real value between 0 and
+1 that is intended to be a quantitative measure corresponding to the
+qualitative notion that some things are more likely than others.
+<A NAME="@default430"></A>
+<A NAME="@default431"></A></P><P>The &#X201C;things&#X201D; we assign probabilities to are called <B>events</B>. If
+<I>E</I>&#XA0;represents an event, then <I>P</I>(<I>E</I>) represents the probability that
+<I>E</I>&#XA0;will occur. A situation where <I>E</I>&#XA0;might or might not happen is
+called a <B>trial</B>.
+<A NAME="@default432"></A>
+<A NAME="@default433"></A>
+<A NAME="@default434"></A></P><P>As an example, suppose you have a standard six-sided
+die<SUP><A NAME="text14" HREF="#note14">1</A></SUP> and want to know
+the probability of rolling a 6. Each roll is a trial.
+Each time a 6 appears is considered a <B>success</B>; other trials are
+considered <B>failures</B>. These terms are used even in scenarios
+where &#X201C;success&#X201D; is bad and &#X201C;failure&#X201D; is good.</P><P>If we have a finite sample of <I>n</I>&#XA0;trials and we observe <I>s</I>&#XA0;successes,
+the probability of success is <I>s</I>/<I>n</I>. If the set of trials is
+infinite, defining probabilities is a little trickier, but most people
+are willing to accept probabilistic claims about a hypothetical series
+of identical trials, like tossing a coin or rolling a die.
+<A NAME="@default435"></A>
+<A NAME="@default436"></A></P><P>We start to run into trouble when we talk about probabilities of
+unique events. For example, we might like to know the probability
+that a candidate will win an election. But every election is unique,
+so there is no series of identical trials to consider.
+<A NAME="@default437"></A></P><P>In cases like this some people would say that the notion of
+probability does not apply. This position is sometimes called <B>frequentism</B> because it defines probability in terms of frequencies.
+If there is no set of identical trials, there is no probability.
+<A NAME="@default438"></A>
+<A NAME="@default439"></A></P><P>Frequentism is philosophically safe, but
+frustrating because it limits the scope of probability to physical
+systems that are either random (like atomic decay) or so unpredictable
+that we model them as random (like a tumbling die). Anything involving
+people is pretty much off the table.</P><P>An alternative is <B>Bayesianism</B>, which defines probability as
+a degree of belief that an event will occur. By this definition,
+the notion of probability can be applied in almost any circumstance.
+One difficulty with Bayesian probability is that it depends on
+a person&#X2019;s state of knowledge; people with different information
+might have different degrees of belief about the same event. For
+this reason, many people think that Bayesian probabilities are
+more subjective than frequency probabilities.
+<A NAME="@default440"></A>
+<A NAME="@default441"></A>
+<A NAME="@default442"></A>
+<A NAME="@default443"></A>
+<A NAME="@default444"></A></P><P>As an example, what is the probability that Thaksin Shinawatra is the
+Prime Minister of Thailand? A frequentist would say that there is no
+probability for this event because there is no set of
+trials. Thaksin either is, or is not, the PM; it&#X2019;s not a question of
+probability.</P><P>In contrast, a Bayesian would be willing to assign a probability to
+this event based on his or her state of knowledge. For example, if
+you remember that there was a coup in Thailand in 2006, and you are
+pretty sure Thaksin was the PM who was ousted, you might
+assign a probability like 0.1, which acknowledges the possibility
+that your recollection is incorrect, or that Thaksin has been
+reinstated.</P><P>If you consult Wikipedia, you will learn that Thaksin is not the
+PM of Thailand (at the time I am writing). Based on this
+information, you might revise your probability estimate to 0.01,
+reflecting the possibility that Wikipedia is wrong.</P><H2 CLASS="section"><A NAME="toc41"></A><A NAME="htoc44">5.1</A>&#XA0;&#XA0;Rules of probability</H2><P>
+<A NAME="@default445"></A></P><P>For frequency probabilities, we can derive rules that relate
+probabilities of different events. Probably the best known of these
+rules is</P><P>&#XA0;&#XA0; <I>P</I>(<I>A</I>&#XA0;and&#XA0;<I>B</I>) = <I>P</I>(<I>A</I>) <I>P</I>(<I>B</I>) &#XA0;&#XA0;Warning: not always true! </P><P>where <I>P</I>(<I>A</I>&#XA0;and&#XA0;<I>B</I>) is the probability that events <I>A</I>&#XA0;and <I>B</I>&#XA0;both
+occur. This formula is easy to remember; the only problem is that it
+is <EM>not always true</EM>. This formula only applies if <I>A</I>&#XA0;and <I>B</I>&#XA0;are 
+<B>independent</B>, which means that if I know <I>A</I>&#XA0;occurred, that
+doesn&#X2019;t change the probability of <I>B</I>, and vice versa.
+<A NAME="@default446"></A>
+<A NAME="@default447"></A></P><P>For example, if <I>A</I>&#XA0;is tossing a coin and getting heads, and <I>B</I>&#XA0;is 
+rolling a die and getting 1, <I>A</I>&#XA0;and <I>B</I>&#XA0;are independent, because
+the coin toss doesn&#X2019;t tell me anything about the die roll.
+<A NAME="@default448"></A></P><P>But if I roll two dice, and <I>A</I>&#XA0;is getting at least one six, and
+<I>B</I>&#XA0;is getting two sixes, <I>A</I>&#XA0;and <I>B</I>&#XA0;are not independent, because
+if I know that <I>A</I>&#XA0;occurred, the probability of <I>B</I>&#XA0;is higher, and
+if I know <I>B</I>&#XA0;occurred, the probability of <I>A</I>&#XA0;is 1.
+<A NAME="@default449"></A>
+<A NAME="@default450"></A></P><P>When <I>A</I>&#XA0;and <I>B</I>&#XA0;are not independent, it is often useful to compute
+the conditional probability, <I>P</I>(<I>A</I>|<I>B</I>), which is the probability of
+<I>A</I>&#XA0;given that we know <I>B</I>&#XA0;occurred:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>A</I>|<I>B</I>)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>P</I>(<I>A</I>&#XA0;&#XA0;and&#XA0;&#XA0;<I>B</I>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>P</I>(<I>B</I>)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD></TR>
+</TABLE><P>
+From that we can derive the general relation</P><P>&#XA0;&#XA0; <I>P</I>(<I>A</I>&#XA0;and&#XA0;<I>B</I>) = <I>P</I>(<I>A</I>) <I>P</I>(<I>B</I>|<I>A</I>) </P><P>This might not be as easy to remember, but if you translate it into
+English it should make sense: &#X201C;The chance of both things happening
+is the chance that the first one happens, and then the second one
+given the first.&#X201D;</P><P>There is nothing special about the order of events, so we could also
+write</P><P>&#XA0;&#XA0; <I>P</I>(<I>A</I>&#XA0;and&#XA0;<I>B</I>) = <I>P</I>(<I>B</I>) <I>P</I>(<I>A</I>|<I>B</I>) </P><P>These relationships hold whether <I>A</I>&#XA0;and <I>B</I>&#XA0;are independent or not.
+If they are independent, then <I>P</I>(<I>A</I>|<I>B</I>)&#XA0;=&#XA0;<I>P</I>(<I>A</I>), which gets us back
+where we started.</P><P>Because all probabilities are in the range 0 to 1, it is
+easy to show that </P><P>&#XA0;&#XA0; <I>P</I>(<I>A</I>&#XA0;and&#XA0;<I>B</I>)&#XA0;&#X2264;&#XA0;<I>P</I>(<I>A</I>) </P><P>To picture this, imagine a club that only admits people who satisfy
+some requirement, <I>A</I>. Now suppose they add a new requirement for
+membership, <I>B</I>. It seems obvious that the club will get smaller, or
+stay the same if it happens that all the members satisfy <I>B</I>. But
+there are some scenarios where people are surprisingly bad at this
+kind of analysis. For examples and discussion of this phenomenon, see
+<TT>http://wikipedia.org/wiki/Conjunction_fallacy</TT>.
+<A NAME="@default451"></A>
+<A NAME="@default452"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;1</B>&#XA0;&#XA0;<EM>
+If I roll two dice and the total is 8, what is the chance that
+one of the dice is a 6?
+</EM><A NAME="@default453"></A></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;2</B>&#XA0;&#XA0;<EM>
+If I roll 100 dice, what is the chance of getting all sixes?
+What is the chance of getting no sixes?</EM></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;3</B>&#XA0;&#XA0;<EM>
+The following questions are adapted from Mlodinow, </EM>The Drunkard&#X2019;s
+Walk<EM>.
+</EM><A NAME="@default454"></A>
+<A NAME="@default455"></A>
+<A NAME="@default456"></A><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate"><EM>If a family has two children, what is the chance that they
+have two girls?</EM></LI><LI CLASS="li-enumerate"><EM>If a family has two children and we know that at least one of
+them is a girl, what is the chance that they have two girls?</EM></LI><LI CLASS="li-enumerate"><EM>If a family has two children and we know that the older one is a
+girl, what is the chance that they have two girls?</EM></LI><LI CLASS="li-enumerate"><EM>If a family has two children and we know that at least one of
+them is a girl named Florida, what is the chance that they have
+two girls?</EM></LI></OL><P><EM>You can assume that the probability that any child is a girl is 1/2,
+and that the children in a family are independent trials (in more ways
+than one). You can also assume that the percentage of girls named
+Florida is small.</EM></P></DIV><H2 CLASS="section"><A NAME="toc42"></A><A NAME="htoc45">5.2</A>&#XA0;&#XA0;Monty Hall</H2><P>
+<A NAME="@default457"></A></P><P>The Monty Hall problem might be the most contentious question in
+the history of probability. The scenario is simple, but the correct
+answer is so counter-intuitive that many people just can&#X2019;t accept
+it, and many smart people have embarrassed themselves not just by
+getting it wrong but by arguing the wrong side, aggressively,
+in public.</P><P>Monty Hall was the original host of the game show <EM>Let&#X2019;s Make a
+Deal</EM>. The Monty Hall problem is based on one of the regular
+games on the show. If you are on the show, here&#X2019;s what happens:</P><UL CLASS="itemize"><LI CLASS="li-itemize">Monty shows you three closed doors and tells you that there is a
+prize behind each door: one prize is a car, the other two are less
+valuable prizes like peanut butter and fake finger nails. The
+prizes are arranged at random.</LI><LI CLASS="li-itemize">The object of the game is to guess which door has the car. If
+you guess right, you get to keep the car.</LI><LI CLASS="li-itemize">So you pick a door, which we will call Door A. We&#X2019;ll call the
+other doors B and C.</LI><LI CLASS="li-itemize">Before opening the door you chose, Monty likes to increase the
+suspense by opening either Door B or C, whichever does not
+have the car. (If the car is actually behind Door A, Monty can
+safely open B or C, so he chooses one at random).</LI><LI CLASS="li-itemize">Then Monty offers you the option to stick with your original
+choice or switch to the one remaining unopened door.</LI></UL><P>The question is, should you &#X201C;stick&#X201D; or &#X201C;switch&#X201D; or does it
+make no difference?
+<A NAME="@default458"></A>
+<A NAME="@default459"></A>
+<A NAME="@default460"></A></P><P>Most people have the strong intuition that it makes no difference.
+There are two doors left, they reason, so the chance that the car
+is behind Door A is 50%.</P><P>But that is wrong. In fact, the chance of winning if you stick
+with Door A is only 1/3; if you switch, your chances are 2/3.
+I will explain why, but I don&#X2019;t expect you to believe me.</P><P>The key is to realize that there are three possible scenarios:
+the car is behind Door A, B or C. Since the prizes are
+arranged at random, the probability of each scenario is 1/3.</P><P>If your strategy is to stick with Door A, then you will
+win only in Scenario A, which has probability 1/3.</P><P>If your strategy is to switch, you will win in either Scenario
+B or Scenario C, so the total probability of winning is 2/3.</P><P>If you are not completely convinced by this argument, you are
+in good company. When a friend presented this solution to
+Paul Erd&#X151;s, he replied, &#X201C;No, that is impossible. It should
+make no difference.<SUP><A NAME="text15" HREF="#note15">2</A></SUP>&#X201D;</P><P>No amount of argument could convince him. In the end, it took
+a computer simulation to bring him around.</P><DIV CLASS="theorem"><B>Exercise&#XA0;4</B>&#XA0;&#XA0;<EM>
+Write a program that simulates the Monty Hall problem and use
+it to estimate the probability of winning if you stick and if
+you switch.</EM><P><EM>Then read the discussion of the problem at
+<TT>http://wikipedia.org/wiki/Monty_Hall_problem</TT>.</EM></P><P><EM>Which do you find more convincing, the simulation or the arguments,
+and why?</EM></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;5</B>&#XA0;&#XA0;<EM>
+To understand the Monty Hall problem, it is important to realize
+that by deciding which door to open, Monty is giving you information.
+To see why this matters, imagine the case where Monty doesn&#X2019;t
+know where the prizes are, so he chooses Door B or C at random.
+</EM><A NAME="@default461"></A>
+<A NAME="@default462"></A><P><EM>If he opens the door with the car, the game is over, you lose, and
+you don&#X2019;t get to choose whether to switch or stick.</EM></P><P><EM>Otherwise, are you better off switching or sticking?</EM></P></DIV><H2 CLASS="section"><A NAME="toc43"></A><A NAME="htoc46">5.3</A>&#XA0;&#XA0;Poincar&#XE9;</H2><P>Henri Poincar&#XE9;&#XA0;was a French mathematician who taught at the Sorbonne
+around 1900. The following anecdote about him is probably fabricated,
+but it makes an interesting probability problem.
+<A NAME="@default463"></A></P><P>Supposedly Poincar&#XE9;&#XA0;suspected that his local bakery was selling
+loaves of bread that were lighter than the advertised weight of 1 kg,
+so every day for a year he bought a loaf of bread, brought it home and
+weighed it. At the end of the year, he plotted the distribution of
+his measurements and showed that it fit a normal distribution with
+mean 950 g and standard deviation 50 g. He brought this evidence to
+the bread police, who gave the baker a warning.
+<A NAME="@default464"></A>
+<A NAME="@default465"></A>
+<A NAME="@default466"></A>
+<A NAME="@default467"></A></P><P>For the next year, Poincar&#XE9;&#XA0;continued the practice of weighing his
+bread every day. At the end of the year, he found that the average
+weight was 1000 g, just as it should be, but again he complained to
+the bread police, and this time they fined the baker.
+<A NAME="@default468"></A></P><P>Why? Because the shape of the distribution was asymmetric. Unlike
+the normal distribution, it was skewed to the right, which is
+consistent with the hypothesis that the baker was still making 950 g
+loaves, but deliberately giving Poincar&#XE9;&#XA0;the heavier ones.</P><DIV CLASS="theorem"><B>Exercise&#XA0;6</B>&#XA0;&#XA0;<EM>
+Write a program that simulates a baker who chooses <I>n</I>&#XA0;loaves from a
+distribution with mean 950 g and standard deviation 50 g, and gives
+the heaviest one to Poincar&#XE9;. What value of <I>n</I>&#XA0;yields a
+distribution with mean 1000 g? What is the standard deviation?</EM><P><EM>Compare this distribution to a normal distribution with the same mean
+and the same standard deviation. Is the difference in the shape of
+the distribution big enough to convince the bread police?</EM></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;7</B>&#XA0;&#XA0;
+<A NAME="coef_var"></A><EM>
+If you go to a dance where partners are paired up randomly, what
+percentage of opposite sex couples will you see where the woman is
+taller than the man?
+</EM><A NAME="@default469"></A>
+<A NAME="@default470"></A>
+<A NAME="@default471"></A>
+<A NAME="@default472"></A><P><EM>In the BRFSS (see Section&#XA0;<A HREF="thinkstats005.html#lognormal">4.5</A>), the distribution of
+heights is roughly normal with parameters &#XB5;&#XA0;=&#XA0;178 cm and
+&#X3C3;<SUP>2</SUP>&#XA0;=&#XA0;59.4 cm for men, and &#XB5;&#XA0;=&#XA0;163 cm and &#X3C3;<SUP>2</SUP>&#XA0;=&#XA0;52.8 cm for
+women.
+</EM><A NAME="@default473"></A>
+<A NAME="@default474"></A></P><P><EM>As an aside, you might notice that the standard deviation for men is
+higher and wonder whether men&#X2019;s heights are more variable. To compare
+variability between groups, it is useful to compute the <B>coefficient of variation</B>, which is the standard deviation as a
+fraction of the mean, &#X3C3;/&#XB5;. By this measure, women&#X2019;s
+heights are slightly more variable.
+</EM><A NAME="@default475"></A></P></DIV><H2 CLASS="section"><A NAME="toc44"></A><A NAME="htoc47">5.4</A>&#XA0;&#XA0;Another rule of probability</H2><P>
+<A NAME="@default476"></A>
+<A NAME="@default477"></A></P><P>If two events are <B>mutually exclusive</B>, that means that only
+one of them can happen, so the conditional probabilities are 0:</P><P>&#XA0;&#XA0; <I>P</I>(<I>A</I>|<I>B</I>) = <I>P</I>(<I>B</I>|<I>A</I>) = 0 </P><P>In this case it is easy to compute the probability of either event:</P><P>&#XA0;&#XA0; <I>P</I>(<I>A</I>&#XA0;or&#XA0;<I>B</I>) = <I>P</I>(<I>A</I>)&#XA0;+&#XA0;<I>P</I>(<I>B</I>) &#XA0;&#XA0;Warning: not always true.</P><P>But remember that this only applies if the events are mutually
+exclusive. In general the probability of <I>A</I>&#XA0;or <I>B</I>&#XA0;or both is:</P><P>&#XA0;&#XA0; <I>P</I>(<I>A</I>&#XA0;or&#XA0;<I>B</I>) = <I>P</I>(<I>A</I>)&#XA0;+&#XA0;<I>P</I>(<I>B</I>)&#XA0;&#X2212;&#XA0;<I>P</I>(<I>A</I>&#XA0;and&#XA0;<I>B</I>) </P><P>The reason we have to subtract off <I>P</I>(<I>A</I>&#XA0;and&#XA0;<I>B</I>) is that otherwise it
+gets counted twice. For example, if I flip two coins, the chance of
+getting at least one tails is 1/2&#XA0;+&#XA0;1/2&#XA0;&#X2212;&#XA0;1/4. I have to subtract
+1/4 because otherwise I am counting heads-heads twice. The problem
+becomes even clearer if I toss three coins.
+<A NAME="@default478"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;8</B>&#XA0;&#XA0;<EM>
+If I roll two dice, what is the chance of rolling at least one 6?
+</EM><A NAME="@default479"></A></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;9</B>&#XA0;&#XA0;<EM>
+What is the general formula for the probability of <I>A</I>&#XA0;or <I>B</I>&#XA0;but not both?</EM></DIV><H2 CLASS="section"><A NAME="toc45"></A><A NAME="htoc48">5.5</A>&#XA0;&#XA0;Binomial distribution</H2><P>
+<A NAME="@default480"></A>
+<A NAME="@default481"></A></P><P>If I roll 100 dice, the chance of getting all sixes is
+(1/6)<SUP>100</SUP>. And the chance of getting no sixes is (5/6)<SUP>100</SUP>.</P><P>Those cases are easy, but more generally, we might like to know the
+chance of getting <I>k</I>&#XA0;sixes, for all values of <I>k</I>&#XA0;from 0 to 100. The
+answer is the <B>binomial distribution</B>, which has this PMF:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>PMF</I>(<I>k</I>)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">&#X239B;<BR>
+&#X239C;<BR>
+&#X239D;</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP><I>n</I></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#X239E;<BR>
+&#X239F;<BR>
+&#X23A0;</TD></TR>
+</TABLE></TD><TD CLASS="dcell"><I>p<SUP>k</SUP></I>&#XA0;(1&#X2212;<I>p</I>)<SUP><I>n</I>&#X2212;<I>k</I></SUP></TD></TR>
+</TABLE><P>
+where <I>n</I>&#XA0;is the number of trials, <I>p</I>&#XA0;is the probability of success,
+and <I>k</I>&#XA0;is the number of successes.
+<A NAME="@default482"></A>
+<A NAME="@default483"></A></P><P>The <B>binomial coefficient</B> is pronounced &#X201C;n choose k&#X201D;, and it
+can be computed directly like this:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">&#X239B;<BR>
+&#X239C;<BR>
+&#X239D;</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP><I>n</I></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#X239E;<BR>
+&#X239F;<BR>
+&#X23A0;</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>n</I>!</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>k</I>!(<I>n</I>&#X2212;<I>k</I>)!</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;&#XA0;</TD></TR>
+</TABLE><P>
+Or recursively like this
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">&#X239B;<BR>
+&#X239C;<BR>
+&#X239D;</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP><I>n</I></TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#X239E;<BR>
+&#X239F;<BR>
+&#X23A0;</TD></TR>
+</TABLE></TD><TD CLASS="dcell">=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">&#X239B;<BR>
+&#X239C;<BR>
+&#X239D;</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP><I>n</I>&#X2212;1</TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>k</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#X239E;<BR>
+&#X239F;<BR>
+&#X23A0;</TD></TR>
+</TABLE></TD><TD CLASS="dcell">+&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR VALIGN="middle"><TD CLASS="dcell">&#X239B;<BR>
+&#X239C;<BR>
+&#X239D;</TD><TD CLASS="dcell"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD ALIGN=center NOWRAP><I>n</I>&#X2212;1</TD></TR>
+<TR><TD ALIGN=center NOWRAP><I>k</I>&#X2212;1</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#X239E;<BR>
+&#X239F;<BR>
+&#X23A0;</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+with two base cases: if <I>n</I>&#XA0;=&#XA0;0 the result is 0; if <I>k</I>&#XA0;=&#XA0;0 the result is 1.
+If you download <TT>http://thinkstats.com/thinkstats.py</TT> you will see a function
+named <TT>Binom</TT> that computes the binomial coefficient with reasonable
+efficiency.
+<A NAME="@default484"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;10</B>&#XA0;&#XA0;<EM>
+If you flip a coin 100 times, you expect about 50 heads, but what
+is the probability of getting exactly 50 heads?
+</EM><A NAME="@default485"></A></DIV><H2 CLASS="section"><A NAME="toc46"></A><A NAME="htoc49">5.6</A>&#XA0;&#XA0;Streaks and hot spots</H2><P>
+<A NAME="@default486"></A>
+<A NAME="@default487"></A>
+<A NAME="@default488"></A></P><P>People do not have very good intuition for random processes. If you
+ask people to generate &#X201C;random&#X201D; numbers, they tend to generate
+sequences that are random-looking, but actually more ordered than real
+random sequences. Conversely, if you show them a real random
+sequence, they tend to see patterns where there are none.</P><P>An example of the second phenomenon is that many people believe
+in &#X201C;streaks&#X201D; in sports: a player that has been successful recently
+is said to have a &#X201C;hot hand;&#X201D; a player that has been unsuccessful is
+&#X201C;in a slump.&#X201D;
+<A NAME="@default489"></A>
+<A NAME="@default490"></A>
+<A NAME="@default491"></A></P><P>Statisticians have tested these hypotheses in a number of sports, and
+the consistent result is that there is no such thing as a
+streak<SUP><A NAME="text16" HREF="#note16">3</A></SUP>. If you assume that each attempt is independent of previous
+attempts, you will see occasional long strings of successes or
+failures. These apparent streaks are not sufficient evidence that
+there is any relationship between successive attempts.
+<A NAME="@default492"></A>
+<A NAME="@default493"></A></P><P>A related phenomenon is the clustering illusion, which is the
+tendency to see clusters in spatial patterns that are actually
+random (see <TT>http://wikipedia.org/wiki/Clustering_illusion</TT>).
+<A NAME="@default494"></A>
+<A NAME="@default495"></A></P><P>To test whether an apparent
+cluster is likely to be meaningful, we can simulate the behavior
+of a random system to see whether it is likely to produce a similar
+cluster. This process is called <B>Monte Carlo</B> simulation because
+generating random numbers is reminiscent of casino games (and Monte
+Carlo is famous for its casino).</P><DIV CLASS="theorem"><B>Exercise&#XA0;11</B>&#XA0;&#XA0;<EM>
+If there are 10 players in a basketball game and each one takes
+15 shots during the course of the game, and each shot has a
+50% probability of going in, what is the probability that 
+you will see, in a given game, at least one player who
+hits 10 shots in a row? If you watch a season of 82 games,
+what are the chances you will see at least one streak of
+10 hits or misses?
+</EM><A NAME="@default496"></A>
+<A NAME="@default497"></A>
+<A NAME="@default498"></A><P><EM>This problem demonstrates some strengths and weaknesses of Monte
+Carlo simulation. A strength is that it is often easy and fast
+to write a simulation, and no great knowledge of probability is
+required. A weakness is that estimating the probability of
+rare events can take a long time! A little bit of analysis can
+save a lot of computing.</EM></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;12</B>&#XA0;&#XA0;<EM>
+In 1941 Joe DiMaggio got at least one hit
+in 56 consecutive games<SUP><A NAME="text17" HREF="#note17">4</A></SUP>. Many baseball fans
+consider this streak the greatest achievement in any sport in history,
+because it was so unlikely.
+</EM><A NAME="@default499"></A>
+<A NAME="@default500"></A>
+<A NAME="@default501"></A>
+<A NAME="@default502"></A>
+<A NAME="@default503"></A><P><EM>Use a Monte Carlo simulation to estimate the probability that
+any player in major league baseball will have a hitting streak
+of 57 or more games in the next century.</EM></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;13</B>&#XA0;&#XA0;<EM>
+A cancer cluster is defined by the Centers for Disease Control (CDC)
+as &#X201C;greater-than-expected number of cancer cases that occurs within a
+group of people in a geographic area over a period of
+time.<SUP><A NAME="text18" HREF="#note18">5</A></SUP>&#X201D;
+</EM><A NAME="@default504"></A>
+<A NAME="@default505"></A>
+<A NAME="@default506"></A><P><EM>Many people interpret a cancer cluster as evidence of an environmental
+hazard, but many scientists and statisticians think that investigating
+cancer clusters is a waste of time<SUP><A NAME="text19" HREF="#note19">6</A></SUP>. Why? One reason
+(among several) is that identifying cancer clusters is a classic case
+of the Sharpshooter Fallacy (see
+<TT>http://wikipedia.org/wiki/Texas_sharpshooter_fallacy</TT>).
+</EM><A NAME="@default507"></A>
+<A NAME="@default508"></A></P><P><EM>Nevertheless, when someone reports a cancer cluster, the CDC is
+obligated to investigate. According to their web page:</EM></P><BLOCKQUOTE CLASS="quote"><P><EM>&#X201C;Investigators develop a &#X2018;case&#X2019; definition, a time period of concern,
+and the population at risk. They then calculate the expected number
+of cases and compare them to the observed number. A cluster is
+confirmed when the observed/expected ratio is greater than 1.0, and
+the difference is statistically significant.&#X201D;</EM></P></BLOCKQUOTE><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate"><EM>Suppose that a particular cancer has an incidence of 1 case per
+thousand people per year. If you follow a particular cohort of 100
+people for 10 years, you would expect to see about 1 case. If you
+saw two cases, that would not be very surprising, but more than than
+two would be rare.</EM><A NAME="@default509"></A><P><EM>Write a program that simulates a large number of cohorts over
+a 10 year period and estimates the distribution of total cases.</EM></P></LI><LI CLASS="li-enumerate"><EM>An observation is considered statistically significant if its
+probability by chance alone, called a p-value, is less than 5%.
+In a cohort of 100 people over 10 years, how many cases would you
+have to see to meet this criterion?</EM></LI><LI CLASS="li-enumerate"><EM>Now imagine that you divide a population of 10000 people into 100
+cohorts and follow them for 10 years. What is the chance that at
+least one of the cohorts will have a &#X201C;statistically significant&#X201D;
+cluster? What if we require a p-value of 1%?</EM></LI><LI CLASS="li-enumerate"><EM>Now imagine that you arrange 10000 people in a 100 &#XD7;100
+grid and follow them for 10 years. What is the chance that there
+will be at least one 10 &#XD7;10 block anywhere in the grid
+with a statistically significant cluster?</EM></LI><LI CLASS="li-enumerate"><EM>Finally, imagine that you follow a grid of 10000 people for 30
+years. What is the chance that there will be a 10-year interval
+at some point with a 10 &#XD7;10 block anywhere in the grid
+with a statistically significant cluster?</EM></LI></OL></DIV><H2 CLASS="section"><A NAME="toc47"></A><A NAME="htoc50">5.7</A>&#XA0;&#XA0;Bayes&#X2019;s theorem</H2><P>
+<A NAME="@default510"></A>
+<A NAME="@default511"></A></P><P>Bayes&#X2019;s theorem is a relationship between the conditional probabilities
+of two events. A conditional probability, often written <I>P</I>(<I>A</I>|<I>B</I>) is
+the probability that Event <I>A</I>will occur given that we know that
+Event <I>B</I>has occurred. Bayes&#X2019;s theorem states:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>A</I>|<I>B</I>)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>P</I>(<I>B</I>|<I>A</I>)<I>P</I>(<I>A</I>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>P</I>(<I>B</I>)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD></TR>
+</TABLE><P>
+To see that this is true, it helps to write <I>P</I>(<I>A</I>&#XA0;and&#XA0;<I>B</I>), which
+is the probability that A and B occur</P><P>&#XA0;&#XA0; <I>P</I>(<I>A</I>&#XA0;and&#XA0;<I>B</I>) = <I>P</I>(<I>A</I>) <I>P</I>(<I>B</I>|<I>A</I>) </P><P>But it is also true that </P><P>&#XA0;&#XA0; <I>P</I>(<I>A</I>&#XA0;and&#XA0;<I>B</I>) = <I>P</I>(<I>B</I>) <I>P</I>(<I>A</I>|<I>B</I>) </P><P>So</P><P>&#XA0;&#XA0; <I>P</I>(<I>B</I>) <I>P</I>(<I>A</I>|<I>B</I>) = <I>P</I>(<I>A</I>) <I>P</I>(<I>B</I>|<I>A</I>) </P><P>Dividing through by <I>P</I>(<I>B</I>) yields Bayes&#X2019;s theorem<SUP><A NAME="text20" HREF="#note20">7</A></SUP>.
+<A NAME="@default512"></A>
+<A NAME="@default513"></A>
+<A NAME="@default514"></A></P><P>Bayes&#X2019;s theorem is often interpreted as a statement about 
+how a body of evidence, <I>E</I>, affects the probability of a 
+hypothesis, <I>H</I>:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>H</I>|<I>E</I>)&#XA0;=&#XA0;<I>P</I>(<I>H</I>)&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>P</I>(<I>E</I>|<I>H</I>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>P</I>(<I>E</I>)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD></TR>
+</TABLE><P>
+In words, this equation says that the probability of <I>H</I>&#XA0;after you
+have seen <I>E</I>&#XA0;is the product of <I>P</I>(<I>H</I>), which is the probability of
+<I>H</I>&#XA0;before you saw the evidence, and the ratio of <I>P</I>(<I>E</I>|<I>H</I>), the
+probability of seeing the evidence assuming that <I>H</I>&#XA0;is true, and
+<I>P</I>(<I>E</I>), the probability of seeing the evidence under any circumstances
+(<I>H</I>&#XA0;true or not).
+<A NAME="@default515"></A></P><P>This way of reading Bayes&#X2019;s theorem is called the &#X201C;diachronic&#X201D;
+interpretation because it describes how the probability of a
+hypothesis gets <B>updated</B> over time, usually in light of new
+evidence. In this context, <I>P</I>(<I>H</I>) is called the <B>prior</B>
+probability and <I>P</I>(<I>H</I>|<I>E</I>) is called the <B>posterior</B>.
+<I>P</I>(<I>E</I>|<I>H</I>) is the <B>likelihood</B> of the evidence, and
+<I>P</I>(<I>E</I>) is the <B>normalizing constant</B>.
+<A NAME="@default516"></A>
+<A NAME="@default517"></A>
+<A NAME="@default518"></A>
+<A NAME="@default519"></A>
+<A NAME="@default520"></A></P><P>A classic use of Bayes&#X2019;s theorem is the interpretation of clinical
+tests. For example, routine testing for illegal drug use is
+increasingly common in workplaces and schools (See
+<TT>http://aclu.org/drugpolicy/testing</TT>.). The companies that
+perform these tests maintain that the tests are sensitive, which means
+that they are likely to produce a positive result if there are drugs
+(or metabolites) in a sample, and specific, which means that they are
+likely to yield a negative result if there are no drugs.
+<A NAME="@default521"></A>
+<A NAME="@default522"></A>
+<A NAME="@default523"></A></P><P>Studies from the Journal of the American Medical
+Association<SUP><A NAME="text21" HREF="#note21">8</A></SUP> estimate that
+the sensitivity of common drug tests is about 60% and the specificity
+is about 99%.</P><P>Now suppose these tests are applied to a workforce where the
+actual rate of drug use is 5%. Of the employees who test positive,
+how many of them actually use drugs?</P><P>In Bayesian terms, we want to compute the probability of
+drug use given a positive test, <I>P</I>(<I>D</I>|<I>E</I>). By Bayes&#X2019;s theorem:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>D</I>|<I>E</I>)&#XA0;=&#XA0;<I>P</I>(<I>D</I>)&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>P</I>(<I>E</I>|<I>D</I>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>P</I>(<I>E</I>)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD></TR>
+</TABLE><P>
+The prior, <I>P</I>(<I>D</I>) is the probability of drug use before we
+see the outcome of the test, which is 5%.
+The likelihood, <I>P</I>(<I>E</I>|<I>D</I>), is the probability
+of a positive test assuming drug use, which is the sensitivity.</P><P>The normalizing constant, <I>P</I>(<I>E</I>) is a little harder to evaluate. We
+have to consider two possibilities, <I>P</I>(<I>E</I>|<I>D</I>) and <I>P</I>(<I>E</I>|<I>N</I>), where
+<I>N</I>&#XA0;is the hypothesis that the subject of the test does not use drugs:</P><P>&#XA0;&#XA0; <I>P</I>(<I>E</I>) = <I>P</I>(<I>D</I>) <I>P</I>(<I>E</I>|<I>D</I>)&#XA0;+&#XA0;<I>P</I>(<I>N</I>) <I>P</I>(<I>E</I>|<I>N</I>) </P><P>The probability of a false positive, <I>P</I>(<I>E</I>|<I>N</I>), is the complement
+of the specificity, or 1%.
+<A NAME="@default524"></A></P><P>Putting it together, we have
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>D</I>|<I>E</I>)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>P</I>(<I>D</I>)&#XA0;<I>P</I>(<I>E</I>|<I>D</I>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>P</I>(<I>D</I>)&#XA0;<I>P</I>(<I>E</I>|<I>D</I>)&#XA0;+&#XA0;<I>P</I>(<I>N</I>)&#XA0;<I>P</I>(<I>E</I>|<I>N</I>)</TD></TR>
+</TABLE></TD></TR>
+</TABLE><P>
+Plugging in the given values yields <I>P</I>(<I>D</I>|<I>E</I>)&#XA0;=&#XA0;0.76, which means
+that of the people who test positive, about 1 in 4 is innocent. </P><DIV CLASS="theorem"><B>Exercise&#XA0;14</B>&#XA0;&#XA0;<EM>
+Write a program that takes the actual rate of drug use, and the
+sensitivity and specificity of the test, and uses Bayes&#X2019;s theorem
+to compute <I>P</I>(<I>D</I>|<I>E</I>).</EM><P><EM>Suppose the same test is applied to a population where the actual
+rate of drug use is 1%. What is the probability that someone
+who tests positive is actually a drug user?</EM></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;15</B>&#XA0;&#XA0;<EM>
+This exercise is from <TT>http://wikipedia.org/wiki/Bayesian_inference</TT>.</EM><BLOCKQUOTE CLASS="quote"><P><EM>&#X201C;Suppose there are two full bowls of cookies. Bowl 1 has 10 chocolate
+chip and 30 plain cookies, while Bowl 2 has 20 of each. Our friend
+Fred picks a bowl at random, and then picks a cookie at random. The
+cookie turns out to be a plain one. How probable is it that Fred
+picked it out of Bowl 1?&#X201D;</EM></P></BLOCKQUOTE><P>
+<A NAME="@default525"></A></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;16</B>&#XA0;&#XA0;<P><EM>The blue M&amp;M was introduced in 1995. Before then, the color mix in
+a bag of plain M&amp;Ms was (30% Brown, 20% Yellow, 20% Red, 10%
+Green, 10% Orange, 10% Tan). Afterward it was (24% Blue , 20%
+Green, 16% Orange, 14% Yellow, 13% Red, 13% Brown).</EM></P><P><EM>A friend of mine has two bags of M&amp;Ms, and he tells me
+that one is from 1994 and one from 1996. He won&#X2019;t tell me which is
+which, but he gives me one M&amp;M from each bag. One is yellow and
+one is green. What is the probability that the yellow M&amp;M came
+from the 1994 bag?</EM></P></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;17</B>&#XA0;&#XA0;<EM>
+This exercise is adapted from MacKay, </EM>Information
+Theory, Inference, and Learning Algorithms<EM>:
+</EM><A NAME="@default526"></A>
+<A NAME="@default527"></A>
+<A NAME="@default528"></A><P><EM>Elvis Presley had a twin brother who died at birth. According to the
+Wikipedia article on twins:</EM></P><BLOCKQUOTE CLASS="quote"><EM>
+&#X201C;Twins are estimated to be approximately 1.9% of the world population,
+with monozygotic twins making up 0.2% of the total&#X2014;and 8% of all
+twins.&#X201D;
+</EM></BLOCKQUOTE><P><EM>What is the probability that Elvis was an identical twin?</EM></P></DIV><H2 CLASS="section"><A NAME="toc48"></A><A NAME="htoc51">5.8</A>&#XA0;&#XA0;Glossary</H2><DL CLASS="description"><DT CLASS="dt-description"><B>event:</B></DT><DD CLASS="dd-description"> Something that may or may not occur, with some probability.
+<A NAME="@default529"></A></DD><DT CLASS="dt-description"><B>trial:</B></DT><DD CLASS="dd-description"> One in a series of occasions when an event might occur.
+<A NAME="@default530"></A></DD><DT CLASS="dt-description"><B>success:</B></DT><DD CLASS="dd-description"> A trial in which an event occurs.
+<A NAME="@default531"></A></DD><DT CLASS="dt-description"><B>failure:</B></DT><DD CLASS="dd-description"> A trail in which no event occurs.
+<A NAME="@default532"></A></DD><DT CLASS="dt-description"><B>frequentism:</B></DT><DD CLASS="dd-description"> A strict interpretation of probability that only
+applies to a series of identical trials.
+<A NAME="@default533"></A></DD><DT CLASS="dt-description"><B>Bayesianism:</B></DT><DD CLASS="dd-description"> A more general interpretation that uses
+probability to represent a subjective degree of belief.
+<A NAME="@default534"></A>
+<A NAME="@default535"></A>
+<A NAME="@default536"></A></DD><DT CLASS="dt-description"><B>independent:</B></DT><DD CLASS="dd-description"> Two events are independent if the occurrence of
+one does has no effect on the probability of another.
+<A NAME="@default537"></A></DD><DT CLASS="dt-description"><B>coefficient of variation:</B></DT><DD CLASS="dd-description"> A statistic that measures spread,
+normalized by central tendency, for comparison between distributions
+with different means.
+<A NAME="@default538"></A></DD><DT CLASS="dt-description"><B>Monte Carlo simulation:</B></DT><DD CLASS="dd-description"> A method of computing probabilities by
+simulating random processes (see
+<TT>http://wikipedia.org/wiki/Monte_Carlo_method</TT>).
+<A NAME="@default539"></A>
+<A NAME="@default540"></A></DD><DT CLASS="dt-description"><B>update:</B></DT><DD CLASS="dd-description"> The process of using data to revise a probability.
+<A NAME="@default541"></A></DD><DT CLASS="dt-description"><B>prior:</B></DT><DD CLASS="dd-description"> A probability before a Bayesian update.
+<A NAME="@default542"></A></DD><DT CLASS="dt-description"><B>posterior:</B></DT><DD CLASS="dd-description"> A probability computed by a Bayesian update.
+<A NAME="@default543"></A></DD><DT CLASS="dt-description"><B>likelihood of the evidence:</B></DT><DD CLASS="dd-description"> One of the terms in Bayes&#X2019;s
+theorem, the probability of the evidence conditioned on a
+hypothesis.
+<A NAME="@default544"></A>
+<A NAME="@default545"></A></DD><DT CLASS="dt-description"><B>normalizing constant:</B></DT><DD CLASS="dd-description"> The denominator of Bayes&#X2019;s Theorem,
+used to normalize the result to be a probability.
+<A NAME="@default546"></A></DD></DL><HR CLASS="footnoterule"><DL CLASS="thefootnotes"><DT CLASS="dt-thefootnotes">
+<A NAME="note14" HREF="#text14">1</A></DT><DD CLASS="dd-thefootnotes">&#X201C;Die&#X201D; is the singular of &#X201C;dice&#X201D;.
+</DD><DT CLASS="dt-thefootnotes"><A NAME="note15" HREF="#text15">2</A></DT><DD CLASS="dd-thefootnotes">See Hoffman, <EM>The Man Who Loved
+Only Numbers</EM>, page 83.
+</DD><DT CLASS="dt-thefootnotes"><A NAME="note16" HREF="#text16">3</A></DT><DD CLASS="dd-thefootnotes">For example, see Gilovich, Vallone and Tversky, &#X201C;The
+hot hand in basketball: On the misperception of random sequences,&#X201D;
+1985.
+</DD><DT CLASS="dt-thefootnotes"><A NAME="note17" HREF="#text17">4</A></DT><DD CLASS="dd-thefootnotes">See
+<TT>http://wikipedia.org/wiki/Hitting_streak</TT>.
+</DD><DT CLASS="dt-thefootnotes"><A NAME="note18" HREF="#text18">5</A></DT><DD CLASS="dd-thefootnotes">From <TT>http://cdc.gov/nceh/clusters/about.htm</TT>.
+</DD><DT CLASS="dt-thefootnotes"><A NAME="note19" HREF="#text19">6</A></DT><DD CLASS="dd-thefootnotes">See Gawande, &#X201C;The Cancer
+Cluster Myth,&#X201D; <EM>New Yorker</EM>, Feb 8, 1997.
+</DD><DT CLASS="dt-thefootnotes"><A NAME="note20" HREF="#text20">7</A></DT><DD CLASS="dd-thefootnotes">See
+<TT>http://wikipedia.org/wiki/Q.E.D.</TT>!
+</DD><DT CLASS="dt-thefootnotes"><A NAME="note21" HREF="#text21">8</A></DT><DD CLASS="dd-thefootnotes">I got these numbers from Gleason and Barnum,
+&#X201C;Predictive Probabilities In Employee Drug-Testing,&#X201D; at
+<TT>http://piercelaw.edu/risk/vol2/winter/gleason.htm</TT>.
+</DD></DL>
+</td>
+
+<td width=130 valign="top">
+
+<h4>Like this book?</h4> <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FThink-Stats%2F181213931900328&amp;width=130&amp;colorscheme=light&amp;show_faces=false&amp;stream=false&amp;header=false&amp;height=62" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:100px;" allowTransparency="true"></iframe>
+
+<p>
+<h4>Are you using one of our books in a class?</h4>  We'd like to know
+about it.  Please consider filling out <a href="http://spreadsheets.google.com/viewform?formkey=dC0tNUZkMjBEdXVoRGljNm9FRmlTMHc6MA" onClick="javascript: pageTracker._trackPageview('/outbound/survey');">this short survey</a>.
+
+<p>
+<br>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?t=greenteapre01-20&o=1&p=8&l=as1&asins=1
+449307116&ref=qf_sp_asin_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1
+=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" margi
+nwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=greenteapre01-20&o=1&p=8&l=as1&m=amazon&f=ifr&md=10FE9736YVPPT7A0FBG2&asins=0521725968" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" onClick="javascript: pageTracker._trackPageview('/outbound/amazon');"></iframe>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?t=greenteapre01-20&o=1&p=8&l=as1&asins=0615185509&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" onClick="javascript: pageTracker._trackPageview('/outbound/amazon_matlab');"></iframe> 
+
+</td>
+</tr>
+</table>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-9267613-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+<HR>
+<A HREF="thinkstats005.html"><IMG SRC="back.png" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="up.png" ALT="Up"></A>
+<A HREF="thinkstats007.html"><IMG SRC="next.png" ALT="Next"></A>
+</BODY>
+</HTML>

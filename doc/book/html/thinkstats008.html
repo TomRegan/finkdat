@@ -1,0 +1,533 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+
+<META http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<META name="GENERATOR" content="hevea 1.10">
+<LINK rel="stylesheet" type="text/css" href="thinkstats.css">
+<TITLE>Hypothesis testing</TITLE>
+</HEAD>
+<BODY >
+<A HREF="thinkstats007.html"><IMG SRC="back.png" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="up.png" ALT="Up"></A>
+<A HREF="thinkstats009.html"><IMG SRC="next.png" ALT="Next"></A>
+<HR>
+<table cellpadding=10>
+
+<tr>
+
+<td valign="top" width=100 bgcolor="#1B82E6">
+</td>
+
+<td valign="top" width=600>
+
+<p>This HTML version of is provided for convenience, but it
+is not the best format for the book.  In particular, some of the
+symbols are not rendered correctly.
+
+<p>You might prefer to read
+the <a href="http://thinkstats.com/thinkstats.pdf">PDF version</a>, or
+you can buy a hardcopy 
+<a href="http://www.lulu.com/product/paperback/think-stats/12443331">here</a>.
+<H1 CLASS="chapter"><A NAME="htoc61">Chapter&#XA0;7</A>&#XA0;&#XA0;Hypothesis testing</H1><P>
+<A NAME="testing"></A>
+<A NAME="@default701"></A>
+<A NAME="@default702"></A></P><P>Exploring the data from the NSFG, we saw several &#X201C;apparent effects,&#X201D;
+including a number of differences between first babies and others.
+So far we have taken these effects at face value; in this chapter,
+finally, we put them to the test.
+<A NAME="@default703"></A>
+<A NAME="@default704"></A></P><P>The fundamental question we want to address is whether these effects
+are real. For example, if we see a difference in the mean pregnancy
+length for first babies and others, we want to know whether that
+difference is real, or whether it occurred by chance.
+<A NAME="@default705"></A>
+<A NAME="@default706"></A></P><P>That question turns out to be hard to address directly, so we will
+proceed in two steps. First we will test whether the effect is <B>significant</B>, then we will try to interpret the result
+as an answer to the original question.
+<A NAME="@default707"></A></P><P>In the context of statistics, &#X201C;significant&#X201D; has a technical
+definition that is different from its use in common language.
+As defined earlier, an apparent effect is statistically
+significant if it is unlikely to have occurred by chance.
+<A NAME="@default708"></A></P><P>To make this more precise, we have to answer three questions:</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">What do we mean by &#X201C;chance&#X201D;?</LI><LI CLASS="li-enumerate">What do we mean by &#X201C;unlikely&#X201D;?</LI><LI CLASS="li-enumerate">What do we mean by &#X201C;effect&#X201D;?</LI></OL><P>All three of these questions are harder than they look. Nevertheless,
+there is a general structure that people use to test statistical
+significance:</P><DL CLASS="description"><DT CLASS="dt-description"><B>Null hypothesis:</B></DT><DD CLASS="dd-description"> The <B>null hypothesis</B> is a model of the
+system based on the assumption that the apparent effect was actually
+due to chance.
+<A NAME="@default709"></A></DD><DT CLASS="dt-description"><B>p-value:</B></DT><DD CLASS="dd-description"> The <B>p-value</B> is the probability of the apparent
+effect under the null hypothesis.
+<A NAME="@default710"></A></DD><DT CLASS="dt-description"><B>Interpretation:</B></DT><DD CLASS="dd-description"> Based on the p-value, we conclude that the
+effect is either statistically significant, or not.</DD></DL><P>This process is called <B>hypothesis testing</B>. The underlying
+logic is similar to a proof by contradiction. To prove a mathematical
+statement, A, you assume temporarily that A is false. If that
+assumption leads to a contradiction, you conclude that A must actually
+be true.
+<A NAME="@default711"></A></P><P>Similarly, to test a hypothesis like, &#X201C;This effect is real,&#X201D; we
+assume, temporarily, that is is not. That&#X2019;s the null hypothesis.
+Based on that assumption, we compute the probability of the apparent
+effect. That&#X2019;s the p-value. If the p-value is low enough, we
+conclude that the null hypothesis is unlikely to be true.</P><H2 CLASS="section"><A NAME="toc57"></A><A NAME="htoc62">7.1</A>&#XA0;&#XA0;Testing a difference in means</H2><P>
+<A NAME="@default712"></A></P><P>One of the easiest hypotheses to test is an apparent difference in mean
+between two groups. In the NSFG data, we saw that the mean pregnancy
+length for first babies is slightly longer, and the mean weight at
+birth is slightly smaller. Now we will see if those effects are
+significant.
+<A NAME="@default713"></A>
+<A NAME="@default714"></A>
+<A NAME="@default715"></A>
+<A NAME="@default716"></A></P><P>For these examples, the null hypothesis is that the distributions
+for the two groups are the same, and that the apparent difference is
+due to chance.
+<A NAME="@default717"></A></P><P>To compute p-values, we find the pooled distribution for all live
+births (first babies and others), generate random samples that are
+the same size as the observed samples, and compute the difference
+in means under the null hypothesis.
+<A NAME="@default718"></A></P><P>If we generate a large number of samples, we can count how often the
+difference in means (due to chance) is as big or bigger than the
+difference we actually observed. This fraction is the p-value.</P><P>For pregnancy length, we observed <I>n</I>&#XA0;=&#XA0;4413 first babies and <I>m</I>&#XA0;=&#XA0;4735
+others, and the difference in mean was &#X3B4;&#XA0;=&#XA0;0.078 weeks. To
+approximate the p-value of this effect, I pooled the distributions,
+generated samples with sizes <I>n</I>&#XA0;and <I>m</I>&#XA0;and computed the difference
+in mean.
+<A NAME="@default719"></A></P><P>This is another example of resampling, because we are drawing a
+random sample from a dataset that is, itself, a sample of the general
+population. I computed differences for 1000 sample pairs;
+Figure&#XA0;<A HREF="#length_deltas_cdf">7.1</A> shows their distribution.</P><BLOCKQUOTE CLASS="figure"><DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV>
+<DIV CLASS="center"><IMG SRC="thinkstats016.png"></DIV>
+<DIV CLASS="caption"><TABLE CELLSPACING=6 CELLPADDING=0><TR><TD VALIGN=top ALIGN=left>Figure 7.1: CDF of difference in mean for resampled data.</TD></TR>
+</TABLE></DIV>
+<A NAME="length_deltas_cdf"></A>
+<DIV CLASS="center"><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE><P>The mean difference is near 0, as you would expect with samples
+from the same distribution. The vertical lines show the cutoffs where
+<I>x</I>&#XA0;=&#XA0;&#X2212;&#X3B4;&#XA0;or <I>x</I>&#XA0;=&#XA0;&#X3B4;.</P><P>Of 1000 sample pairs, there were 166 where the difference in mean
+(positive or negative) was as big or bigger than &#X3B4;, so the
+p-value is approximately 0.166. In other words, we expect to see an
+effect as big as &#X3B4;&#XA0;about 17% of the time, even if the actual
+distribution for the two groups is the same.</P><P>So the apparent effect is not very likely, but is it unlikely enough?
+I&#X2019;ll address that in the next section.</P><DIV CLASS="theorem"><B>Exercise&#XA0;1</B>&#XA0;&#XA0;<EM>
+In the NSFG dataset, the difference in mean weight for first
+births is 2.0 ounces. Compute the p-value of this difference.
+</EM><A NAME="@default720"></A>
+<A NAME="@default721"></A><P><EM>Hint: for this kind of resampling it is important to sample
+with replacement, so you should use <TT>random.choice</TT> rather
+than <TT>random.sample</TT> (see Section&#XA0;<A HREF="thinkstats004.html#random">3.8</A>).
+</EM><A NAME="@default722"></A>
+<A NAME="@default723"></A></P><P><EM>You can start with the code I used to generate the results in this
+section, which you can download from <TT>http://thinkstats.com/hypothesis.py</TT>.
+</EM><A NAME="@default724"></A></P></DIV><H2 CLASS="section"><A NAME="toc58"></A><A NAME="htoc63">7.2</A>&#XA0;&#XA0;Choosing a threshold</H2><P>
+<A NAME="threshold"></A>
+<A NAME="@default725"></A></P><P>In hypothesis testing we have to worry about two kinds of errors.
+<A NAME="@default726"></A>
+<A NAME="@default727"></A>
+<A NAME="@default728"></A>
+<A NAME="@default729"></A></P><UL CLASS="itemize"><LI CLASS="li-itemize">A Type I error, also called a <B>false positive</B>, is when we
+accept a hypothesis that is actually false; that is, we consider an
+effect significant when it was actually due to chance.</LI><LI CLASS="li-itemize">A Type II error, also called a <B>false negative</B>, is when we
+reject a hypothesis that is actually true; that is, we attribute an
+effect to chance when it was actually real.</LI></UL><P>The most common approach to hypothesis testing is to choose a
+threshold<SUP><A NAME="text24" HREF="#note24">1</A></SUP>,
+&#X3B1;, for the p-value and to accept as significant any effect with
+a p-value less than &#X3B1;. A common choice for &#X3B1;&#XA0;is 5%.
+By this criterion, the apparent difference in pregnancy length for
+first babies is not significant, but the difference in weight is.
+<A NAME="@default730"></A>
+<A NAME="@default731"></A>
+<A NAME="@default732"></A></P><P>For this kind of hypothesis testing, we can compute the probability of
+a false positive explicitly: it turns out to be &#X3B1;.</P><P>To see why, think about the definition of false positive&#X2014;the chance
+of accepting a hypothesis that is false&#X2014;and the definition of a
+p-value&#X2014;the chance of generating the measured effect if the
+hypothesis is false.</P><P>Putting these together, we can ask: if the hypothesis is false,
+what is the chance of generating a measured effect that will be
+considered significant with threshold &#X3B1;? The answer is
+&#X3B1;.</P><P>We can decrease the chance of a false positive by decreasing the
+threshold. For example, if the threshold is 1%, there is only a 1%
+chance of a false positive.</P><P>But there is a price to pay: decreasing the threshold raises the
+standard of evidence, which increases the chance of rejecting
+a valid hypothesis.</P><P>In general there is a tradeoff between Type I and Type II errors.
+The only way to decrease both at the same time is to increase the
+sample size (or, in some cases, decrease measurement error).
+<A NAME="@default733"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;2</B>&#XA0;&#XA0;<EM>
+To investigate the effect of sample size on p-value, see what happens
+if you discard half of the data from the NSFG. Hint: use <TT>random.sample</TT>. What if you discard three-quarters of the data, and
+so on?
+</EM><A NAME="@default734"></A>
+<A NAME="@default735"></A><P><EM>What is the smallest sample size where the difference in mean birth
+weight is still significant with &#X3B1;&#XA0;=&#XA0;5%? How much
+larger does the sample size have to be with &#X3B1;&#XA0;=&#XA0;1%?</EM></P><P><EM>You can start with the code I used to generate the results in this
+section, which you can download from <TT>http://thinkstats.com/hypothesis.py</TT>.
+</EM><A NAME="@default736"></A></P></DIV><H2 CLASS="section"><A NAME="toc59"></A><A NAME="htoc64">7.3</A>&#XA0;&#XA0;Defining the effect</H2><P>When something unusual happens, people often say something like,
+&#X201C;Wow! What were the chances of <EM>that</EM>?&#X201D; This question makes
+sense because we have an intuitive sense that some things are more
+likely than others. But this intuition doesn&#X2019;t always hold up to
+scrutiny.
+<A NAME="@default737"></A>
+<A NAME="@default738"></A></P><P>For example, suppose I toss a coin 10 times, and after each toss I
+write down H for heads and T for tails. If the result was a sequence
+like THHTHTTTHH, you wouldn&#X2019;t be too surprised. But if the result was
+HHHHHHHHHH, you would say something like, &#X201C;Wow! What were the
+chances of <EM>that</EM>?&#X201D;</P><P>But in this example, the probability of the two sequences is the
+same: one in 1024. And the same is true for any other sequence.
+So when we ask, &#X201C;What were the chances of <EM>that</EM>,&#X201D; we have
+to be careful about what we mean by &#X201C;that.&#X201D;</P><P>For the NSFG data, I defined the effect as &#X201C;a difference in mean
+(positive or negative) as big or bigger than &#X3B4;.&#X201D; By making
+this choice, I decided to evaluate the magnitude of the difference,
+ignoring the sign.
+<A NAME="@default739"></A>
+<A NAME="@default740"></A></P><P>A test like that is called <B>two-sided</B>, because we consider both
+sides (positive and negative) in the distribution from
+Figure&#XA0;<A HREF="#length_deltas_cdf">7.1</A>. By using a two-sided test we are
+testing the hypothesis that there is a significant difference between
+the distributions, without specifying the sign of the difference.
+<A NAME="@default741"></A>
+<A NAME="@default742"></A>
+<A NAME="@default743"></A>
+<A NAME="@default744"></A></P><P>The alternative is to use a <B>one-sided</B> test, which asks whether
+the mean for first babies is significantly <EM>higher</EM> than
+the mean for others. Because the hypothesis is more specific, the
+p-value is lower&#X2014;in this case it is roughly half.</P><H2 CLASS="section"><A NAME="toc60"></A><A NAME="htoc65">7.4</A>&#XA0;&#XA0;Interpreting the result</H2><P>At the beginning of this chapter I said that the question we want to
+address is whether an apparent effect is real. We started by defining
+the null hypothesis, denoted <I>H</I><SUB>0</SUB>, which is the hypothesis that
+the effect is not real. Then we defined the p-value, which is
+<I>P</I>(<I>E</I>|<I>H</I><SUB>0</SUB>), where <I>E</I>&#XA0;is an effect as big as or bigger
+than the apparent effect. Then we computed p-values and compared them
+to a threshold, &#X3B1;.</P><P>That&#X2019;s a useful step, but it doesn&#X2019;t answer the original question,
+which is whether the effect is real. There are several ways to
+interpret the result of a hypothesis test:</P><DL CLASS="description"><DT CLASS="dt-description"><B>Classical:</B></DT><DD CLASS="dd-description"> In classical hypothesis testing, if a p-value
+is less than &#X3B1;, you can say that the effect is statistically
+significant, but you can&#X2019;t conclude that it&#X2019;s real. This
+formulation is careful to avoid leaping to conclusions, but it is
+deeply unsatisfying.</DD><DT CLASS="dt-description"><B>Practical:</B></DT><DD CLASS="dd-description"> In practice, people are not so formal. In most
+science journals, researchers report p-values without apology, and
+readers interpret them as evidence that the apparent effect is real.
+The lower the p-value, the higher their confidence in this
+conclusion.
+<A NAME="@default745"></A></DD><DT CLASS="dt-description"><B>Bayesian:</B></DT><DD CLASS="dd-description"> What we really want to know is <I>P</I>(<I>H<SUB>A</SUB></I>|<I>E</I>), 
+where <I>H<SUB>A</SUB></I> is the hypothesis that the effect is real. 
+By Bayes&#X2019;s theorem
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>P</I>(<I>H<SUB>A</SUB></I>&#XA0;&#XA0;|&#XA0;&#XA0;<I>E</I>)&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center"><I>P</I>(<I>E</I>&#XA0;&#XA0;|&#XA0;&#XA0;<I>H<SUB>A</SUB></I>)&#XA0;&#XA0;&#XA0;<I>P</I>(<I>H<SUB>A</SUB></I>)</TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>P</I>(<I>E</I>)</TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD></TR>
+</TABLE>
+where <I>P</I>(<I>H<SUB>A</SUB></I>) is the prior probability of <I>H<SUB>A</SUB></I> before 
+we saw the
+effect, <I>P</I>(<I>E</I>|<I>H<SUB>A</SUB></I>) is the probability of seeing <I>E</I>, 
+assuming that
+the effect is real, and <I>P</I>(<I>E</I>) is the probability of seeing 
+<I>E</I>&#XA0;under any hypothesis. Since the effect is either real or it&#X2019;s not,<P>&#XA0;&#XA0; <I>P</I>(<I>E</I>) = <I>P</I>(<I>E</I>|<I>H<SUB>A</SUB></I>) <I>P</I>(<I>H<SUB>A</SUB></I>)&#XA0;+&#XA0;<I>P</I>(<I>E</I>|<I>H</I><SUB>0</SUB>) <I>P</I>(<I>H</I><SUB>0</SUB>) </P></DD></DL><P>As an example, I&#X2019;ll compute <I>P</I>(<I>H<SUB>A</SUB></I>|E) for pregnancy
+lengths in the NSFG. We have already computed
+<I>P</I>(<I>E</I>|<I>H</I><SUB>0</SUB>)&#XA0;=&#XA0;0.166, so all we have to do is compute
+<I>P</I>(<I>E</I>|<I>H<SUB>A</SUB></I>) and choose a value for the prior.
+<A NAME="@default746"></A>
+<A NAME="@default747"></A>
+<A NAME="@default748"></A>
+<A NAME="@default749"></A>
+<A NAME="@default750"></A></P><P>To compute <I>P</I>(<I>E</I>|<I>H<SUB>A</SUB></I>), we assume that the effect is
+real&#X2014;that is,
+that the difference in mean duration, &#X3B4;, is actually what we
+observed, 0.078. (This way of formulating <I>H<SUB>A</SUB></I>&#XA0;is a little bit
+bogus. I will explain and fix the problem in the next section.)</P><P>By generating 1000 sample pairs, one from each
+distribution, I estimated <I>P</I>(E|<I>H<SUB>A</SUB></I>)&#XA0;=&#XA0;0.494. With the prior
+<I>P</I>(<I>H<SUB>A</SUB></I>)&#XA0;=&#XA0;0.5, the posterior probability of <I>H<SUB>A</SUB></I> is 0.748.
+<A NAME="@default751"></A>
+<A NAME="@default752"></A></P><P>So if the prior probability of <I>H<SUB>A</SUB></I>&#XA0;is 50%, the updated
+probability, taking into account the evidence from this dataset,
+is almost 75%. It makes sense that the posterior
+is higher, since the data provide some support for the hypothesis.
+But it might seem surprising that the difference is so large,
+especially since we found that the difference in means was not
+statistically significant.</P><P>In fact, the method I used in this section is not quite right, and
+it tends to overstate the impact of the evidence. In the next section
+we will correct this tendency.</P><DIV CLASS="theorem"><B>Exercise&#XA0;3</B>&#XA0;&#XA0;<EM>
+Using the data from the NSFG, what is the posterior probability that
+the distribution of birth weights is different for first babies and
+others?
+</EM><A NAME="@default753"></A>
+<A NAME="@default754"></A>
+<A NAME="@default755"></A>
+<A NAME="@default756"></A><P><EM>You can start with the code I used to generate the results in this
+section, which you can download from <TT>http://thinkstats.com/hypothesis.py</TT>.
+</EM><A NAME="@default757"></A></P></DIV><H2 CLASS="section"><A NAME="toc61"></A><A NAME="htoc66">7.5</A>&#XA0;&#XA0;Cross-validation</H2><P>
+<A NAME="@default758"></A></P><P>In the previous example, we used the dataset to formulate the
+hypothesis <I>H<SUB>A</SUB></I>, and then we used the same dataset to test it.
+That&#X2019;s not a good idea; it is too easy to generate misleading results.</P><P>The problem is that even when the null hypothesis is true, there is
+likely to be some difference, &#X3B4;, between any two groups, just by
+chance. If we use the observed value of &#X3B4;&#XA0;to formulate the
+hypothesis, <I>P</I>(<I>H<SUB>A</SUB></I>|<I>E</I>) is likely to be high even when
+<I>H<SUB>A</SUB></I>&#XA0;is false.</P><P>We can address this problem with <B>cross-validation</B>, which uses
+one dataset to compute &#X3B4;&#XA0;and a <EM>different</EM> dataset to
+evaluate <I>H<SUB>A</SUB></I>. The first dataset is called the <B>training set</B>;
+the second is called the <B>testing set</B>.
+<A NAME="@default759"></A>
+<A NAME="@default760"></A>
+<A NAME="@default761"></A>
+<A NAME="@default762"></A></P><P>In a study like the NSFG, which studies a different cohort in each
+cycle, we can use one cycle for training and another for testing.
+Or we can partition the data into subsets (at random), then use
+one for training and one for testing.
+<A NAME="@default763"></A>
+<A NAME="@default764"></A></P><P>I implemented the second approach, dividing the Cycle 6 data roughly
+in half. I ran the test several times with different random partitions.
+The average posterior probability was <I>P</I>(<I>H<SUB>A</SUB></I>|<I>E</I>)&#XA0;=&#XA0;0.621.
+As expected, the impact of the evidence is smaller, partly because of
+the smaller sample size in the test set, and also because we are no
+longer using the same data for training and testing.</P><H2 CLASS="section"><A NAME="toc62"></A><A NAME="htoc67">7.6</A>&#XA0;&#XA0;Reporting Bayesian probabilities</H2><P>
+<A NAME="@default765"></A></P><P>In the previous section we chose the prior probability <I>P</I>(<I>H<SUB>A</SUB></I>)&#XA0;=&#XA0;0.5.
+If we have a set of hypotheses and no reason to think one is more
+likely than another, it is common to assign each the same probability.</P><P>Some people object to Bayesian probabilities because they depend on
+prior probabilities, and people might not agree on
+the right priors. For people who expect scientific results to be
+objective and universal, this property is deeply unsettling.
+<A NAME="@default766"></A>
+<A NAME="@default767"></A>
+<A NAME="@default768"></A>
+<A NAME="@default769"></A></P><P>One response to this objection is that, in practice, strong evidence
+tends to swamp the effect of the prior, so people who start with
+different priors will converge toward the same posterior
+probability.
+<A NAME="@default770"></A>
+<A NAME="@default771"></A></P><P>Another option is to report just the <B>likelihood ratio</B>, <I>P</I>(E
+| <I>H<SUB>A</SUB></I>) &#XA0;/&#XA0; <I>P</I>(<I>E</I>|<I>H</I><SUB>0</SUB>), rather than the
+posterior probability. That way readers can plug in whatever prior
+they like and compute their own posteriors (no pun intended). The
+likelihood ratio is sometimes called a Bayes factor (see
+<TT>http://wikipedia.org/wiki/Bayes_factor</TT>).</P><DIV CLASS="theorem"><B>Exercise&#XA0;4</B>&#XA0;&#XA0;<EM>
+If your prior probability for a hypothesis, <I>H<SUB>A</SUB></I>, is 0.3 and new
+evidence becomes available that yields a likelihood ratio of 3
+relative to the null hypothesis, <I>H</I><SUB>0</SUB>, what is your posterior
+probability for <I>H<SUB>A</SUB></I>?
+</EM><A NAME="@default772"></A></DIV><DIV CLASS="theorem"><B>Exercise&#XA0;5</B>&#XA0;&#XA0;<EM>
+This exercise is adapted from MacKay, </EM>Information
+Theory, Inference, and Learning Algorithms<EM>:
+</EM><A NAME="@default773"></A><BLOCKQUOTE CLASS="quote"><P><EM>Two people have left traces of their own blood at the scene of a
+crime. A suspect, Oliver, is tested and found to have type O blood.
+The blood groups of the two traces are found to be of type O (a common
+type in the local population, having frequency 60%) and of type AB (a
+rare type, with frequency 1%). Do these data (the blood types found
+at the scene) give evidence in favor of the proposition that
+Oliver was one of the two people whose blood was found at the scene?</EM></P></BLOCKQUOTE><P><EM>Hint: Compute the likelihood ratio for this evidence; if it is greater
+than 1, then the evidence is in favor of the proposition.
+For a solution and discussion, see page 55 of MacKay&#X2019;s book.
+</EM><A NAME="@default774"></A></P></DIV><H2 CLASS="section"><A NAME="toc63"></A><A NAME="htoc68">7.7</A>&#XA0;&#XA0;Chi-square test</H2><P>
+<A NAME="@default775"></A></P><P>In Section&#XA0;<A HREF="#threshold">7.2</A> we concluded that the apparent difference
+in mean pregnancy length for first babies and others was not
+significant. But in Section&#XA0;<A HREF="thinkstats003.html#relative.risk">2.10</A>, when we computed
+relative risk, we saw that first babies are more likely to be early,
+less likely to be on time, and more likely to be late.
+<A NAME="@default776"></A>
+<A NAME="@default777"></A>
+<A NAME="@default778"></A></P><P>So maybe the distributions have the same mean and different variance.
+We could test the significance of the difference in variance, but
+variances are less robust than means, and hypothesis tests for
+variance often behave badly.
+<A NAME="@default779"></A>
+<A NAME="@default780"></A>
+<A NAME="@default781"></A></P><P>An alternative is to test a hypothesis that more directly reflects the
+effect as it appears; that is, the hypothesis that first babies are
+more likely to be early, less likely to be on time, and more likely to
+be late.</P><P>We proceed in five easy steps:</P><OL CLASS="enumerate" type=1><LI CLASS="li-enumerate">We define a set of categories, called <B>cells</B>, that each
+baby might fall into. In this example, there are six cells because
+there are two groups (first babies and others) and three bins
+(early, on time or late).
+<A NAME="@default782"></A><P>I&#X2019;ll use the definitions from Section&#XA0;<A HREF="thinkstats003.html#relative.risk">2.10</A>: a baby is
+early if it is born during Week 37 or earlier, on time if it is born
+during Week 38, 39 or 40, and late if it is born during Week 41 or
+later.</P></LI><LI CLASS="li-enumerate">We compute the number of babies we expect in each cell. Under
+the null hypothesis, we assume that the distributions are the same
+for the two groups, so we can compute the pooled probabilities:
+<I>P</I>(early), <I>P</I>(ontime) and <I>P</I>(late).<P>For first babies, we have <I>n</I>&#XA0;=&#XA0;4413 samples, so under the null
+hypothesis we expect <I>n</I>&#XA0;<I>P</I>(early) first babies to be early,
+<I>n</I>&#XA0;<I>P</I>(ontime) to be on time, etc. Likewise, we have <I>m</I>&#XA0;=&#XA0;4735
+other babies, so we expect <I>m</I>&#XA0;<I>P</I>(early) other babies to be
+early, etc.</P></LI><LI CLASS="li-enumerate">For each cell we compute the deviation; that is, the difference
+between the observed value, <I>O<SUB>i</SUB></I>, and the expected value, <I>E<SUB>i</SUB></I>.
+<A NAME="@default783"></A>
+<A NAME="@default784"></A></LI><LI CLASS="li-enumerate">We compute some measure of the total deviation; this quantity
+is called the <B>test statistic</B>. The most common
+choice is the chi-square statistic:
+<TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell">&#X3C7;<SUP>2</SUP>&#XA0;=&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">&nbsp;</TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><FONT SIZE=6>&#X2211;</FONT></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>i</I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD><TD CLASS="dcell"><TABLE CLASS="display"><TR><TD CLASS="dcell" ALIGN="center">(<I>O<SUB>i</SUB></I>&#XA0;&#X2212;&#XA0;<I>E<SUB>i</SUB></I>)<SUP>2</SUP></TD></TR>
+<TR><TD CLASS="hbar"></TD></TR>
+<TR><TD CLASS="dcell" ALIGN="center"><I>E<SUB>i</SUB></I></TD></TR>
+</TABLE></TD><TD CLASS="dcell">&#XA0;</TD></TR>
+</TABLE>
+</LI><LI CLASS="li-enumerate">We can use a Monte Carlo simulation to compute the p-value,
+which is the probability of seeing a chi-square statistic as high
+as the observed value under the null hypothesis.
+<A NAME="@default785"></A>
+<A NAME="@default786"></A></LI></OL><P>When the chi-square statistic is used, this process is called a 
+<B>chi-square test</B>. One feature of the chi-square test is that
+the distribution of the test statistic can be computed analytically.
+<A NAME="@default787"></A>
+<A NAME="@default788"></A></P><P>Using the data from the NSFG I computed &#X3C7;<SUP>2</SUP>&#XA0;=&#XA0;91.64, which would
+occur by chance about one time in 10,000. I conclude that this result
+is statistically significant, with one caution: again we used the
+same dataset for exploration and testing. It would be a good idea
+to confirm this result with another dataset.
+<A NAME="@default789"></A>
+<A NAME="@default790"></A></P><P>You can download the code I used in this section from
+<TT>http://thinkstats.com/chi.py</TT>.
+<A NAME="@default791"></A></P><DIV CLASS="theorem"><B>Exercise&#XA0;6</B>&#XA0;&#XA0;<EM>
+Suppose you run a casino and you suspect that a customer has
+replaced a die provided by the casino with a &#X201C;crooked die;&#X201D; that
+is, one that has been tampered with to make one of the faces more
+likely to come up than the others. You apprehend the alleged
+cheater and confiscate the die, but now you have to prove that it
+is crooked.
+</EM><A NAME="@default792"></A>
+<A NAME="@default793"></A>
+<A NAME="@default794"></A><P><EM>You roll the die 60 times and get the following results:</EM></P><DIV CLASS="center">
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=1><TR><TD ALIGN=left NOWRAP><EM>Value</EM></TD><TD ALIGN=center NOWRAP><EM>1</EM></TD><TD ALIGN=center NOWRAP><EM>2</EM></TD><TD ALIGN=center NOWRAP><EM>3</EM></TD><TD ALIGN=center NOWRAP><EM>4</EM></TD><TD ALIGN=center NOWRAP><EM>5</EM></TD><TD ALIGN=center NOWRAP><EM>6</EM></TD></TR>
+<TR><TD ALIGN=left NOWRAP><EM>Frequency</EM></TD><TD ALIGN=center NOWRAP><EM>8</EM></TD><TD ALIGN=center NOWRAP><EM>9</EM></TD><TD ALIGN=center NOWRAP><EM>19</EM></TD><TD ALIGN=center NOWRAP><EM>6</EM></TD><TD ALIGN=center NOWRAP><EM>8</EM></TD><TD ALIGN=center NOWRAP><EM>10</EM></TD></TR>
+</TABLE>
+</DIV><P><EM>What is the chi-squared statistic for these values? What is the
+probability of seeing a chi-squared value as large by chance?</EM></P></DIV><H2 CLASS="section"><A NAME="toc64"></A><A NAME="htoc69">7.8</A>&#XA0;&#XA0;Efficient resampling</H2><P>
+<A NAME="@default795"></A></P><P>Anyone reading this book who has prior training in statistics probably
+laughed when they saw Figure&#XA0;<A HREF="#length_deltas_cdf">7.1</A>, because I used a
+lot of computer power to simulate something I could have figured out
+analytically.
+<A NAME="@default796"></A>
+<A NAME="@default797"></A>
+<A NAME="@default798"></A></P><P>Obviously mathematical analysis is not the focus of this book. I am
+willing to use computers to do things the &#X201C;dumb&#X201D; way, because I
+think it is easier for beginners to understand simulations, and easier
+to demonstrate that they are correct. So as long as the simulations
+don&#X2019;t take too long to run, I don&#X2019;t feel guilty for skipping the
+analysis.</P><P>However, there are times when a little analysis can save a lot of
+computing, and Figure&#XA0;<A HREF="#length_deltas_cdf">7.1</A> is one of those times.
+<A NAME="@default799"></A></P><P>Remember that we were testing the observed difference in the mean between
+pregnancy lengths for <I>n</I>&#XA0;=&#XA0;4413 first babies and <I>m</I>&#XA0;=&#XA0;4735 others. We formed
+the pooled distribution for all babies, drew samples with sizes <I>n</I>&#XA0;and
+<I>m</I>, and computed the difference in sample means.
+<A NAME="@default800"></A></P><P>Instead, we could directly compute the distribution of the difference
+in sample means. To get started, let&#X2019;s think about what a sample mean
+is: we draw <I>n</I>&#XA0;samples from a distribution, add them up, and
+divide by <I>n</I>. If the distribution has mean &#XB5;&#XA0;and variance
+&#X3C3;<SUP>2</SUP>, then by the Central Limit Theorem, we know that the sum of
+the samples is <FONT COLOR=red><I>N</I></FONT>(<I>n</I>&#XB5;, <I>n</I>&#X3C3;<SUP>2</SUP>).
+<A NAME="@default801"></A>
+<A NAME="@default802"></A>
+<A NAME="@default803"></A>
+<A NAME="@default804"></A></P><P>To figure out the distribution of the sample means, we have to invoke
+one of the properties of the normal distribution: if <I>X</I>&#XA0;is
+<FONT COLOR=red><I>N</I></FONT>(&#XB5;, &#X3C3;<SUP>2</SUP>),</P><P>&#XA0;&#XA0; <I>aX</I>&#XA0;+&#XA0;<I>b</I>&#XA0;&#X223C;&#XA0;<FONT COLOR=red><I>N</I></FONT>(<I>a</I>&#XB5;&#XA0;+&#XA0;<I>b</I>, <I>a</I><SUP>2</SUP> &#X3C3;<SUP>2</SUP>) </P><P>When we divide by <I>n</I>, <I>a</I>&#XA0;=&#XA0;1/<I>n</I>and <I>b</I>&#XA0;=&#XA0;0, so</P><P><I>X</I>/<I>n</I>&#XA0;&#X223C;&#XA0;<FONT COLOR=red><I>N</I></FONT>(&#XB5;/<I>n</I>, &#X3C3;<SUP>2</SUP>/ <I>n</I><SUP>2</SUP>)</P><P>So the distribution of the sample mean is <FONT COLOR=red><I>N</I></FONT>(&#XB5;, &#X3C3;<SUP>2</SUP>/<I>n</I>).</P><P>To get the distribution of the difference between two sample means,
+we invoke another property of the normal distribution: if <I>X</I><SUB>1</SUB> is
+<FONT COLOR=red><I>N</I></FONT>(&#XB5;<SUB>1</SUB>, &#X3C3;<SUB>1</SUB><SUP>2</SUP>) and <I>X</I><SUB>2</SUB> is
+<FONT COLOR=red><I>N</I></FONT>(&#XB5;<SUB>2</SUB>, &#X3C3;<SUB>2</SUB><SUP>2</SUP>),
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>aX</I><SUB>1</SUB>&#XA0;+&#XA0;<I>bX</I><SUB>2</SUB>&#XA0;&#X223C;&#XA0;<FONT COLOR=red><I>N</I></FONT>(<I>a</I>&#XB5;<SUB>1</SUB>&#XA0;+&#XA0;<I>b</I>&#XB5;<SUB>2</SUB>,&#XA0;
+<I>a</I><SUP>2</SUP>&#X3C3;<SUB>1</SUB><SUP>2</SUP>&#XA0;+&#XA0;<I>b</I><SUP>2</SUP>&#X3C3;<SUB>2</SUB><SUP>2</SUP>)&#XA0;</TD></TR>
+</TABLE><P>
+So as a special case:
+</P><TABLE CLASS="display dcenter"><TR VALIGN="middle"><TD CLASS="dcell"><I>X</I><SUB>1</SUB>&#XA0;&#X2212;&#XA0;<I>X</I><SUB>2</SUB>&#XA0;&#X223C;&#XA0;<FONT COLOR=red><I>N</I></FONT>(&#XB5;<SUB>1</SUB>&#XA0;&#X2212;&#XA0;&#XB5;<SUB>2</SUB>,&#XA0;
+&#X3C3;<SUB>1</SUB><SUP>2</SUP>&#XA0;+&#XA0;&#X3C3;<SUB>2</SUB><SUP>2</SUP>)&#XA0;</TD></TR>
+</TABLE><P>
+Putting it all together, we conclude that the sample in
+Figure&#XA0;<A HREF="#length_deltas_cdf">7.1</A> is drawn from 
+<FONT COLOR=red><I>N</I></FONT>(0, <I>f</I>&#X3C3;<SUP>2</SUP>), where <I>f</I>&#XA0;=&#XA0;1/<I>n</I>&#XA0;+&#XA0;1/<I>m</I>. Plugging in
+<I>n</I>&#XA0;=&#XA0;4413 and <I>m</I>&#XA0;=&#XA0;4735, we expect the difference of sample means to be
+<FONT COLOR=red><I>N</I></FONT>(0, 0.0032).
+<A NAME="@default805"></A></P><P>We can use <TT>erf.NormalCdf</TT> to compute the p-value of the observed 
+difference in the means:
+</P><PRE CLASS="verbatim">delta = 0.078
+sigma = math.sqrt(0.0032)
+left = erf.NormalCdf(-delta, 0.0, sigma)
+right = 1 - erf.NormalCdf(delta, 0.0, sigma)
+</PRE><P>The sum of the left and right tails is the p-value, 0.168, which is
+pretty close to what we estimated by resampling, 0.166. 
+You can download the code I used in this section from
+<TT>http://thinkstats.com/hypothesis_analytic.py</TT>
+<A NAME="@default806"></A></P><H2 CLASS="section"><A NAME="toc65"></A><A NAME="htoc70">7.9</A>&#XA0;&#XA0;Power</H2><P>
+<A NAME="@default807"></A></P><P>When the result of a hypothesis test is negative (that is, the effect is
+not statistically significant), can we conclude that the effect is not
+real? That depends on the power of the test.</P><P>Statistical <B>power</B> is the probability that the test will be
+positive if the null hypothesis is false. In general, the power of a
+test depends on the sample size, the magnitude of the effect, and the
+threshold &#X3B1;.</P><DIV CLASS="theorem"><B>Exercise&#XA0;7</B>&#XA0;&#XA0;<EM>
+What is the power of the test in Section&#XA0;<A HREF="#threshold">7.2</A>, using
+&#X3B1;&#XA0;=&#XA0;0.05 and assuming that the actual difference between the
+means is 0.078 weeks?</EM><P><EM>You can estimate power by generating random samples from distributions
+with the given difference in the mean, testing the observed difference
+in the mean, and counting the number of positive tests.</EM></P><P><EM>What is the power of the test with &#X3B1;&#XA0;=&#XA0;0.10?</EM></P></DIV><P>One way to report the power of a test, along with a negative result,
+is to say something like, &#X201C;If the apparent effect were as large
+as <I>x</I>, this test would reject the null hypothesis with probability <I>p</I>.&#X201D;</P><H2 CLASS="section"><A NAME="toc66"></A><A NAME="htoc71">7.10</A>&#XA0;&#XA0;Glossary</H2><DL CLASS="description"><DT CLASS="dt-description"><B>significant:</B></DT><DD CLASS="dd-description"> An effect is statistically significant if it is unlikely
+to occur by chance.
+<A NAME="@default808"></A></DD><DT CLASS="dt-description"><B>null hypothesis:</B></DT><DD CLASS="dd-description"> A model of a system based on the assumption that
+an apparent effect is due to chance.
+<A NAME="@default809"></A></DD><DT CLASS="dt-description"><B>p-value:</B></DT><DD CLASS="dd-description"> The probability that an effect could occur by chance.
+<A NAME="@default810"></A></DD><DT CLASS="dt-description"><B>hypothesis testing:</B></DT><DD CLASS="dd-description"> The process of determining whether an apparent
+effect is statistically significant.
+<A NAME="@default811"></A></DD><DT CLASS="dt-description"><B>false positive:</B></DT><DD CLASS="dd-description"> The conclusion that an effect is real when it is not.
+<A NAME="@default812"></A></DD><DT CLASS="dt-description"><B>false negative:</B></DT><DD CLASS="dd-description"> The conclusion that an effect is due to chance when it
+is not.
+<A NAME="@default813"></A></DD><DT CLASS="dt-description"><B>two-sided test:</B></DT><DD CLASS="dd-description"> A test that asks, &#X201C;What is the chance of an effect
+as big as the observed effect, positive or negative?&#X201D;</DD><DT CLASS="dt-description"><B>one-sided test:</B></DT><DD CLASS="dd-description"> A test that asks, &#X201C;What is the chance of an effect
+as big as the observed effect, and with the same sign?&#X201D;
+<A NAME="@default814"></A>
+<A NAME="@default815"></A>
+<A NAME="@default816"></A>
+<A NAME="@default817"></A></DD><DT CLASS="dt-description"><B>cross-validation:</B></DT><DD CLASS="dd-description"> A process of hypothesis testing that uses one
+dataset for exploratory data analysis and another dataset for testing.
+<A NAME="@default818"></A></DD><DT CLASS="dt-description"><B>training set:</B></DT><DD CLASS="dd-description"> A dataset used to formulate a hypothesis for testing.
+<A NAME="@default819"></A></DD><DT CLASS="dt-description"><B>testing set:</B></DT><DD CLASS="dd-description"> A dataset used for testing.
+<A NAME="@default820"></A></DD><DT CLASS="dt-description"><B>test statistic:</B></DT><DD CLASS="dd-description"> A statistic used to measure the deviation of an
+apparent effect from what is expected by chance.
+<A NAME="@default821"></A></DD><DT CLASS="dt-description"><B>chi-square test:</B></DT><DD CLASS="dd-description"> A test that uses the chi-square statistic as
+the test statistic.
+<A NAME="@default822"></A></DD><DT CLASS="dt-description"><B>likelihood ratio:</B></DT><DD CLASS="dd-description"> The ratio of <I>P</I>(<I>E</I>|<I>A</I>) to <I>P</I>(<I>E</I>|<I>B</I>) 
+for two hypotheses <I>A</I>&#XA0;and <I>B</I>, which is a way to report
+results from a Bayesian analysis without depending on priors.
+<A NAME="@default823"></A></DD><DT CLASS="dt-description"><B>cell:</B></DT><DD CLASS="dd-description"> In a chi-square test, the categories the observations are
+divided into.
+<A NAME="@default824"></A></DD><DT CLASS="dt-description"><B>power:</B></DT><DD CLASS="dd-description"> The probability that a test will reject the null hypothesis
+if it is false.
+<A NAME="@default825"></A></DD></DL><HR CLASS="footnoterule"><DL CLASS="thefootnotes"><DT CLASS="dt-thefootnotes">
+<A NAME="note24" HREF="#text24">1</A></DT><DD CLASS="dd-thefootnotes">Also known as a &#X201C;Significance criterion.&#X201D;
+</DD></DL>
+</td>
+
+<td width=130 valign="top">
+
+<h4>Like this book?</h4> <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FThink-Stats%2F181213931900328&amp;width=130&amp;colorscheme=light&amp;show_faces=false&amp;stream=false&amp;header=false&amp;height=62" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:100px;" allowTransparency="true"></iframe>
+
+<p>
+<h4>Are you using one of our books in a class?</h4>  We'd like to know
+about it.  Please consider filling out <a href="http://spreadsheets.google.com/viewform?formkey=dC0tNUZkMjBEdXVoRGljNm9FRmlTMHc6MA" onClick="javascript: pageTracker._trackPageview('/outbound/survey');">this short survey</a>.
+
+<p>
+<br>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?t=greenteapre01-20&o=1&p=8&l=as1&asins=1
+449307116&ref=qf_sp_asin_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1
+=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" margi
+nwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=greenteapre01-20&o=1&p=8&l=as1&m=amazon&f=ifr&md=10FE9736YVPPT7A0FBG2&asins=0521725968" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" onClick="javascript: pageTracker._trackPageview('/outbound/amazon');"></iframe>
+
+<p>
+<iframe src="http://rcm.amazon.com/e/cm?t=greenteapre01-20&o=1&p=8&l=as1&asins=0615185509&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" onClick="javascript: pageTracker._trackPageview('/outbound/amazon_matlab');"></iframe> 
+
+</td>
+</tr>
+</table>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-9267613-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+<HR>
+<A HREF="thinkstats007.html"><IMG SRC="back.png" ALT="Previous"></A>
+<A HREF="index.html"><IMG SRC="up.png" ALT="Up"></A>
+<A HREF="thinkstats009.html"><IMG SRC="next.png" ALT="Next"></A>
+</BODY>
+</HTML>
